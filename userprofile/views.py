@@ -1,10 +1,9 @@
 from django.shortcuts import render
-from django.urls.base import reverse, reverse_lazy
+from django.urls.base import reverse_lazy
 from .forms import ProfileForm
 from .models import Profile
 from django.views.generic import ListView,UpdateView
 
-# Create your views here.
 class ProfileView(ListView):
     model = Profile
     form_class = ProfileForm

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.urls.base import reverse, reverse_lazy
+from django.urls.base import reverse_lazy
 from .forms import LessonForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
@@ -34,8 +34,6 @@ class DeleteLessonView(DeleteView):
     model = Lesson
     template_name = 'learning/deletelesson.html'
     success_url = reverse_lazy('home')
-
-
 
 class LessonView(DetailView):
     model = Lesson

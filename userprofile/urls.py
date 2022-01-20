@@ -1,5 +1,4 @@
 from django.urls import path
-#from learning.models import Course, Lesson
 from .views import ProfileView, EditProfileView
 from . import views
 
