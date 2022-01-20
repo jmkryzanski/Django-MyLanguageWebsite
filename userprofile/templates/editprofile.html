@@ -1,0 +1,21 @@
+{% extends 'learning/base.html' %}
+
+{% block content %}
+
+{{user.userprofile.username}}
+{{user.userprofile.bio}}
+
+{{user.pk}}
+
+
+<h1>Update profile</h1>
+
+<div class="form-group">
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button>Update</button>
+    </form>
+</div>
+
+{% endblock %}

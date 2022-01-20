@@ -1,0 +1,87 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <title>Language learning</title>
+  </head>
+<body class="d-flex flex-column min-vh-100">
+  <nav class="navbar navbar-expand-sm navbar-dark">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav nav-fill w-100 mx-auto text-center">
+        <a class="nav-item nav-link navbar-text" href="{% url 'home' %}"><!--<span><img class="navbar-img" src="{% static 'img/homeicon.jpg' %}"></span> -->Home</a>
+        <a class="nav-item nav-link navbar-text" href="{% url 'learn' %}"><!--<span><img class="navbar-img" src="{% static 'img/brainicon.jpg' %}"></span> -->Learn</a>
+        <a class="nav-item nav-link navbar-text" href="{% url 'post' %}"><!--<span><img class="navbar-img" src="{% static 'img/blogicon.jpg' %}"></span> -->Blog</a>
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+            <a class="nav-link active navbar-text" data-bs-toggle="dropdown" href="#"
+                role="button" aria-expanded="false"><!--<span><img class="navbar-img" src="{% static 'img/profileicon.jpg' %}"></span> -->{{user.username}}</a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li> <a style="font-size: 26px;" class="dropdown-item" href="{% url 'profile' user.pk %}">Profile</a></li>
+              <li> <a style="font-size: 26px;" class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </li>
+        {% else %}
+        <a class="nav-item nav-link navbar-text" href={% url 'login' %}><!--<span><button class="btn btn-lg">Login</button></span>-->Login</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+  <hr>
+  
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<footer class="text-center mt-auto">
+  <div class="container p-4">
+    <section class="">
+      <h1>website name</h1>
+    </section>
+    <section class="mb-4">
+      <p>
+        Learn languages the fun way
+      </p>
+    </section>
+    <section class="">
+      <div class="row">
+        <div class="col-12 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Links</h5>
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="{% url 'about' %}"><span>About</span></a>
+            </li>
+            <li>
+              <a href="{% url 'contact' %}"><span>Contact</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div id="fotter-copyright" class="text-center p-3">
+    © 2022 Copyright:
+    <a class="text-white" href="https://website.com/">website.com</a>
+  </div>
+</footer>
+
+<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <script src="{% static 'js/scripts.js'%}"></script>
+
+</body>
+</html>
