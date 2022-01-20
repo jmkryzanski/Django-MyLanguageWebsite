@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Language website</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+<style>
+
+body{
+  background-color: #3778c2;
+}
+
+	.register-form {
+		width: 700px;
+		margin: 30px auto;
+	}
+    .register-form form {        
+    	margin-bottom: 15px;
+        background: #f7f7f7;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+    }
+    .register-form h2 {
+        margin: 0 0 15px;
+    }
+    .form-control, .register-btn {
+        min-height: 38px;
+        border-radius: 2px;
+    }
+    .input-group-addon .fa {
+        font-size: 18px;
+    }
+    .register-btn {
+        font-size: 15px;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+<div class="register-form">
+    <form method="post">
+      {% csrf_token %}
+        <h2 class="text-center">Register</h2>
+        {% for field in form %}   
+        <div class="form-group">
+        	<div class="input-group">
+                {{field.label_tag}}
+                {{field}}
+                {% if field.help_text %}
+                    <br><small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}        
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary register-btn btn-block">Sign in</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+
+<!--<h2>Sign up Form</h2>
+<form method="post">
+  {% csrf_token %}
+  {% for field in form %}
+    <p>
+      {{ field.label_tag }}<br>
+      {{ field }}
+      {% if field.help_text %}
+        <small style="color: grey">{{ field.help_text }}</small>
+      {% endif %}
+      {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+      {% endfor %}
+    </p>
+  {% endfor %}
+  <button type="submit">Sign up</button>
+</form>
+-->

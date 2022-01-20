@@ -1,0 +1,46 @@
+{% extends 'learning/base.html' %}
+{% block content %}
+
+{% if user.is_superuser %}
+<a href="{% url 'createlesson' %}"><span><button class="btn btn-primary">Create Lesson</button></span></a>
+{% endif %}
+
+<div class="row text-center">
+    <div class="col-12 col-md-8">
+        {% for lesson in course_lessons %}
+
+            {% if lesson.title == 'polish' %}
+                <script>
+                    //change navbar to red and white
+                </script>
+            {% endif %}
+            
+        <div class="card rounded shadow border-0 small-margin">
+            <div class="card-body">
+                Lesson course ndawlh aidh aooawdih oiawhd aamdalwdjalidj liawjdadliawdj laiwdj lajd laijd laijd lawijd alwjd 
+                dddawd
+                lawijd laijwd liajwd lajdw e {{lesson.course}}<br>
+                Lesson language name {{lesson.language}}<br>
+                Lesson lessonTitle name {{lesson.lessonTitle}}<br>
+                <a class="stretched-link" href="{{lesson.pk}}"></a>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="card rounded">
+            <div class="card-body">
+                <h5 class="card-title">Grammar Guides</h5>
+                {% for post in object_list %}
+                <p class="card-text"></p>
+                <a class="course-title" href="{% url 'individualpost' post.pk %}">{{post.title}} | {{post.post_date}}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

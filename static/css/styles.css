@@ -1,0 +1,110 @@
+:root{
+    --primThemeColor: #3778c2;       /*#6daffe;*/
+    --secThemeColor: #f8a300;
+    --primPolandColor: red;
+    --secPolandColor: white;
+}
+
+body{
+    background-color: white;
+}
+
+h1{
+    color: var(--secThemeColor);
+}
+
+h1, h2, h3, h4, h5, h6{
+    margin-bottom: 20px;
+}
+
+footer {
+    background-color: var(--primThemeColor);
+}
+
+.login-register-btns{
+    margin-left: .5%;
+    margin-right: .5%;
+}
+
+a{
+    color: black;
+}
+
+/* remove underline and capitalize first letter for links */
+.course-title{
+    text-transform: capitalize;
+    text-decoration: none;
+}
+
+/*switched from margin to padding*/
+@media screen and (min-width: 1400px) {
+    .navbar {
+        padding-left: 15%;
+        padding-right: 15%;
+    }
+}
+
+/*
+@media screen and (max-width: 1400px) {
+    .margin-responsive{
+        margin-left: 3%;
+        margin-right: 3%;
+    }
+}
+*/
+
+.navbar-light .navbar-nav .nav-link {
+    color: black;
+}
+
+.navbar-img{
+    height: 75px;
+    width: 75px;;
+}
+
+.btn{
+    background-color: white;
+    color: orange;
+    border: 2px solid white;
+}
+
+hr{
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.navbar {
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: var(--primThemeColor);
+}
+
+.navbar-text{
+    font-size: 40px;
+    color: white !important;
+}
+
+.navbar-languages-text{
+    font-size: 30px;
+    color: white;
+}
+
+.navbar-nav li:hover>ul.dropdown-menu{
+    display: block;
+}
+
+.small-margin{
+    margin-bottom: 20px;
+}
+
+hr{
+    color: black;
+}
+
+.container{
+    margin-bottom: 20px;
+}
+
+.img-home{
+    width: 75px;
+}

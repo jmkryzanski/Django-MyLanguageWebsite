@@ -1,0 +1,53 @@
+{% extends 'learning/base.html' %}
+{% block content %}
+{% load static %}
+
+<h1 class="text-center">Available Languages</h1>
+
+{% if user.is_superuser %}
+<a href="{% url 'createlesson' %}"><span><button class="btn btn-primary">Create Lesson</button></span></a>
+{% endif %}
+
+{% for course in object_list %}
+{% if course.title == "polish" %}
+<div class="card border-1 text-center small-margin">
+    <div class="card-body">
+        <h5 class="course-title card-title">{{course.title}}</h5>
+        <img class="img-fluid" src="{% static 'img/polishflag.jpg' %}">
+        <a class="course-title stretched-link" href="{{course.title}}"></a>
+    </div>
+</div>
+{% endif %}
+
+{% if course.title == "spanish" %}
+<div class="card border-1 text-center small-margin">
+    <div class="card-body">
+        <h5 class="course-title card-title">{{course.title}}</h5>
+        <img class="img-fluid" src="{% static 'img/spanishflag.jpg' %}">
+        <a class="course-title stretched-link" href="{{course.title}}"></a>
+    </div>
+</div>
+{% endif %}
+
+{% if course.title == "russian" %}
+<div class="card border-1 text-center small-margin">
+    <div class="card-body">
+        <h5 class="course-title card-title">{{course.title}}</h5>
+        <img class="img-fluid" src="{% static 'img/russianflag.jpg' %}">
+        <a class="course-title stretched-link" href="{{course.title}}"></a>
+    </div>
+</div>
+{% endif %}
+
+{% if course.title == "italian" %}
+<div class="card border-1 text-center small-margin">
+    <div class="card-body">
+        <h5 class="course-title card-title">{{course.title}}</h5>
+        <img class="img-fluid" src="{% static 'img/italianflag.jpg' %}">
+        <a class="course-title stretched-link" href="{{course.title}}"></a>
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+
+{% endblock %}
