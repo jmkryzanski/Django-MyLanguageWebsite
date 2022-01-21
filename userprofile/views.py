@@ -8,11 +8,15 @@ class ProfileView(ListView):
     model = Profile
     form_class = ProfileForm
     template_name = 'userprofile/profile.html'
+    slug_url_kwarg = 'myslug'
+    slug_field = 'slug'
 
 class EditProfileView(UpdateView):
     model = Profile
     form_class = ProfileForm
     template_name = 'userprofile/editprofile.html'
+    slug_url_kwarg = 'myslug'
+    slug_field = 'slug'
     success_url = reverse_lazy('home')
 
 def profile(request):

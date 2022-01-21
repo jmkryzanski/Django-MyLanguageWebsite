@@ -24,7 +24,7 @@
             <a class="nav-link active navbar-text" data-bs-toggle="dropdown" href="#"
                 role="button" aria-expanded="false"><!--<span><img class="navbar-img" src="{% static 'img/profileicon.jpg' %}"></span> -->{{user.username}}</a>
             <ul class="dropdown-menu dropdown-menu-end">
-              <li> <a style="font-size: 26px;" class="dropdown-item" href="{% url 'profile' user.pk %}">Profile</a></li>
+              <li> <a style="font-size: 26px;" class="dropdown-item" href="{% url 'profile' user.profile.slug %}">Profile</a></li>
               <li> <a style="font-size: 26px;" class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
             </ul>
         </li>

@@ -7,8 +7,7 @@
 
 
 {{user.pk}}
-{{profile.bio}}
 
-<a href="{% url 'editprofile' user.pk %}">edit</a>
+<a href="{% url 'editprofile' user.profile.slug %}">edit</a>
 
 {% endblock %}
