@@ -1,10 +1,13 @@
 {% extends 'learning/base.html' %}
 {% block content %}
 
+{{user.profile.user}}
 {{user.profile.username}}
 {{user.profile.bio}}
 
+
 {{user.pk}}
+{{profile.bio}}
 
 <a href="{% url 'editprofile' user.pk %}">edit</a>
 

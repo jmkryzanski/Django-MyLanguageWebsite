@@ -22,7 +22,7 @@
                 lawijd laijwd liajwd lajdw e {{lesson.course}}<br>
                 Lesson language name {{lesson.language}}<br>
                 Lesson lessonTitle name {{lesson.lessonTitle}}<br>
-                <a class="stretched-link" href="{{lesson.pk}}"></a>
+                <a class="stretched-link" href="{{lesson.slug}}"></a>
             </div>
         </div>
     {% endfor %}
@@ -30,17 +30,17 @@
     <div class="col-12 col-md-4">
         <div class="card rounded">
             <div class="card-body">
-                <h5 class="card-title">Grammar Guides</h5>
-                {% for post in object_list %}
+                <h5 class="card-title">Grammar Guides</h5>     
+                {% for guide in course_guides %}
+
+                <a href="{% url 'createguide' guide.course %}"><span><button class="btn btn-primary">create guide</button></span></a>
+
                 <p class="card-text"></p>
-                <a class="course-title" href="{% url 'individualpost' post.pk %}">{{post.title}} | {{post.post_date}}</a>
+                <a class="course-title" href="{% url 'individualguide' guide.course guide.slug  %}">{{guide.guideTitle}}</a>
                 {% endfor %}
             </div>
         </div>
     </div>
 </div>
-
-
-
 
 {% endblock %}

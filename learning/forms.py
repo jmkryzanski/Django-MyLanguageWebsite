@@ -1,5 +1,5 @@
 from django import forms
-from .models import Lesson
+from .models import Lesson, Guide
 
 class LessonForm(forms.ModelForm):
     class Meta:
@@ -8,18 +8,42 @@ class LessonForm(forms.ModelForm):
         widgets = {
             'course': forms.Select(attrs={
                 'class': 'form-control',
-                'placeholder': 'course'
+                'placeholder': 'Course'
             }),
             'language': forms.Textarea(attrs={
                 'class': 'form-control',
-                'placeholder': 'Body'
+                'placeholder': 'Language'
             }),
             'lessonTitle': forms.Textarea(attrs={
                 'class': 'form-control',
-                'placeholder': 'Body'
+                'placeholder': 'Title'
             }),
             'content': forms.Textarea(attrs={
                 'class': 'form-control',
-                'placeholder': 'content'
+                'placeholder': 'Content'
+            }),
+        }
+
+class GuideForm(forms.ModelForm):
+    class Meta:
+        model = Guide
+        fields = '__all__'
+        #fields = ('course', 'language', 'lessonTitle', 'content')
+        widgets = {
+            'course': forms.Select(attrs={
+                'class': 'form-control',
+                'placeholder': 'Course'
+            }),
+            'language': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Language'
+            }),
+            #'lessonTitle': forms.Textarea(attrs={
+            #    'class': 'form-control',
+            #    'placeholder': 'Title'
+            #}),
+            'content': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Content'
             }),
         }

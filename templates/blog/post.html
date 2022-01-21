@@ -13,9 +13,9 @@
             <div class="card-body">
                 <h5 class="card-title">{{post.title}}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">By {{post.author}}{% if user.is_superuser %}
-                    <a href="{% url 'editpost' post.pk %}">Edit</a>{%endif%}</h6>
+                    <a href="{% url 'editpost' post.slug %}">Edit</a>{%endif%}</h6>
                 <p class="card-text">{{post.caption|slice:"255"}}</p>
-                <a href="{% url 'individualpost' post.pk %}" class="stretched-link"></a>
+                <a href="{% url 'individualpost' post.slug %}" class="stretched-link"></a>
             </div>
         </div>
     {% endfor %}
@@ -26,7 +26,7 @@
                 <h5 class="card-title">Blog Archive</h5>
                 {% for post in object_list %}
                 <p class="card-text"></p>
-                <a class="course-title" href="{% url 'individualpost' post.pk %}">{{post.title}} | {{post.post_date}}</a>
+                <a class="course-title" href="{% url 'individualpost' post.slug %}">{{post.title}} | {{post.post_date}}</a>
                 {% endfor %}
             </div>
         </div>

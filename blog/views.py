@@ -14,6 +14,8 @@ class ViewPostView(ListView):
 class IndividualPostView(DetailView):
     model = Post
     template_name = 'blog/individualpost.html'
+    slug_url_kwarg = 'myslug'
+    slug_field = 'slug'
 
 class CreatePostView(CreateView):
     model = Post
@@ -24,8 +26,12 @@ class EditPostView(UpdateView):
     model = Post
     form_class = EditPostForm
     template_name = 'blog/editpost.html'
+    slug_url_kwarg = 'myslug'
+    slug_field = 'slug'
 
 class DeletePostView(DeleteView):
     model = Post
     template_name = 'blog/deletepost.html'
     success_url = reverse_lazy('home')
+    slug_url_kwarg = 'myslug'
+    slug_field = 'slug'

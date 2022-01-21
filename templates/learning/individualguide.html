@@ -1,0 +1,16 @@
+{% extends 'learning/base.html' %}
+{% block content %}
+
+{{guide.guideTitle}}
+{{guide.content}}
+
+{% autoescape off %}
+{{guide.content}}
+{% endautoescape %}
+
+{% if user.is_superuser %}
+<a href="{% url 'editguide' guide.course guide.slug %}"><span><button class="btn btn-primary">edit guide</button></span></a>
+{% endif %}
+
+
+{% endblock %}

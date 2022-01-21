@@ -8,8 +8,8 @@
 {{post.body}}
 {% endautoescape %}
 
-<a href="{% url 'editpost' post.pk %}">edit</a>
+<a href="{% url 'editpost' post.slug %}">edit</a>
 
-<a href="{% url 'deletepost' post.pk %}">delete</a>
+<a href="{% url 'deletepost' post.slug %}">delete</a>
 
 {% endblock %}

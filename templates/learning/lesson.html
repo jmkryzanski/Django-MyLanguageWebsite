@@ -8,8 +8,8 @@ leson html
 {{lesson.content}}
 {% endautoescape %}
 
-<a href="{% url 'editlesson' lesson.course lesson.pk %}">edit</a>
+<a href="{% url 'editlesson' lesson.course lesson.slug %}">edit</a>
 
-<a href="{% url 'deletelesson' lesson.course lesson.pk %}">delete</a>
+<a href="{% url 'deletelesson' lesson.course lesson.slug %}">delete</a>
 
 {% endblock %}
