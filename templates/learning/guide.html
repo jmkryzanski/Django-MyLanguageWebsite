@@ -1,13 +1,45 @@
 {% extends 'learning/base.html' %}
 {% block content %}
 
-{% for guide in object_list %}
+<!--
+    {% for guide in object_list %}
     {{guide.course}}
     {{guide.guideTitle}}
+
+    <a class="course-title" href="{% url 'individualguide' guide.course guide.slug  %}"><span><h2>{{guide.guideTitle}}</h2></span></a><br>
+
+
     {% autoescape off %}
-    {{guide.content}}
+    {{guide.content}}<br><br>
     {% endautoescape %}
+{% endfor %}-->
+
+
+{% for p in thisPronounGuides %}
+    {% if p.orderingID == 1 %}
+        <h3 style="color: aqua;" class="card-title">Pronouns</h3>
+    {% endif %}
+        <a class="course-title" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+    {% endfor %}
+    {% for p in thisVerbGuides %}
+    {% if p.orderingID == 1 %}
+        <h3 style="color: aqua;" class="card-title">Verbs</h3>
+    {% endif %}
+        <a class="course-title" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+    {% endfor %}
+    {% for p in thisAdjectiveGuides %}
+    {% if p.orderingID == 1 %}
+       <h3 style="color: aqua;" class="card-title">Adjectives</h3>
+    {% endif %}
+        <a class="course-title" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+    {% endfor %}
+    {% for p in thisAdverbGuides %}
+    {% if p.orderingID == 1 %}
+        <h3 style="color: aqua;" class="card-title">Adverbs</h3>
+    {% endif %}
+        <a class="course-title" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
 {% endfor %}
+
 
 
 {% endblock %}

@@ -30,14 +30,31 @@
     <div class="col-12 col-md-4">
         <div class="card rounded">
             <div class="card-body">
-                <h5 class="card-title">Grammar Guides</h5>     
-                {% for guide in course_guides %}
-
-                <a href="{% url 'createguide' guide.course %}"><span><button class="btn btn-primary">create guide</button></span></a>
-
-                <p class="card-text"></p>
-                <a class="course-title" href="{% url 'individualguide' guide.course guide.slug  %}">{{guide.guideTitle}}</a>
-                {% endfor %}
+                <a class="course-title" href="{% url 'guide' lan %}"><span><h1 class="card-title">{{lan}} Grammar Guide</h1></span></a>
+                    {% for p in thisPronounGuides %}
+                        {% if p.orderingID == 1 %}
+                            <h3 style="color: aqua;" class="card-title">Pronouns</h3>
+                        {% endif %}
+                        <a class="course-title" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+                    {% endfor %}
+                    {% for p in thisVerbGuides %}
+                        {% if p.orderingID == 1 %}
+                            <h3 style="color: aqua;" class="card-title">Verbs</h3>
+                        {% endif %}
+                        <a class="course-title" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+                    {% endfor %}
+                    {% for p in thisAdjectiveGuides %}
+                        {% if p.orderingID == 1 %}
+                            <h3 style="color: aqua;" class="card-title">Adjectives</h3>
+                        {% endif %}
+                        <a class="course-title" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+                    {% endfor %}
+                    {% for p in thisAdverbGuides %}
+                        {% if p.orderingID == 1 %}
+                            <h3 style="color: aqua;" class="card-title">Adverbs</h3>
+                        {% endif %}
+                        <a class="course-title" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+                    {% endfor %}
             </div>
         </div>
     </div>

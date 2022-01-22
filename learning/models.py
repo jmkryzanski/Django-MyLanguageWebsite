@@ -37,6 +37,7 @@ class Guide(models.Model):
     content = models.TextField(max_length=10000, default='content')
     orderingID = models.IntegerField()
     slug = models.SlugField(unique=True)
+    category = models.CharField(max_length=255)
 
     def __str__(self):
         return 'Course- ' + self.course.title + ' |  Guide Title- ' + self.guideTitle

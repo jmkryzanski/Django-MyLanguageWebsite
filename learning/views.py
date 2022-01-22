@@ -18,8 +18,27 @@ class LearnView(ListView):
 def CourseView(request, lan):
     Lesson.objects.all().order_by('orderingID')
     course_lessons = Lesson.objects.filter(language=lan)
+    #Guide.objects.all().order_by('category')
     course_guides = Guide.objects.filter(language=lan)
-    return render(request, 'learning/course.html', {'lan': lan, 'course_lessons': course_lessons, 'course_guides': course_guides})
+    thisPronounGuides = course_guides.filter(category="pronouns")
+    #thisPronounGuides.all().order_by('orderingID')
+    thisVerbGuides = course_guides.filter(category="verbs")
+    thisAdjectiveGuides = course_guides.filter(category="adjectives")
+    thisAdverbGuides = course_guides.filter(category="adverbs")
+    context = {
+        'lan': lan,
+        'course_lessons': course_lessons,
+        #'course_guides': course_guides,
+        'thisPronounGuides': thisPronounGuides,
+        'thisVerbGuides': thisVerbGuides,
+        'thisAdjectiveGuides': thisAdjectiveGuides,
+        'thisAdverbGuides': thisAdverbGuides,
+    }
+    #pronounGuides = Guide.objects.filter(category="pronouns")
+
+    #return render(request, 'learning/course.html', {'lan': lan, 'course_lessons': course_lessons, 'course_guides': course_guides, 'thisPronounGuides': thisPronounGuides})
+    return render(request, 'learning/course.html', context)
+
 
 class CreateLessonView(CreateView):
     model = Lesson
@@ -73,11 +92,33 @@ class DeleteGuideView(DeleteView):
     slug_field = 'slug'
     success_url = reverse_lazy('home')
 
+'''
 class ViewGuideView(ListView):
     model = Guide
     template_name = 'learning/guide.html'
     slug_url_kwarg = 'myslug'
     slug_field = 'slug'
+'''
+
+def ViewGuideView(request, lan):
+    course_lessons = Lesson.objects.filter(language=lan)
+    course_guides = Guide.objects.filter(language=lan)
+    thisPronounGuides = course_guides.filter(category="pronouns")
+    thisVerbGuides = course_guides.filter(category="verbs")
+    thisAdjectiveGuides = course_guides.filter(category="adjectives")
+    thisAdverbGuides = course_guides.filter(category="adverbs")
+    context = {
+        'lan': lan,
+        'course_lessons': course_lessons,
+        'thisPronounGuides': thisPronounGuides,
+        'thisVerbGuides': thisVerbGuides,
+        'thisAdjectiveGuides': thisAdjectiveGuides,
+        'thisAdverbGuides': thisAdverbGuides,
+    }
+
+    return render(request, 'learning/guide.html', context)
+
+
 
 class IndividualGuideView(DetailView):
     model = Guide
