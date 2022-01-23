@@ -12,8 +12,7 @@
         <div class="card rounded shadow border-0 small-margin">
             <div class="card-body">
                 <h5 class="card-title">{{post.title}}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">By {{post.author}}{% if user.is_superuser %}
-                    <a href="{% url 'editpost' post.slug %}">Edit</a>{%endif%}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">By {{post.author}}</h6>
                 <p class="card-text">{{post.caption|slice:"255"}}</p>
                 <a href="{% url 'individualpost' post.slug %}" class="stretched-link"></a>
             </div>

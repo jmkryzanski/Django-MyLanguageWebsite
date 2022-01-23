@@ -1,6 +1,6 @@
 from django.urls import path
 #from learning.models import Course, Lesson
-from .views import ViewPostView, CreatePostView, EditPostView, DeletePostView, IndividualPostView, IndividualPostView
+from .views import ViewPostView, CreatePostView, DeletePostView, IndividualPostView, IndividualPostView, EditPostView
 from . import views
 
 urlpatterns = [

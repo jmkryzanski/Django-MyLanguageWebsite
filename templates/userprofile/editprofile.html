@@ -2,8 +2,9 @@
 
 {% block content %}
 
-{{user.profile.username}}
-{{user.profile.bio}}
+Permanent user name: {{user.profile.user}}<br>
+Changeeable user name: {{user.profile.username}}<br>
+Bio: {{user.profile.bio}}<br>
 
 {{user.pk}}
 

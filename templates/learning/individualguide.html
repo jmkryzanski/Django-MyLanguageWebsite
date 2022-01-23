@@ -2,13 +2,18 @@
 {% block content %}
 
 <div class="text-center">
-    <h1>{{guide.guideTitle}}</h1>
+    <h1 class="secondary-theme">{{guide.guideTitle}}</h1>
 </div>
 
 {% if user.is_superuser %}
     <a href="{% url 'editguide' guide.course guide.slug %}"><span><button class="btn btn-primary">Edit Guide</button></span></a>
 {% endif %}
 
+<style>
+    h1, h2{
+        color: #f8a300;
+    }
+</style>
 {% autoescape off %}
 {{guide.content}}
 {% endautoescape %}

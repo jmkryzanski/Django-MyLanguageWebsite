@@ -9,8 +9,17 @@ body{
     background-color: white;
 }
 
+/*
 h1, h3{
     color: var(--secThemeColor);
+}*/
+
+h1.primary-theme, h2.primary-theme, h3.primary-theme, .card-title{
+    color: var(--primThemeColor)
+}
+
+h1.secondary-theme, h2.secondary-theme, h3.secondary-theme, .card-title{
+    color: var(--secThemeColor)
 }
 
 h1, h2, h3, h4, h5, h6{
@@ -28,6 +37,7 @@ footer {
 
 a{
     color: black;
+    text-decoration: none;
 }
 
 .card-title{
@@ -37,11 +47,16 @@ a{
 /* remove underline and capitalize first letter for links */
 .course-title{
     text-transform: capitalize;
-    text-decoration: none;
+    /*text-decoration: none;*/
 }
 
 .guide-title{
     font-size: 20px;
+}
+
+.guide-top-text{
+    color: var(--secThemeColor);
+    font-weight: 600;
 }
 
 /*switched from margin to padding*/
@@ -117,4 +132,22 @@ hr.center1{
 
 .img-home{
     width: 75px;
+}
+
+table{
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+    color: #000000;
+    margin-left: auto;
+    margin-right: auto;
+}
+table td, table th {
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+    padding: 3px;
 }

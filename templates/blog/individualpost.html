@@ -1,15 +1,16 @@
 {% extends 'learning/base.html' %}
 {% block content %}
 
+{% if user.is_superuser %}
+    <a href="{% url 'editpost' post.slug %}"><span><button class="btn btn-primary">Edit Post</button></span></a>
+    <a href="{% url 'deletepost' post.slug %}"><span><button class="btn btn-primary">Delete Post</button></span></a>
+{% endif %}
+
 {{post.title}}
 {{post.author}}
 
 {% autoescape off %}
 {{post.body}}
 {% endautoescape %}
-
-<a href="{% url 'editpost' post.slug %}">edit</a>
-
-<a href="{% url 'deletepost' post.slug %}">delete</a>
 
 {% endblock %}

@@ -18,7 +18,7 @@
     <a href="{% url 'createguide' lan %}"><span><button class="btn btn-primary">Create Guide</button></span></a>
 {% endif %}
 
-<h1 class="course-title text-center">{{lan}} Grammar Guide Reference</h1>
+<h1 class="secondary-theme course-title text-center">{{lan}} Grammar Guide Reference</h1>
 <div class="guide-title">
     {% for p in thisCaseGuides %}
         {% if p.orderingID == 1 %}

@@ -22,9 +22,9 @@
         {% if user.is_authenticated %}
         <li class="nav-item dropdown">
             <a class="nav-link active navbar-text" data-bs-toggle="dropdown" href="#"
-                role="button" aria-expanded="false"><!--<span><img class="navbar-img" src="{% static 'img/profileicon.jpg' %}"></span> -->{{user.username}}</a>
+                role="button" aria-expanded="false"><!--<span><img class="navbar-img" src="{% static 'img/profileicon.jpg' %}"></span> -->{{request.user.profile.user}}</a>
             <ul class="dropdown-menu dropdown-menu-end">
-              <li> <a style="font-size: 26px;" class="dropdown-item" href="{% url 'profile' user.profile.slug %}">Profile</a></li>
+              <li> <a style="font-size: 26px;" class="dropdown-item" href="{% url 'profile' request.user.profile.slug %}">Profile</a></li>
               <li> <a style="font-size: 26px;" class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
             </ul>
         </li>
@@ -44,7 +44,7 @@
 <footer class="text-center mt-auto">
   <div class="container p-4">
     <section class="">
-      <h1>website name</h1>
+      <h1 class="secondary-theme">website name</h1>
     </section>
     <section class="mb-4">
       <p>

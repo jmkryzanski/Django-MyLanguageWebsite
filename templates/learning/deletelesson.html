@@ -2,8 +2,8 @@
 
 {% block content %}
 
-<h1>Delete Lesson</h1>
-<h1>Delete: {{lesson.lessonTitle}}</h1>
+<h1 class="secondary-theme">Delete Lesson</h1>
+<h1 class="secondary-theme">Delete: {{lesson.lessonTitle}}</h1>
 <div class="form-group">
     <form method="POST">
         {% csrf_token %}

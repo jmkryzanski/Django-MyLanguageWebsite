@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.urls.base import reverse_lazy
 from .forms import LessonForm, GuideForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-
 from learning.models import Course, Lesson, Guide
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
 
 class HomeView(ListView):
     model = Course
@@ -46,8 +48,7 @@ def CourseView(request, lan):
     #return render(request, 'learning/course.html', {'lan': lan, 'course_lessons': course_lessons, 'course_guides': course_guides, 'thisPronounGuides': thisPronounGuides})
     return render(request, 'learning/course.html', context)
 
-
-class CreateLessonView(CreateView):
+class CreateLessonView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Lesson
     form_class = LessonForm
     template_name = 'learning/createlesson.html'
@@ -55,7 +56,10 @@ class CreateLessonView(CreateView):
     slug_field = 'slug'
     #success_url = reverse_lazy('home')
 
-class EditLessonView(UpdateView):
+    def test_func(self):
+        return self.request.user.is_superuser
+
+class EditLessonView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Lesson
     form_class = LessonForm
     template_name = 'learning/editlesson.html'
@@ -63,12 +67,18 @@ class EditLessonView(UpdateView):
     slug_field = 'slug'
     success_url = reverse_lazy('home')
 
-class DeleteLessonView(DeleteView):
+    def test_func(self):
+        return self.request.user.is_superuser
+
+class DeleteLessonView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Lesson
     template_name = 'learning/deletelesson.html'
     slug_url_kwarg = 'myslug'
     slug_field = 'slug'
     success_url = reverse_lazy('home')
+
+    def test_func(self):
+        return self.request.user.is_superuser
 
 class ViewLessonView(DetailView):
     model = Lesson
@@ -76,7 +86,8 @@ class ViewLessonView(DetailView):
     slug_url_kwarg = 'myslug'
     slug_field = 'slug'
 
-class CreateGuideView(CreateView):
+#@user_passes_test(lambda u: u.is_superuser)
+class CreateGuideView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Guide
     form_class = GuideForm
     template_name = 'learning/createguide.html'
@@ -84,7 +95,10 @@ class CreateGuideView(CreateView):
     slug_field = 'slug'
     #success_url = reverse_lazy('home')
 
-class EditGuideView(UpdateView):
+    def test_func(self):
+        return self.request.user.is_superuser
+
+class EditGuideView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Guide
     form_class = GuideForm
     template_name = 'learning/editguide.html'
@@ -92,12 +106,18 @@ class EditGuideView(UpdateView):
     slug_field = 'slug'
     success_url = reverse_lazy('home')
 
-class DeleteGuideView(DeleteView):
+    def test_func(self):
+        return self.request.user.is_superuser
+
+class DeleteGuideView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Guide
     template_name = 'learning/deleteguide.html'
     slug_url_kwarg = 'myslug'
     slug_field = 'slug'
     success_url = reverse_lazy('home')
+
+    def test_func(self):
+        return self.request.user.is_superuser
 
 '''
 class ViewGuideView(ListView):
