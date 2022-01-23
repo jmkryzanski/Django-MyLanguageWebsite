@@ -4,10 +4,6 @@
 
 <h1 class="text-center">Available Languages</h1>
 
-{% if user.is_superuser %}
-<a href="{% url 'createlesson' %}"><span><button class="btn btn-primary">Create Lesson</button></span></a>
-{% endif %}
-
 {% for course in object_list %}
 {% if course.title == "polish" %}
 <div class="card border-1 text-center small-margin">
@@ -49,5 +45,9 @@
 </div>
 {% endif %}
 {% endfor %}
+
+{% if user.is_superuser %}
+    <a href="{% url 'createlesson' %}"><span><button class="btn btn-primary">Create Lesson</button></span></a>
+{% endif %}
 
 {% endblock %}

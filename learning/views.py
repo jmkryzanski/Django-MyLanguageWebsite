@@ -18,8 +18,12 @@ class LearnView(ListView):
 def CourseView(request, lan):
     Lesson.objects.all().order_by('orderingID')
     course_lessons = Lesson.objects.filter(language=lan)
-    #Guide.objects.all().order_by('category')
-    course_guides = Guide.objects.filter(language=lan)
+
+    #Guide.objects.order_by('orderingID')
+
+    #course_guides = Guide.objects.filter(language=lan)
+    course_guides = Guide.objects.all().filter(language=lan).order_by('orderingID')
+    thisCaseGuides = course_guides.filter(category="cases")
     thisPronounGuides = course_guides.filter(category="pronouns")
     #thisPronounGuides.all().order_by('orderingID')
     thisVerbGuides = course_guides.filter(category="verbs")
@@ -28,6 +32,7 @@ def CourseView(request, lan):
     context = {
         'lan': lan,
         'course_lessons': course_lessons,
+        'thisCaseGuides': thisCaseGuides,
         #'course_guides': course_guides,
         'thisPronounGuides': thisPronounGuides,
         'thisVerbGuides': thisVerbGuides,
@@ -63,7 +68,7 @@ class DeleteLessonView(DeleteView):
     slug_field = 'slug'
     success_url = reverse_lazy('home')
 
-class LessonView(DetailView):
+class ViewLessonView(DetailView):
     model = Lesson
     template_name = 'learning/lesson.html'
     slug_url_kwarg = 'myslug'
@@ -102,7 +107,11 @@ class ViewGuideView(ListView):
 
 def ViewGuideView(request, lan):
     course_lessons = Lesson.objects.filter(language=lan)
-    course_guides = Guide.objects.filter(language=lan)
+
+    course_guides = Guide.objects.all().filter(language=lan).order_by('orderingID')
+
+    #course_guides = Guide.objects.filter(language=lan)
+    thisCaseGuides = course_guides.filter(category="cases")
     thisPronounGuides = course_guides.filter(category="pronouns")
     thisVerbGuides = course_guides.filter(category="verbs")
     thisAdjectiveGuides = course_guides.filter(category="adjectives")
@@ -110,6 +119,7 @@ def ViewGuideView(request, lan):
     context = {
         'lan': lan,
         'course_lessons': course_lessons,
+        'thisCaseGuides': thisCaseGuides,
         'thisPronounGuides': thisPronounGuides,
         'thisVerbGuides': thisVerbGuides,
         'thisAdjectiveGuides': thisAdjectiveGuides,
@@ -117,8 +127,6 @@ def ViewGuideView(request, lan):
     }
 
     return render(request, 'learning/guide.html', context)
-
-
 
 class IndividualGuideView(DetailView):
     model = Guide

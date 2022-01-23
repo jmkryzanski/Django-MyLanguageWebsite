@@ -1,10 +1,6 @@
 {% extends 'learning/base.html' %}
 {% block content %}
 
-{% if user.is_superuser %}
-<a href="{% url 'createlesson' %}"><span><button class="btn btn-primary">Create Lesson</button></span></a>
-{% endif %}
-
 <div class="row text-center">
     <div class="col-12 col-md-8">
         {% for lesson in course_lessons %}
@@ -31,27 +27,33 @@
         <div class="card rounded">
             <div class="card-body">
                 <a class="course-title" href="{% url 'guide' lan %}"><span><h1 class="card-title">{{lan}} Grammar Guide</h1></span></a>
+                    {% for p in thisCaseGuides %}
+                        {% if p.orderingID == 1 %}
+                            <h3 class="card-title">Cases</h3>
+                        {% endif %}
+                        <a class="course-title" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+                    {% endfor %}
                     {% for p in thisPronounGuides %}
                         {% if p.orderingID == 1 %}
-                            <h3 style="color: aqua;" class="card-title">Pronouns</h3>
+                            <h3 class="card-title">Pronouns</h3>
                         {% endif %}
                         <a class="course-title" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
                     {% endfor %}
                     {% for p in thisVerbGuides %}
                         {% if p.orderingID == 1 %}
-                            <h3 style="color: aqua;" class="card-title">Verbs</h3>
+                            <h3 class="card-title">Verbs</h3>
                         {% endif %}
                         <a class="course-title" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
                     {% endfor %}
                     {% for p in thisAdjectiveGuides %}
                         {% if p.orderingID == 1 %}
-                            <h3 style="color: aqua;" class="card-title">Adjectives</h3>
+                            <h3 class="card-title">Adjectives</h3>
                         {% endif %}
                         <a class="course-title" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
                     {% endfor %}
                     {% for p in thisAdverbGuides %}
                         {% if p.orderingID == 1 %}
-                            <h3 style="color: aqua;" class="card-title">Adverbs</h3>
+                            <h3 class="card-title">Adverbs</h3>
                         {% endif %}
                         <a class="course-title" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
                     {% endfor %}
@@ -59,5 +61,9 @@
         </div>
     </div>
 </div>
+
+{% if user.is_superuser %}
+    <a href="{% url 'createlesson' %}"><span><button class="btn btn-primary">Create Lesson</button></span></a>
+{% endif %}
 
 {% endblock %}

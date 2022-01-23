@@ -1,8 +1,9 @@
 {% extends 'learning/base.html' %}
 {% block content %}
 
-{{guide.guideTitle}}
-{{guide.content}}
+<div class="text-center">
+    <h1>{{guide.guideTitle}}</h1>
+</div>
 
 {% autoescape off %}
 {{guide.content}}
@@ -11,6 +12,5 @@
 {% if user.is_superuser %}
 <a href="{% url 'editguide' guide.course guide.slug %}"><span><button class="btn btn-primary">edit guide</button></span></a>
 {% endif %}
-
 
 {% endblock %}
