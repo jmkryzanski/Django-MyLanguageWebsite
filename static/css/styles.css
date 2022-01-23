@@ -30,10 +30,18 @@ a{
     color: black;
 }
 
+.card-title{
+    margin-top: 8px;
+}
+
 /* remove underline and capitalize first letter for links */
 .course-title{
     text-transform: capitalize;
     text-decoration: none;
+}
+
+.guide-title{
+    font-size: 20px;
 }
 
 /*switched from margin to padding*/
@@ -71,6 +79,12 @@ a{
 hr{
     margin: 0;
     margin-bottom: 20px;
+    color: black;
+}
+
+hr.center1{
+    width: 90%;
+    margin: 10px auto;
 }
 
 .navbar {
@@ -95,10 +109,6 @@ hr{
 
 .small-margin{
     margin-bottom: 20px;
-}
-
-hr{
-    color: black;
 }
 
 .container{

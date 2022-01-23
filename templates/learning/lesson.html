@@ -1,6 +1,12 @@
 {% extends 'learning/base.html' %}
 {% block content %}
-leson html
+Lesson HTML<br>
+
+{% if user.is_superuser %}
+    <a href="{% url 'editlesson' lesson.course lesson.slug %}"><span><button class="btn btn-primary">Edit Lesson</button></span></a>
+    <a href="{% url 'deletelesson' lesson.course lesson.slug %}"><span><button class="btn btn-primary">Delete Lesson</button></span></a>
+{% endif %}
+
 {{lesson.course}}
 {{lesson.lessonTitle}}
 
@@ -8,8 +14,5 @@ leson html
 {{lesson.content}}
 {% endautoescape %}
 
-<a href="{% url 'editlesson' lesson.course lesson.slug %}">edit</a>
-
-<a href="{% url 'deletelesson' lesson.course lesson.slug %}">delete</a>
 
 {% endblock %}

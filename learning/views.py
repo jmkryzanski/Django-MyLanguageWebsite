@@ -29,6 +29,7 @@ def CourseView(request, lan):
     thisVerbGuides = course_guides.filter(category="verbs")
     thisAdjectiveGuides = course_guides.filter(category="adjectives")
     thisAdverbGuides = course_guides.filter(category="adverbs")
+    thisOtherGuides = course_guides.filter(category="other")
     context = {
         'lan': lan,
         'course_lessons': course_lessons,
@@ -38,6 +39,7 @@ def CourseView(request, lan):
         'thisVerbGuides': thisVerbGuides,
         'thisAdjectiveGuides': thisAdjectiveGuides,
         'thisAdverbGuides': thisAdverbGuides,
+        'thisOtherGuides': thisOtherGuides,
     }
     #pronounGuides = Guide.objects.filter(category="pronouns")
 
@@ -116,6 +118,7 @@ def ViewGuideView(request, lan):
     thisVerbGuides = course_guides.filter(category="verbs")
     thisAdjectiveGuides = course_guides.filter(category="adjectives")
     thisAdverbGuides = course_guides.filter(category="adverbs")
+    thisOtherGuides = course_guides.filter(category="other")
     context = {
         'lan': lan,
         'course_lessons': course_lessons,
@@ -124,6 +127,7 @@ def ViewGuideView(request, lan):
         'thisVerbGuides': thisVerbGuides,
         'thisAdjectiveGuides': thisAdjectiveGuides,
         'thisAdverbGuides': thisAdverbGuides,
+        'thisOtherGuides': thisOtherGuides,
     }
 
     return render(request, 'learning/guide.html', context)

@@ -5,12 +5,12 @@
     <h1>{{guide.guideTitle}}</h1>
 </div>
 
+{% if user.is_superuser %}
+    <a href="{% url 'editguide' guide.course guide.slug %}"><span><button class="btn btn-primary">Edit Guide</button></span></a>
+{% endif %}
+
 {% autoescape off %}
 {{guide.content}}
 {% endautoescape %}
-
-{% if user.is_superuser %}
-<a href="{% url 'editguide' guide.course guide.slug %}"><span><button class="btn btn-primary">edit guide</button></span></a>
-{% endif %}
 
 {% endblock %}

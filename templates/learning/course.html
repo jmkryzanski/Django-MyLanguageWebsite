@@ -1,6 +1,10 @@
 {% extends 'learning/base.html' %}
 {% block content %}
 
+{% if user.is_superuser %}
+    <a href="{% url 'createlesson' %}"><span><button class="btn btn-primary">Create Lesson</button></span></a>
+{% endif %}
+
 <div class="row text-center">
     <div class="col-12 col-md-8">
         {% for lesson in course_lessons %}
@@ -27,6 +31,8 @@
         <div class="card rounded">
             <div class="card-body">
                 <a class="course-title" href="{% url 'guide' lan %}"><span><h1 class="card-title">{{lan}} Grammar Guide</h1></span></a>
+                <hr class="center1">
+                <div class="guide-title">
                     {% for p in thisCaseGuides %}
                         {% if p.orderingID == 1 %}
                             <h3 class="card-title">Cases</h3>
@@ -57,13 +63,17 @@
                         {% endif %}
                         <a class="course-title" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
                     {% endfor %}
+                    {% for p in thisOtherGuides %}
+                        {% if p.orderingID == 1 %}
+                            <h3 class="card-title">Other</h3>
+                        {% endif %}
+                            <a class="course-title" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+                    {% endfor %}
+                </div>
+
             </div>
         </div>
     </div>
 </div>
-
-{% if user.is_superuser %}
-    <a href="{% url 'createlesson' %}"><span><button class="btn btn-primary">Create Lesson</button></span></a>
-{% endif %}
 
 {% endblock %}
