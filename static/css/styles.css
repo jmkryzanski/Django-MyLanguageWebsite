@@ -1,26 +1,52 @@
 :root{
     --primThemeColor: #3778c2;       /*#6daffe;*/
     --secThemeColor: #f8a300;
+    --thirdThemeColor: black;
+    --fourthThemeColor: black;
     --primPolandColor: red;
     --secPolandColor: white;
 }
+
+
+
 
 body{
     background-color: white;
 }
 
-/*
-h1, h3{
+.primary-theme{
+    color: var(--primThemeColor);
+}
+
+.primary-theme-background{
+    background-color: var(--primThemeColor);
+}
+
+.secondary-theme, .card-title{
     color: var(--secThemeColor);
-}*/
-
-h1.primary-theme, h2.primary-theme, h3.primary-theme, .card-title{
-    color: var(--primThemeColor)
 }
 
-h1.secondary-theme, h2.secondary-theme, h3.secondary-theme, .card-title{
-    color: var(--secThemeColor)
+.third-theme, .card-text{
+    color: var(--thirdThemeColor);
 }
+
+.fourth-theme{
+    color: var(--fourthThemeColor);
+}
+
+.welcome{
+    padding-top: 25px;
+    padding-bottom: 25px;
+    margin-bottom: 0px;
+}
+
+hr.welcome{
+    padding: 0;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+
 
 h1, h2, h3, h4, h5, h6{
     margin-bottom: 20px;
@@ -28,6 +54,7 @@ h1, h2, h3, h4, h5, h6{
 
 footer {
     background-color: var(--primThemeColor);
+    border-top:5px solid white;
 }
 
 .login-register-btns{
@@ -35,17 +62,17 @@ footer {
     margin-right: .5%;
 }
 
-a{
-    color: black;
+/*.normal-text{
+    color: aqua;
+}*/
+
+a {
+    /*color: orange;*/
     text-decoration: none;
 }
 
-.card-title{
-    margin-top: 8px;
-}
-
 /* remove underline and capitalize first letter for links */
-.course-title{
+.capitalize-first-letter{
     text-transform: capitalize;
     /*text-decoration: none;*/
 }
@@ -106,11 +133,12 @@ hr.center1{
     margin-bottom: 20px;
     border-radius: 5px;
     background-color: var(--primThemeColor);
+    border-bottom:5px solid white;
 }
 
 .navbar-text{
     font-size: 40px;
-    color: white !important;
+    color: white; /*!important;*/
 }
 
 .navbar-languages-text{
@@ -150,4 +178,57 @@ table td, table th {
     border-color: black;
     border-style: solid;
     padding: 3px;
+}
+
+
+body.dark {
+    background-color: #1a1a1a;
+}
+
+.dark{
+    color: aqua;
+}
+
+.dark-primary-theme{
+    color: white;
+}
+
+.dark-secondary-theme{
+    color: var(--secThemeColor);
+}
+
+.dark-third-theme{
+    color: white;
+}
+
+.dark-fourth-theme{
+    color: white;
+}
+
+.dark-primary-theme-background{
+    background-color: yellow;
+}
+
+.dark-secondary-theme-background{
+    background-color: var(--secThemeColor);
+}
+
+.dark-third-theme-background{
+    background-color: white;
+}
+
+.dark-fourth-theme-background{
+    background-color: #1a1a1a;
+}
+
+.some-class{
+    background-color: magenta;
+}
+
+.plzwork{
+    color: magenta;
+}
+
+.plzwork2{
+    color: orange;
 }

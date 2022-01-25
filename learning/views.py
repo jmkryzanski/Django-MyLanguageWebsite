@@ -6,14 +6,13 @@ from learning.models import Course, Lesson, Guide
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
+class WelcomeView(ListView):
+    model = Course
+    template_name = 'learning/welcome.html'
 
 class HomeView(ListView):
     model = Course
     template_name = 'learning/home.html'
-
-class HomeTestView(ListView):
-    model = Course
-    template_name = 'learning/hometest.html'
 
 class LearnView(ListView):
     model = Course
