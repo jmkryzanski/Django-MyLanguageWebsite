@@ -11,6 +11,10 @@ class HomeView(ListView):
     model = Course
     template_name = 'learning/home.html'
 
+class HomeTestView(ListView):
+    model = Course
+    template_name = 'learning/hometest.html'
+
 class LearnView(ListView):
     model = Course
     template_name = 'learning/learn.html'

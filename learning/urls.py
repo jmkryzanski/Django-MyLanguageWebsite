@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import ViewGuideView, EditGuideView, IndividualGuideView, CreateGuideView, DeleteGuideView, HomeView, CourseView, LearnView, EditLessonView, DeleteLessonView, CreateLessonView, ViewLessonView
+from .views import HomeTestView, ViewGuideView, EditGuideView, IndividualGuideView, CreateGuideView, DeleteGuideView, HomeView, CourseView, LearnView, EditLessonView, DeleteLessonView, CreateLessonView, ViewLessonView
 from . import views
 
 urlpatterns = [
     path('', HomeView.as_view(), name="home"),
+    path('hometest/', HomeTestView.as_view(), name="hometest"),
     path('about/', views.AboutView, name="about"),
     path('learn/', LearnView.as_view(), name="learn"),
     path('learn/create/', CreateLessonView.as_view(), name="createlesson"),
