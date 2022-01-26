@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
+from userprofile.models import Profile
 
 def register_view(request):
     if request.method == 'POST':
@@ -16,6 +17,8 @@ def register_view(request):
             new_user = authenticate(username=form.cleaned_data['username'],
                                     password=form.cleaned_data['password1'],)
             login(request, new_user)
+            Profile.objects.create(user=new_user, username=new_user.username, bio='bio...')
+
             return redirect(reverse('home'))
     else:
         form = UserCreationForm()
