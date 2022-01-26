@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from pipes import Template
+from django.shortcuts import get_object_or_404, render
+from django.template import context
 from django.urls.base import reverse_lazy
 from .forms import LessonForm, GuideForm
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from learning.models import Course, Lesson, Guide
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
+from learning.models import Course, Lesson, QuestionAnswer, Guide
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -83,11 +85,17 @@ class DeleteLessonView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         return self.request.user.is_superuser
 
-class ViewLessonView(DetailView):
-    model = Lesson
-    template_name = 'learning/lesson.html'
-    slug_url_kwarg = 'myslug'
-    slug_field = 'slug'
+def ViewLessonView(request, lan, myslug):
+    #lesson = Lesson.objects.filter(course__title=lan, lessonTitle=myslug)
+    lesson = Lesson.objects.get(course__title=lan, lessonTitle=myslug)
+    questionanswer = QuestionAnswer.objects.filter(lesson__lessonTitle=myslug)
+    context = {
+        'lesson': lesson,
+        'questionanswer': questionanswer,
+        'lan': lan,
+        'myslug': myslug,
+    }
+    return render(request, 'learning/lesson.html', context)
 
 #@user_passes_test(lambda u: u.is_superuser)
 class CreateGuideView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -121,14 +129,6 @@ class DeleteGuideView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         return self.request.user.is_superuser
-
-'''
-class ViewGuideView(ListView):
-    model = Guide
-    template_name = 'learning/guide.html'
-    slug_url_kwarg = 'myslug'
-    slug_field = 'slug'
-'''
 
 def ViewGuideView(request, lan):
     course_lessons = Lesson.objects.filter(language=lan)

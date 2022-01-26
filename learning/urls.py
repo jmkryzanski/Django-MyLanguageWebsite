@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import WelcomeView, HomeView, ViewGuideView, EditGuideView, IndividualGuideView, CreateGuideView, DeleteGuideView, HomeView, CourseView, LearnView, EditLessonView, DeleteLessonView, CreateLessonView, ViewLessonView
+from .views import WelcomeView, HomeView, ViewGuideView, EditGuideView, IndividualGuideView, CreateGuideView, DeleteGuideView, HomeView, CourseView, LearnView, EditLessonView, DeleteLessonView, CreateLessonView
 from . import views
 
 urlpatterns = [
@@ -15,7 +15,7 @@ urlpatterns = [
     path('learn/<str:lan>/guide/<str:myslug>/', IndividualGuideView.as_view(), name="individualguide"),
     path('learn/<str:lan>/guide/<str:myslug>/edit', EditGuideView.as_view(), name="editguide"),
     path('learn/<str:lan>/guide/<str:myslug>/delete', DeleteGuideView.as_view(), name="deleteguide"),
-    path('learn/<str:lan>/<str:myslug>/', ViewLessonView.as_view(), name="lesson"),
+    path('learn/<str:lan>/<str:myslug>/', views.ViewLessonView, name="lesson"),
     path('learn/<str:lan>/<str:myslug>/edit', EditLessonView.as_view(), name="editlesson"),
     path('learn/<str:lan>/<str:myslug>/delete', DeleteLessonView.as_view(), name="deletelesson"),
 ]

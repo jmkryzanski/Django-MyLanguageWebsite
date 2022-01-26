@@ -30,6 +30,14 @@ class Lesson(models.Model):
     def get_absolute_url(self):
         return reverse('home')
 
+class QuestionAnswer(models.Model):
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    question = models.CharField(max_length=255)
+    answer = models.CharField(max_length=255)
+
+    def __str__(self):
+        return 'Lesson ' + self.lesson.lessonTitle + ' | Question ' + self.question + ' | Answer ' + '| ' + self.answer
+
 class Guide(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     language = models.CharField(max_length=255)

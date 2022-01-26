@@ -10,9 +10,12 @@ Lesson HTML<br>
 {{lesson.course}}
 {{lesson.lessonTitle}}
 
-{% autoescape off %}
-{{lesson.content}}
-{% endautoescape %}
+{% for qa in questionanswer %}
+<hr>
+{{qa.question}}
+{{qa.answer}}<hr>
+
+{% endfor %}
 
 
 {% endblock %}
