@@ -15,6 +15,10 @@ body{
     color: var(--primThemeColor);
 }
 
+/*li > a{
+    color: magenta;
+}*/
+
 .primary-theme-background{
     background-color: var(--primThemeColor);
 }
@@ -23,7 +27,12 @@ body{
     color: var(--secThemeColor);
 }
 
-.third-theme, .card-text{
+.card-title{
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.third-theme, .card-body{
     color: var(--thirdThemeColor);
 }
 
@@ -43,8 +52,6 @@ hr.welcome{
     margin-bottom: 25px;
 }
 
-
-
 h1, h2, h3, h4, h5, h6{
     margin-bottom: 20px;
 }
@@ -63,9 +70,10 @@ footer {
     color: aqua;
 }*/
 
-a {
+a{
     /*color: orange;*/
     text-decoration: none;
+    color: var(--primThemeColor);
 }
 
 /* remove underline and capitalize first letter for links */

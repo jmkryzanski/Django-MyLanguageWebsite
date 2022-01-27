@@ -21,10 +21,6 @@ class LessonForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Course'
             }),
-            'language': forms.Select(choices=choice_list,attrs={
-                'class': 'form-control',
-                'placeholder': 'Language'
-            }),
             'lessonTitle': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'Title'
@@ -53,10 +49,6 @@ class GuideForm(forms.ModelForm):
             #    'class': 'form-control',
             #    'placeholder': 'Language'
             #}),
-            'language': forms.Select(choices=choice_list,attrs={
-                'class': 'form-control',
-                'placeholder': 'Language'
-            }),
             'guideTitle': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Title'

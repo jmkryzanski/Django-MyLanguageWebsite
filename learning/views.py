@@ -7,6 +7,8 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView,
 from learning.models import Course, Lesson, QuestionAnswer, Guide
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+import random
+import json
 
 class WelcomeView(ListView):
     model = Course
@@ -24,12 +26,13 @@ class LearnView(ListView):
 
 def CourseView(request, lan):
     Lesson.objects.all().order_by('orderingID')
-    course_lessons = Lesson.objects.filter(language=lan)
+    #course_lessons = Lesson.objects.filter(language=lan)
+    course_lessons = Lesson.objects.filter(course__title=lan)
 
     #Guide.objects.order_by('orderingID')
 
     #course_guides = Guide.objects.filter(language=lan)
-    course_guides = Guide.objects.all().filter(language=lan).order_by('orderingID')
+    course_guides = Guide.objects.all().filter(course__title=lan).order_by('orderingID')
     thisCaseGuides = course_guides.filter(category="cases")
     thisPronounGuides = course_guides.filter(category="pronouns")
     #thisPronounGuides.all().order_by('orderingID')
@@ -131,9 +134,9 @@ class DeleteGuideView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.request.user.is_superuser
 
 def ViewGuideView(request, lan):
-    course_lessons = Lesson.objects.filter(language=lan)
+    course_lessons = Lesson.objects.filter(course__title=lan)
 
-    course_guides = Guide.objects.all().filter(language=lan).order_by('orderingID')
+    course_guides = Guide.objects.all().filter(course__title=lan).order_by('orderingID')
 
     #course_guides = Guide.objects.filter(language=lan)
     thisCaseGuides = course_guides.filter(category="cases")

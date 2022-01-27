@@ -1,6 +1,7 @@
 {% extends 'learning/base.html' %}
 {% block content %}
 
+<div class="third-theme">
 Username (not modifiable) {{user.profile.user}}<br>
 Userbane (modifiable) {{user.profile.username}}<br>
 Bio {{user.profile.bio}}<br>
@@ -9,6 +10,7 @@ Bio {{user.profile.bio}}<br>
 {{request.user.username}}}
 {{request.user.profile.bio}}
 
+</div>
 <a href="{% url 'editprofile' user.profile.slug %}">edit</a>
 
 {% endblock %}

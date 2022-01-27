@@ -1,14 +1,13 @@
 {% extends 'learning/base.html' %}
 
 {% block content %}
-
-<h1 class="secondary-theme">Delete Lesson</h1>
-<h1 class="secondary-theme">Delete: {{lesson.lessonTitle}}</h1>
+<div class="third-theme">
+<h1 class="secondary-theme">Delete Lesson - "{{lesson.lessonTitle}}</h1>
 <div class="form-group">
     <form method="POST">
         {% csrf_token %}
         <button>Delete</button>
     </form>
 </div>
-
+</div>
 {% endblock %}

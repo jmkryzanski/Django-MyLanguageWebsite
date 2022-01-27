@@ -1,9 +1,8 @@
 {% extends 'learning/base.html' %}
 
 {% block content %}
-
-<h1>Update post</h1>
-
+<div class="third-theme">
+<h1 class="secondary-theme">Update Post</h1>
 <div class="form-group">
     <form method="POST">
         {% csrf_token %}
@@ -11,5 +10,5 @@
         <button>Update</button>
     </form>
 </div>
-
+</div>
 {% endblock %}

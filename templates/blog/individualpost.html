@@ -6,11 +6,13 @@
     <a href="{% url 'deletepost' post.slug %}"><span><button class="btn btn-primary">Delete Post</button></span></a>
 {% endif %}
 
+<div class="third-theme">
 {{post.title}}
 {{post.author}}
 
 {% autoescape off %}
 {{post.body}}
 {% endautoescape %}
+</div>
 
 {% endblock %}

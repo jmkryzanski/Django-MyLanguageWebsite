@@ -1,21 +1,19 @@
 {% extends 'learning/base.html' %}
 {% block content %}
-Lesson HTML<br>
 
 {% if user.is_superuser %}
     <a href="{% url 'editlesson' lesson.course lesson.slug %}"><span><button class="btn btn-primary">Edit Lesson</button></span></a>
     <a href="{% url 'deletelesson' lesson.course lesson.slug %}"><span><button class="btn btn-primary">Delete Lesson</button></span></a>
 {% endif %}
 
-{{lesson.course}}
-{{lesson.lessonTitle}}
-
-{% for qa in questionanswer %}
-<hr>
-{{qa.question}}
-{{qa.answer}}<hr>
-
-{% endfor %}
-
+<div class="third-theme">
+    {{lesson.course}}
+    {{lesson.lessonTitle}}
+    {% for qa in questionanswer %}
+        <br>
+        Question: {{qa.question}}
+        Answer: {{qa.answer}}<br>
+    {% endfor %}
+</div>
 
 {% endblock %}

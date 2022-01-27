@@ -14,7 +14,6 @@ class Course(models.Model):
 
 class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    language = models.CharField(max_length=255)
     lessonTitle = models.CharField(max_length=255)
     content = models.TextField(default='content')
     orderingID = models.IntegerField()
@@ -40,7 +39,6 @@ class QuestionAnswer(models.Model):
 
 class Guide(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    language = models.CharField(max_length=255)
     guideTitle = models.CharField(max_length=255)
     content = models.TextField(default='content')
     orderingID = models.IntegerField()

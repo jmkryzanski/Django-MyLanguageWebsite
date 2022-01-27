@@ -18,11 +18,14 @@
         <a class="nav-item nav-link navbar-text" href="{% url 'home' %}"><!--<span><img class="navbar-img" src="{% static 'img/homeicon.jpg' %}"></span> -->Home</a>
         <a class="nav-item nav-link navbar-text" href="{% url 'learn' %}"><!--<span><img class="navbar-img" src="{% static 'img/brainicon.jpg' %}"></span> -->Learn</a>
         <a class="nav-item nav-link navbar-text" href="{% url 'post' %}"><!--<span><img class="navbar-img" src="{% static 'img/blogicon.jpg' %}"></span> -->Blog</a>
-        
-        <div class="toggle">
+        <a class="nav-item nav-link navbar-text" >
+          <div class="toggle">
           <input type="checkbox" class="checkbox" id="chk" />
-          <label class="label" for="chk">Turn On Dark Mode</label>
-       </div>
+          <label class="label" for="chk">Dark Mode</label>
+          </div>
+        </a>
+
+        
 
         {% if user.is_authenticated %}
         <li class="nav-item dropdown">
@@ -39,18 +42,14 @@
       </div>
     </div>
   </nav>
-  <hr>
-  
 <div class="container">
     {% block content %}
     {% endblock %}
 </div>
 
-<footer class="text-center mt-auto fourth-theme-background">
+<footer class="text-center mt-auto third-theme fourth-theme-background">
   <div class="container">
-    <section class="">
       <h1 class="secondary-theme m-4">website name</h1>
-    </section>
     <section class="mb-4">
       <p class="normal-text">
         Learn languages the fun way
@@ -63,10 +62,10 @@
 
           <ul class="list-unstyled mb-0">
             <li>
-              <a class="nounderline" href="{% url 'about' %}">About</a>
+              <a class="third-theme" href="{% url 'about' %}">About</a>
             </li>
             <li>
-              <a class="nounderline" href="{% url 'contact' %}">Contact</a>
+              <a class="third-theme" href="{% url 'contact' %}">Contact</a>
             </li>
           </ul>
         </div>
@@ -75,7 +74,7 @@
   </div>
   <div id="fotter-copyright" class="text-center">
     © 2022 Copyright:
-    <a class="text-white" href="https://website.com/">website.com</a>
+    <a class="third-theme" href="https://website.com/">website.com</a>
   </div>
 </footer>
 
@@ -143,7 +142,7 @@
         document.getElementById('chk').checked = true;
       }
     });
- </script>        
 
+ </script>        
 </body>
 </html>
