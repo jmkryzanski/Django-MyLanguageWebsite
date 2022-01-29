@@ -5,7 +5,7 @@
     <a href="{% url 'editlesson' lesson.course lesson.slug %}"><span><button class="btn btn-primary">Edit Lesson</button></span></a>
     <a href="{% url 'deletelesson' lesson.course lesson.slug %}"><span><button class="btn btn-primary">Delete Lesson</button></span></a>
 {% endif %}
-
+<!--
 <div class="third-theme">
     {{lesson.course}}
     {{lesson.lessonTitle}}
@@ -15,5 +15,141 @@
         Answer: {{qa.answer}}<br>
     {% endfor %}
 </div>
+-->
+<div class="col-12">
+{% autoescape off %}
+{{lesson.content}}
+{% endautoescape %}
+</div>
+
+<div class="col-12">
+<div class="card">
+    <div class="card-body text-center">
+        {% csrf_token %}
+    <form onsubmit="return false">
+        <div class="form-group">
+            <div class="card-title"><h3>Translate the sentence to English:</h3></div>
+            <div style="font-size: 30px;" id="question-label" class="card-body text-center"></div>            
+            <textarea id="answer-textarea" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <button style="margin: 10px;" class="btn-primary" onclick="myClick()" >submit</button><br>
+            <label id="result"></label>
+        </div>
+    </form>
+    </div>
+</div>
+</div>
+
+
+<!--
+{{ questions|json_script:"questions" }}
+{{ answers|json_script:"answers" }}
+
+<h1 id="plz">
+
+</h1>
+
+questions:
+{{questions}}
+<hr>answers
+{{answers}}
+
+<h1 id="myq">
+</h1>
+<h1 id="mya">
+</h1>
+
+plzworktest
+<h1 id="myqtest">
+</h1>
+<h1 id="myatest">
+</h1>
+-->
+
+<script>
+
+var questionsarray = {{ questions|safe }};
+var answersarray = {{ answers|safe }};
+var result = document.getElementById("result");
+var questionLabel = document.getElementById("question-label");
+var answerTextarea = document.getElementById("answer-textarea");
+var randomNumber = Math.floor(Math.random() * questionsarray.length);
+var rollQuestion = questionsarray.splice(randomNumber, 1);
+var rollAnswer = answersarray.splice(randomNumber, 1);
+var randomQuestion = rollQuestion[ 0 ];
+var randomAnswer = rollAnswer[ 0 ];
+questionLabel.innerHTML = randomQuestion;
+console.log(randomQuestion + ' - ' + randomAnswer);
+
+
+/*function randomQA(){
+    randomNumber = (Math.floor(Math.random()*questionsarray.length));
+    randomQuestion = questionsarray[randomNumber];
+    randomAnswer = answersarray[randomNumber];
+    questionLabel.innerHTML = randomQuestion;
+    $(answerTextarea).val('');
+}*/
+
+
+function checkIfQAMatch(q, a){
+    // remove spaces
+    testq = q.replace(/\s+/g, '');
+    testa = a.replace(/\s+/g, '');
+
+    // to lowercase
+    testq = testq.toLowerCase();
+    testa = testa.toLowerCase();
+    if (testq === testa) {
+        return true;
+    }
+    else {
+        return false;
+    }
+
+}
+
+function newRandomQA(){
+    randomNumber = Math.floor(Math.random() * questionsarray.length);
+    rollQuestion = questionsarray.splice(randomNumber, 1);
+    rollAnswer = answersarray.splice(randomNumber, 1);
+    randomQuestion = rollQuestion[ 0 ];
+    randomAnswer = rollAnswer[ 0 ];
+    console.log(randomQuestion + ' - ' + randomAnswer);
+    questionLabel.innerHTML = randomQuestion;
+    $(answerTextarea).val('');
+}
+
+function resetQA() {
+    questionsarray = {{ questions|safe }};
+    answersarray = {{ answers|safe }};
+}
+
+function myClick(){
+    if (checkIfQAMatch(answerTextarea.value, randomAnswer)) { //if (answerTextarea.value === randomAnswer) {
+        if (questionsarray.length === 0) {
+            resetQA();
+            newRandomQA();
+        }
+        else {
+            result.innerHTML = "";
+            newRandomQA();
+        }        
+    }
+    else{
+        result.innerHTML = "incorrect"
+    }
+};
+
+
+/*
+const questions = JSON.parse(document.getElementById("questions").textContent);
+document.getElementById("myq").innerHTML=questions;
+const answers = JSON.parse(document.getElementById('answers').textContent);
+document.getElementById("mya").innerHTML=answers;
+*/
+
+</script>
+
+
+
 
 {% endblock %}

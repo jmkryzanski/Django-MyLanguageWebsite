@@ -37,6 +37,15 @@ class QuestionAnswer(models.Model):
     def __str__(self):
         return 'Lesson ' + self.lesson.lessonTitle + ' | Question ' + self.question + ' | Answer ' + '| ' + self.answer
 
+    def model_method(self):
+        return self.question + ' - '  + self.answer
+
+    def strquestion(self):
+        return self.question
+    
+    def stranswer(self):
+        return self.answer
+
 class Guide(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     guideTitle = models.CharField(max_length=255)

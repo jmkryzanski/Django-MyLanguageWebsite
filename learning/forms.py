@@ -21,7 +21,7 @@ class LessonForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Course'
             }),
-            'lessonTitle': forms.Textarea(attrs={
+            'lessonTitle': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Title'
             }),

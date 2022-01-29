@@ -1,0 +1,61 @@
+{% extends 'learning/base.html' %}
+{% block content %}
+    
+{{ mydata|json_script:"mydata" }}
+{{ lesson.lesssonTitle|json_script:"lesson" }}
+{{ questionanswer.m|json_script:"questionanswer" }}
+
+{{lesson}}<br>
+{{questionanswer}}
+
+{% for qa in questionanswer %}
+<hr>
+{{qa.question}} - 
+{{qa.answer}}<hr>
+
+{% endfor %}
+
+
+questionanswer2list - {{questionanswer2list}}
+
+
+{{ questions.a|json_script:"questions" }}
+{% for q in questions %}
+<hr>
+The question is - {{q}}<hr>
+
+{% endfor %}
+{{q.question}}
+
+
+<h1 id="plz">
+
+</h1>
+
+Questions:
+<h1 id="plz2">
+</h1>
+
+Answers:
+<h1 id="plz3">
+</h1>
+
+{{myquestions|json_script:"myquestions"}}
+{{myanswers|json_script:"myanswers"}}
+
+
+<script>
+
+const value = JSON.parse(document.getElementById('mydata').textContent);
+document.getElementById("plz").innerHTML=value;
+
+const value2 = JSON.parse(document.getElementById('myquestions').textContent);
+document.getElementById("plz2").innerHTML=value2;
+
+const value3 = JSON.parse(document.getElementById('myanswers').textContent);
+document.getElementById("plz3").innerHTML=value3;
+
+</script>
+
+
+{% endblock %}

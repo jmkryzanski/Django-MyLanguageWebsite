@@ -7,12 +7,14 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView,
 from learning.models import Course, Lesson, QuestionAnswer, Guide
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-import random
-import json
+from django.contrib.auth.models import User
+from django.core import serializers
 
-class WelcomeView(ListView):
-    model = Course
-    template_name = 'learning/welcome.html'
+def WelcomeView(request):
+    if request.user.is_authenticated:
+        return render(request, 'learning/home.html')
+    else:
+        return render(request, 'learning/welcome.html')
 
 class HomeView(ListView):
     model = Course
@@ -25,10 +27,9 @@ class LearnView(ListView):
     slug_field = 'slug'
 
 def CourseView(request, lan):
-    Lesson.objects.all().order_by('orderingID')
+    Lesson.objects.all()
     #course_lessons = Lesson.objects.filter(language=lan)
-    course_lessons = Lesson.objects.filter(course__title=lan)
-
+    course_lessons = Lesson.objects.filter(course__title=lan).order_by('orderingID')
     #Guide.objects.order_by('orderingID')
 
     #course_guides = Guide.objects.filter(language=lan)
@@ -90,15 +91,66 @@ class DeleteLessonView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def ViewLessonView(request, lan, myslug):
     #lesson = Lesson.objects.filter(course__title=lan, lessonTitle=myslug)
-    lesson = Lesson.objects.get(course__title=lan, lessonTitle=myslug)
-    questionanswer = QuestionAnswer.objects.filter(lesson__lessonTitle=myslug)
+    #lesson = Lesson.objects.get(course__title=lan, lessonTitle=myslug)
+    lesson = Lesson.objects.get(course__title=lan, slug=myslug)
+    questionanswer = QuestionAnswer.objects.filter(lesson__slug=myslug)
+    questionslist = questionanswer.values_list('question')
+    answerslist = questionanswer.values_list('answer')
+    questions = []
+    answers = []
+    for q in questionanswer:
+        questions.append(q.strquestion())
+    for a in questionanswer:
+        answers.append(a.stranswer())
+
     context = {
         'lesson': lesson,
         'questionanswer': questionanswer,
         'lan': lan,
         'myslug': myslug,
+        'questions': questions,
+        'answers': answers,
     }
     return render(request, 'learning/lesson.html', context)
+
+
+
+
+
+
+def MyTestView(request):
+    #lesson = Lesson.objects.filter(course__title=lan, lessonTitle=myslug)
+    lesson = Lesson.objects.get(lessonTitle="lesson1")
+    questionanswer = QuestionAnswer.objects.filter(lesson__lessonTitle="lesson1")
+    myquestions = []
+    myanswers = []
+    for q in questionanswer:
+        myquestions.append(q.question)
+
+    for a in questionanswer:
+        myanswers.append(a.answer)
+        
+
+    questions = questionanswer.values_list('question')
+    questionanswer2 = QuestionAnswer.objects.filter(lesson__lessonTitle="lesson1")
+    questionanswer2list = serializers.serialize('json', questionanswer2)
+    #questionanswer3 = QuestionAnswer.objects.filter(lesson__lessonTitle="lesson1")
+    #questionanswer3list = json.dumps(questionanswer3)
+    context = {
+        'lesson': lesson,
+        'questionanswer': questionanswer,
+        'questionanswer2list': questionanswer2list,
+        'questions': questions,
+        'mydata': 'mydataww',
+        'myquestions': myquestions,
+        'myanswers': myanswers,
+    }
+    return render(request, 'learning/mytest.html', context)
+
+    
+
+
+
 
 #@user_passes_test(lambda u: u.is_superuser)
 class CreateGuideView(LoginRequiredMixin, UserPassesTestMixin, CreateView):

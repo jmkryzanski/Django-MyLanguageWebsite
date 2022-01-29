@@ -4,47 +4,26 @@
 
 <h1 class="secondary-theme text-center">Available Languages</h1>
 
-{% for course in object_list %}
-{% if course.title == "polish" %}
-<div class="card border-1 text-center small-margin">
-    <div class="card-body">
-        <h5 class="capitalize-first-letter card-title">{{course.title}}</h5>
-        <img class="img-fluid" src="{% static 'img/polishflag.jpg' %}">
-        <a class="capitalize-first-letter stretched-link" href="{{course.title}}"></a>
-    </div>
-</div>
-{% endif %}
+<div class="text-center">
+    <h3 class="card-title">Polish</h3>
+    <a class="capitalize-first-letter" href="polish"><img class="img-fluid small-margin" src="{% static 'img/polishflag.jpg' %}"></a>
+</div>  
 
-{% if course.title == "spanish" %}
-<div class="card border-1 text-center small-margin">
-    <div class="card-body">
-        <h5 class="capitalize-first-letter card-title">{{course.title}}</h5>
-        <img class="img-fluid" src="{% static 'img/spanishflag.jpg' %}">
-        <a class="capitalize-first-letter stretched-link" href="{{course.title}}"></a>
-    </div>
+<div class="text-center">
+    <h3 class="card-title">Spanish</h3>
+    <a class="capitalize-first-letter" href="spanish"><img class="img-fluid small-margin" src="{% static 'img/spanishflag.jpg' %}"></a>
 </div>
-{% endif %}
 
-{% if course.title == "russian" %}
-<div class="card border-1 text-center small-margin">
-    <div class="card-body">
-        <h5 class="capitalize-first-letter card-title">{{course.title}}</h5>
-        <img class="img-fluid" src="{% static 'img/russianflag.jpg' %}">
-        <a class="capitalize-first-letter stretched-link" href="{{course.title}}"></a>
-    </div>
-</div>
-{% endif %}
+<div class="text-center">
+    <h3 class="card-title">Russian</h3>
+    <a class="capitalize-first-letter" href="russian"><img class="img-fluid small-margin" src="{% static 'img/russianflag.jpg' %}"></a>
+</div> 
 
-{% if course.title == "italian" %}
-<div class="card border-1 text-center small-margin">
-    <div class="card-body">
-        <h5 class="capitalize-first-letter card-title">{{course.title}}</h5>
-        <img class="img-fluid" src="{% static 'img/italianflag.jpg' %}">
-        <a class="capitalize-first-letter stretched-link" href="{{course.title}}"></a>
-    </div>
-</div>
-{% endif %}
-{% endfor %}
+<div class="text-center">
+    <h3 class="card-title">Italian</h3>
+    <a class="capitalize-first-letter" href="italian"><img class="img-fluid small-margin" src="{% static 'img/italianflag.jpg' %}"></a>
+</div> 
+
 
 {% if user.is_superuser %}
     <a href="{% url 'createlesson' %}"><span><button class="btn btn-primary">Create Lesson</button></span></a>
