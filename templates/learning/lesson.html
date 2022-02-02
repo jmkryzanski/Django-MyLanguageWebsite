@@ -35,6 +35,8 @@
             <span id='clickableAwesomeFont'><i onclick="playAudio()" style="font-size: 40px;" class="fas fa-volume-up"></i></span>
             <textarea id="answer-textarea" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
             <button style="margin: 10px;" class="btn" id="btn-submit" onclick="submitAnswer()">Check</button><br>
+            <!--<button style="margin: 10px;" onclick="goBack()">Go back</button><br>
+            <button style="margin: 10px;" onclick="goForward()">Go forward</button><br>-->
             <label id="result"></label>
         </div>
     </form>
@@ -69,22 +71,34 @@ plzworktest
 -->
 
 <script>
-questionsarray = {{ questions|safe }};
+var questionsarray = {{ questions|safe }};
 var answersarray = {{ answers|safe }};
 var result = document.getElementById("result");
 var questionLabel = document.getElementById("question-label");
 var answerTextarea = document.getElementById("answer-textarea");
-//document.getElementById("answer-textarea").addEventListener("keypress", submitOnEnter);
 answerTextarea.addEventListener("keypress", submitOnEnter);
 var randomNumber = Math.floor(Math.random() * questionsarray.length);
-var rollQuestion = questionsarray.splice(randomNumber, 1);
-var rollAnswer = answersarray.splice(randomNumber, 1);
-var randomQuestion = rollQuestion[ 0 ];
-var randomAnswer = rollAnswer[ 0 ];
-questionLabel.innerHTML = randomQuestion;
-console.log(randomQuestion + ' - ' + randomAnswer);
 
-//audio variables
+var gameQuestions = [];
+var gameAnswers = [];
+var currentIndex = 0;
+var currentQuestion = '';
+var currentAanswer = '';
+
+for (var q = questionsarray, i = q.length; i--; ) {
+    var random = Math.floor(Math.random() * (i + 1));
+    var q1 = q.splice(random, 1)[0];
+    var a2 = answersarray.splice(random, 1)[0];
+    gameQuestions.push(q1);
+    gameAnswers.push(a2);
+}
+console.log('Both arrays:\n' + gameQuestions + '\n' + gameAnswers)
+currentQuestion = gameQuestions[currentIndex];
+currentAanswer = gameAnswers[currentIndex];
+console.log(currentIndex + ' - ' + currentQuestion + ' - ' + currentAanswer);
+
+questionLabel.innerHTML = currentQuestion;
+
 var audioMessage = new SpeechSynthesisUtterance();
 var voices = window.speechSynthesis.getVoices();
 audioMessage.voice = voices[10]; // Note: some voices don't support altering params
@@ -92,14 +106,8 @@ audioMessage.voiceURI = 'native';
 audioMessage.volume = 1; // 0 to 1
 audioMessage.rate = 0.8; // 0.1 to 10
 audioMessage.pitch = 0; //0 to 2
-audioMessage.text = randomQuestion;
+audioMessage.text = currentQuestion;
 audioMessage.lang = 'pl';
-
-/*audioMessage.onend = function(e) {
-console.log('Finished in ' + event.elapsedTime + ' seconds.');
-};
-speechSynthesis.speak(audioMessage);*/
-
 
 function checkIfQAMatch(q, a){
     // remove spaces
@@ -119,7 +127,169 @@ function checkIfQAMatch(q, a){
 }
 
 function newRandomQA(){
+    currentIndex++;
+    currentQuestion = gameQuestions[currentIndex];
+    currentAanswer = gameAnswers[currentIndex];
+    questionLabel.innerHTML = currentQuestion;
+    console.log(currentIndex + ' - ' + currentQuestion + ' - ' + currentAanswer);
+    $(answerTextarea).val('');
+}
+
+function resetQA() {
+    //console.log('finished');
+}
+
+function playAudio(){
+    audioMessage.text = currentQuestion;
+    speechSynthesis.speak(audioMessage);
+}
+
+function wrongAnswer(){
+    console.log('incorrect');
+    gameQuestions.push(gameQuestions.splice(currentIndex, 1)[0]);
+    gameAnswers.push(gameAnswers.splice(currentIndex, 1)[0]);
+    currentQuestion = gameQuestions[currentIndex];
+    currentAanswer = gameAnswers[currentIndex];
+    console.log(currentIndex + ' - ' + gameQuestions + ' - ' + gameAnswers);
+    questionLabel.innerHTML = currentQuestion;
+    console.log(currentIndex + ' - ' + currentQuestion + ' - ' + currentAanswer);
+    $(answerTextarea).val('');
+}
+
+function playAudio(){
+    audioMessage.text = currentQuestion;
+    speechSynthesis.speak(audioMessage);
+}
+
+function submitAnswer(){
+    if (checkIfQAMatch(answerTextarea.value, currentAanswer)) { //if (answerTextarea.value === randomAnswer) {
+        /*if (questionsarray.length === 0) {
+            resetQA();
+            newRandomQA();
+        }
+        else {
+            result.innerHTML = "";
+            newRandomQA();
+        } */
+        if (currentIndex >= gameQuestions.length-1) {
+            //resetQA();
+            console.log('finished');
+            //newRandomQA();
+        }
+        else {
+            newRandomQA();
+        }
+        
+       // newRandomQA();       
+    }
+    else{
+        wrongAnswer();
+    }
+};
+
+function submitOnEnter(event){
+    if(event.which === 13){
+        event.target.form.dispatchEvent(new Event("submit", {cancelable: true}));
+        event.preventDefault(); // Prevents the addition of a new line in the text field (not needed in a lot of cases)
+        submitAnswer();
+    }
+}
+
+</script>
+<script>
+// previous working version:
+/*
+questionsarray = {{ questions|safe }};
+var answersarray = {{ answers|safe }};
+var result = document.getElementById("result");
+var questionLabel = document.getElementById("question-label");
+var answerTextarea = document.getElementById("answer-textarea");
+//document.getElementById("answer-textarea").addEventListener("keypress", submitOnEnter);
+answerTextarea.addEventListener("keypress", submitOnEnter);
+var randomNumber = Math.floor(Math.random() * questionsarray.length);
+
+var rollQuestion = questionsarray.splice(randomNumber, 1);
+var rollAnswer = answersarray.splice(randomNumber, 1);
+var randomQuestion = rollQuestion[ 0 ];
+var randomAnswer = rollAnswer[ 0 ];
+questionLabel.innerHTML = randomQuestion;
+console.log(randomQuestion + ' - ' + randomAnswer);
+
+//audio variables
+var audioMessage = new SpeechSynthesisUtterance();
+var voices = window.speechSynthesis.getVoices();
+audioMessage.voice = voices[10]; // Note: some voices don't support altering params
+audioMessage.voiceURI = 'native';
+audioMessage.volume = 1; // 0 to 1
+audioMessage.rate = 0.8; // 0.1 to 10
+audioMessage.pitch = 0; //0 to 2
+audioMessage.text = randomQuestion;
+audioMessage.lang = 'pl';
+
+
+var testArray = [1, 2, 3, 4];
+
+function shuffle(o) {
+    for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+};
+
+var testrandom = shuffle(testArray);
+console.log(testrandom);
+
+/*audioMessage.onend = function(e) {
+console.log('Finished in ' + event.elapsedTime + ' seconds.');
+};
+speechSynthesis.speak(audioMessage);
+
+
+function checkIfQAMatch(q, a){
+    // remove spaces
+    testq = q.replace(/\s+/g, '');
+    testa = a.replace(/\s+/g, '');
+
+    // to lowercase
+    testq = testq.toLowerCase();
+    testa = testa.toLowerCase();
+    if (testq === testa) {
+        return true;
+    }
+    else {
+        return false;
+    }
+
+}
+
+/* go back
+var questionIndex = 0;
+var listRandomQ = [];
+var listRandomA = [];
+listRandomQ.push(randomQuestion);
+listRandomA.push(randomAnswer);
+console.log(listRandomQ + ' - ' + listRandomA);
+var previousAnswer;
+var previousQuestion;
+function goBack(){
+    questionIndex--;
+    listRandomQ.push(randomQuestion);
+    listRandomA.push(randomAnswer);
+    randomQuestion = listRandomQ[questionIndex];
+    randomAnswer = listRandomA[questionIndex];
+    console.log(randomQuestion + ' - ' + randomAnswer);
+    questionLabel.innerHTML = randomQuestion;
+    $(answerTextarea).val('');
+
+    console.log("back");
+}
+
+
+function goForward(){
+
+}
+
+function newRandomQA(){
     randomNumber = Math.floor(Math.random() * questionsarray.length);
+
     rollQuestion = questionsarray.splice(randomNumber, 1);
     rollAnswer = answersarray.splice(randomNumber, 1);
     randomQuestion = rollQuestion[ 0 ];
@@ -127,6 +297,10 @@ function newRandomQA(){
     console.log(randomQuestion + ' - ' + randomAnswer);
     questionLabel.innerHTML = randomQuestion;
     $(answerTextarea).val('');
+    /* go back
+    questionIndex++;
+    listRandomQ.push(randomQuestion);
+    listRandomA.push(randomAnswer);
 }
 
 function resetQA() {
@@ -163,6 +337,6 @@ function submitOnEnter(event){
         submitAnswer();
     }
 }
-
+*/
 </script>
 {% endblock %}

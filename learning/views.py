@@ -95,8 +95,8 @@ def ViewLessonView(request, lan, myslug):
     #lesson = Lesson.objects.get(course__title=lan, lessonTitle=myslug)
     lesson = Lesson.objects.get(course__title=lan, slug=myslug)
     questionanswer = QuestionAnswer.objects.filter(lesson__slug=myslug)
-    questionslist = questionanswer.values_list('question')
-    answerslist = questionanswer.values_list('answer')
+    #questionslist = questionanswer.values_list('question')
+    #answerslist = questionanswer.values_list('answer')
     questions = []
     answers = []
     for q in questionanswer:

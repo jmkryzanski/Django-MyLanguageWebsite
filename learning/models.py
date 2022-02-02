@@ -33,6 +33,7 @@ class QuestionAnswer(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     question = models.CharField(max_length=255)
     answer = models.CharField(max_length=255)
+    level = models.IntegerField()
 
     def __str__(self):
         return 'Lesson ' + self.lesson.lessonTitle + ' | Question ' + self.question + ' | Answer ' + '| ' + self.answer
