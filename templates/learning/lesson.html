@@ -16,14 +16,26 @@
     {% endfor %}
 </div>
 -->
-<div class="col-12">
+
+<style>
+    h1, h2, h3{
+        color: #f8a300;
+    }
+
+    /*a{
+        text-decoration: none;
+        color: #f8a300;
+    }*/
+
+</style>
+<div class="col-12 third-theme">
 {% autoescape off %}
 {{lesson.content}}
 {% endautoescape %}
 </div>
 
 <div class="col-12">
-<div class="card">
+<div class="card" id="qa-card">
     <div class="card-body text-center">
         {% csrf_token %}
     <form onsubmit="return false">
@@ -35,6 +47,7 @@
             <span id='clickableAwesomeFont'><i onclick="playAudio()" style="font-size: 40px;" class="fas fa-volume-up"></i></span>
             <textarea id="answer-textarea" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
             <button style="margin: 10px;" class="btn" id="btn-submit" onclick="submitAnswer()">Check</button><br>
+            <p id="result"></p>
             <!--<button style="margin: 10px;" onclick="goBack()">Go back</button><br>
             <button style="margin: 10px;" onclick="goForward()">Go forward</button><br>-->
             <label id="result"></label>
@@ -42,6 +55,12 @@
     </form>
     </div>
 </div>
+
+<div class="card text-center" id="showend-card">
+    <h1>Great job! You did it</h1>
+    <a class="secondary-theme" href="{% url 'course' lan %}"><p class="secondary-theme">Return back to {{lesson.course}} lessons</p></a>
+</div>
+
 </div>
 
 
@@ -73,11 +92,17 @@ plzworktest
 <script>
 var questionsarray = {{ questions|safe }};
 var answersarray = {{ answers|safe }};
+var btnSubmit = document.getElementById("btn-submit");
 var result = document.getElementById("result");
 var questionLabel = document.getElementById("question-label");
 var answerTextarea = document.getElementById("answer-textarea");
 answerTextarea.addEventListener("keypress", submitOnEnter);
+var qaCard = document.getElementById("qa-card");
+var showEndCard = document.getElementById("showend-card");
+showEndCard.style.display = "none";
+
 var randomNumber = Math.floor(Math.random() * questionsarray.length);
+let idle = false;
 
 var gameQuestions = [];
 var gameAnswers = [];
@@ -144,8 +169,25 @@ function playAudio(){
     speechSynthesis.speak(audioMessage);
 }
 
+function correctAnswer(){
+    idle = true;
+    result.innerHTML = "correct";
+    $(result).css('color', 'green');
+    btnSubmit.innerHTML = "Continue";
+    answerTextarea.disabled = true;
+    btnSubmit.focus();
+}
+
+function wrongAnswerFirst() {
+    idle = true;
+    result.innerHTML = "incorrect, the correct translation is" + currentAanswer;
+    $(result).css('color', 'red');
+    btnSubmit.innerHTML = "Continue";
+    answerTextarea.disabled = true;
+    btnSubmit.focus();
+}
+
 function wrongAnswer(){
-    console.log('incorrect');
     gameQuestions.push(gameQuestions.splice(currentIndex, 1)[0]);
     gameAnswers.push(gameAnswers.splice(currentIndex, 1)[0]);
     currentQuestion = gameQuestions[currentIndex];
@@ -161,29 +203,52 @@ function playAudio(){
     speechSynthesis.speak(audioMessage);
 }
 
-function submitAnswer(){
-    if (checkIfQAMatch(answerTextarea.value, currentAanswer)) { //if (answerTextarea.value === randomAnswer) {
-        /*if (questionsarray.length === 0) {
-            resetQA();
-            newRandomQA();
+function showEndScreen(){
+    qaCard.style.display = "none";
+    showEndCard.style.display = "block";
+}
+
+function submitAnswer(){ 
+    if (idle == false) {
+        if (checkIfQAMatch(answerTextarea.value, currentAanswer)) {
+            if (currentIndex >= gameQuestions.length-1) {
+                console.log('finished');
+                result.innerHTML = "finished";
+                $(result).css('color', 'aqua');
+                showEndScreen();
+            }
+            else {
+                correctAnswer();
+            }   
         }
-        else {
-            result.innerHTML = "";
-            newRandomQA();
-        } */
-        if (currentIndex >= gameQuestions.length-1) {
-            //resetQA();
-            console.log('finished');
-            //newRandomQA();
+        else{
+            wrongAnswerFirst();
         }
-        else {
-            newRandomQA();
-        }
-        
-       // newRandomQA();       
     }
-    else{
-        wrongAnswer();
+    else {
+        if (checkIfQAMatch(answerTextarea.value, currentAanswer)) {
+            if (currentIndex >= gameQuestions.length-1) {
+                console.log('finished');
+                result.innerHTML = "finished";
+                $(result).css('color', 'aqua');
+            }
+            else {
+                idle = false;
+                result.innerHTML = "";
+                btnSubmit.innerHTML = "Check";
+                newRandomQA();
+                answerTextarea.disabled = false;
+                answerTextarea.focus();
+            }  
+    }
+        else{
+            idle = false;
+            result.innerHTML = "";
+            btnSubmit.innerHTML = "Check";
+            wrongAnswer();
+            answerTextarea.disabled = false;
+            answerTextarea.focus();
+        }
     }
 };
 

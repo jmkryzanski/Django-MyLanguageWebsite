@@ -11,6 +11,10 @@ body{
     background-color: white;
 }
 
+.far:hover{
+    color: var(--secThemeColor);
+}
+
 .primary-theme{
     color: var(--primThemeColor);
 }

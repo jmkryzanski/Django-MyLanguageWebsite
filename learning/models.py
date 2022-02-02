@@ -24,7 +24,7 @@ class Lesson(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return 'Course- ' + self.course.title + ' |  Lesson Title- ' + self.lessonTitle
+        return self.course.title + ' | ' + self.lessonTitle
 
     def get_absolute_url(self):
         return reverse('home')

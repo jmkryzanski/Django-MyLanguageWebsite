@@ -90,11 +90,11 @@ class DeleteLessonView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         return self.request.user.is_superuser
 
-def ViewLessonView(request, lan, myslug):
+def ViewLessonView(request, lan, myslug, level):
     #lesson = Lesson.objects.filter(course__title=lan, lessonTitle=myslug)
     #lesson = Lesson.objects.get(course__title=lan, lessonTitle=myslug)
     lesson = Lesson.objects.get(course__title=lan, slug=myslug)
-    questionanswer = QuestionAnswer.objects.filter(lesson__slug=myslug)
+    questionanswer = QuestionAnswer.objects.filter(lesson__slug=myslug, level=level)
     #questionslist = questionanswer.values_list('question')
     #answerslist = questionanswer.values_list('answer')
     questions = []
@@ -113,45 +113,6 @@ def ViewLessonView(request, lan, myslug):
         'answers': answers,
     }
     return render(request, 'learning/lesson.html', context)
-
-
-
-
-
-
-def MyTestView(request):
-    #lesson = Lesson.objects.filter(course__title=lan, lessonTitle=myslug)
-    lesson = Lesson.objects.get(lessonTitle="lesson1")
-    questionanswer = QuestionAnswer.objects.filter(lesson__lessonTitle="lesson1")
-    myquestions = []
-    myanswers = []
-    for q in questionanswer:
-        myquestions.append(q.question)
-
-    for a in questionanswer:
-        myanswers.append(a.answer)
-        
-
-    questions = questionanswer.values_list('question')
-    questionanswer2 = QuestionAnswer.objects.filter(lesson__lessonTitle="lesson1")
-    questionanswer2list = serializers.serialize('json', questionanswer2)
-    #questionanswer3 = QuestionAnswer.objects.filter(lesson__lessonTitle="lesson1")
-    #questionanswer3list = json.dumps(questionanswer3)
-    context = {
-        'lesson': lesson,
-        'questionanswer': questionanswer,
-        'questionanswer2list': questionanswer2list,
-        'questions': questions,
-        'mydata': 'mydataww',
-        'myquestions': myquestions,
-        'myanswers': myanswers,
-    }
-    return render(request, 'learning/mytest.html', context)
-
-    
-
-
-
 
 #@user_passes_test(lambda u: u.is_superuser)
 class CreateGuideView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
