@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.urls import path
 from .views import HomeView, ViewGuideView, EditGuideView, IndividualGuideView, CreateGuideView, DeleteGuideView, HomeView, CourseView, LearnView, EditLessonView, DeleteLessonView, CreateLessonView
 from . import views

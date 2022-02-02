@@ -117,10 +117,23 @@ a{
     width: 75px;;
 }
 
+
+#clickableAwesomeFont {
+    cursor: pointer
+}
+
 .btn{
     background-color: white;
     color: orange;
     border: 2px solid white;
+}
+
+#btn-submit{
+    background-color: var(--secThemeColor);
+    color: white;
+    border: 2px solid white;
+    border-radius: 10px;
+    font-size: 30px;
 }
 
 hr{
