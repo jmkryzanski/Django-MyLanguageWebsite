@@ -5,21 +5,36 @@ from django.urls.base import reverse_lazy
 from .forms import LessonForm, GuideForm
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from learning.models import Course, Lesson, QuestionAnswer, Guide
+from userprofile.models import Profile
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.core import serializers
 from gtts import gTTS
+from django.http import HttpResponse
 
 def WelcomeView(request):
     if request.user.is_authenticated:
-        return render(request, 'learning/home.html')
+        #return render(request, 'learning/home.html')
+        return HomeView(request)
     else:
         return render(request, 'learning/welcome.html')
 
-class HomeView(ListView):
+'''class HomeView(ListView):
     model = Course
     template_name = 'learning/home.html'
+'''
+
+def HomeView(request):
+    currentProfile = Profile.objects.get(user=request.user)
+
+    #courseToAdd = currentCourse
+    #currentProfile.course.add(courseToAdd)
+
+    context = {
+        'currentProfile': currentProfile,
+    }
+    return render(request, 'learning/home.html', context)
 
 class LearnView(ListView):
     model = Course
@@ -183,3 +198,21 @@ def AboutView(request):
 
 def ContactView(request):
     return render(request, 'learning/test.html')
+
+def addLanToProfile(request, lan):    
+    currentCourse = Course.objects.get(title=lan)
+    mycourses = currentCourse.profile_set.all()
+    currentProfile = Profile.objects.get(user=request.user)
+
+    courseToAdd = currentCourse
+    currentProfile.course.add(courseToAdd)
+
+    context = {
+        'lan': lan,
+        'mycourses': mycourses,
+        'currentProfile': currentProfile,
+    }
+    #return render(request, 'learning/home.html', context)
+    return HomeView(request)
+
+

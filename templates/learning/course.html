@@ -5,9 +5,6 @@
     <a href="{% url 'createlesson' %}"><span><button class="btn btn-primary">Create Lesson</button></span></a>
 {% endif %}
 
-<style>
-    
-</style>
 
 <div class="row text-center">
     <div class="col-12 col-md-8">
@@ -26,6 +23,7 @@
                 <a href="{% url 'lesson' lan lesson.slug 2 %}">Level 2</a>
             </div>
         </div>-->
+        <a href="{% url 'addLanToProfile' lan %}">Add course to home page</a>
         <div>
             <i style="font-size: 50px;"class="far fa-comments third-theme"></i><br>
             <h5 class="secondary-theme">{{lesson.lessonTitle}}</h5>
