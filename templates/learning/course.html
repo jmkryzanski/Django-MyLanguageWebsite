@@ -23,6 +23,10 @@
                 <a href="{% url 'lesson' lan lesson.slug 2 %}">Level 2</a>
             </div>
         </div>-->
+
+        <button id="ajaxtest">plzwork</button>
+
+
         <a href="{% url 'addLanToProfile' lan %}">Add course to home page</a>
         <div>
             <i style="font-size: 50px;"class="far fa-comments third-theme"></i><br>
@@ -120,7 +124,32 @@
                     <a class="third-theme" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
             {% endfor %}
         </div>
-
     </div>
 </div>
+
+
+{% block javascript %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+//    $(document).ready(function () {
+        $('#ajaxtest').click(function () {
+            $.ajax({
+                data: $(this).serialize(),
+                type: $(this).attr('method'),
+                url: "{% url 'addLanToProfile' lan %}",
+                success: function (response) {
+                    alert("worked");
+                },
+                error: function (response) {
+                    console.log("didnt work")
+                }
+            });
+            return false;
+        });
+//    })
+</script>
+    {% endblock %}
+
+
+
 {% endblock %}

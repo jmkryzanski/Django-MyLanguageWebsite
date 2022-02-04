@@ -20,6 +20,6 @@ urlpatterns = [
     path('learn/<str:lan>/<str:myslug>/<int:level>/', views.ViewLessonView, name="lesson"),
     path('learn/<str:lan>/<str:myslug>/edit', EditLessonView.as_view(), name="editlesson"),
     path('learn/<str:lan>/<str:myslug>/delete', DeleteLessonView.as_view(), name="deletelesson"),
-    path('test/<str:lan>/', views.addLanToProfile, name="addLanToProfile"),
+    path('addLanToProfile/<str:lan>/', views.addLanToProfile, name="addLanToProfile"),
     #path('test/', views.test, name="test"),
 ]

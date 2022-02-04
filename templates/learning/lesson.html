@@ -117,6 +117,7 @@ for (var q = questionsarray, i = q.length; i--; ) {
     gameQuestions.push(q1);
     gameAnswers.push(a2);
 }
+
 console.log('Both arrays:\n' + gameQuestions + '\n' + gameAnswers)
 currentQuestion = gameQuestions[currentIndex];
 currentAanswer = gameAnswers[currentIndex];
@@ -134,6 +135,9 @@ audioMessage.pitch = 0; //0 to 2
 audioMessage.text = currentQuestion;
 audioMessage.lang = 'pl';
 
+
+// add function to remove symbols in testa and testa, such as number or $
+// also accept answer if user input is within 2 characters of correct answer
 function checkIfQAMatch(q, a){
     // remove spaces
     testq = q.replace(/\s+/g, '');

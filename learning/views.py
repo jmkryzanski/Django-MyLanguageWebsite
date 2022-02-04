@@ -1,5 +1,5 @@
 from pipes import Template
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template import context
 from django.urls.base import reverse_lazy
 from .forms import LessonForm, GuideForm
@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.core import serializers
 from gtts import gTTS
 from django.http import HttpResponse
+from django.http import JsonResponse
 
 def WelcomeView(request):
     if request.user.is_authenticated:
@@ -200,19 +201,23 @@ def ContactView(request):
     return render(request, 'learning/test.html')
 
 def addLanToProfile(request, lan):    
-    currentCourse = Course.objects.get(title=lan)
-    mycourses = currentCourse.profile_set.all()
-    currentProfile = Profile.objects.get(user=request.user)
+    if is_ajax(request):
+        currentCourse = Course.objects.get(title=lan)
+        mycourses = currentCourse.profile_set.all()
+        currentProfile = Profile.objects.get(user=request.user)
 
-    courseToAdd = currentCourse
-    currentProfile.course.add(courseToAdd)
+        courseToAdd = currentCourse
+        currentProfile.course.add(courseToAdd)
 
-    context = {
-        'lan': lan,
-        'mycourses': mycourses,
-        'currentProfile': currentProfile,
-    }
-    #return render(request, 'learning/home.html', context)
-    return HomeView(request)
+        context = {
+            'lan': lan,
+            'mycourses': mycourses,
+            'currentProfile': currentProfile,
+        }
+        #return render(request, 'learning/home.html', context)
+        return HomeView(request)
+    else:
+        return redirect('home')
 
-
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
