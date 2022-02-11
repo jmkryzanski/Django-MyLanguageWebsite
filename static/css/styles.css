@@ -239,6 +239,16 @@ body.dark {
     background-color: white;
 }
 
+.third-theme-border{
+    border: 2px solid black;
+    background-color: transparent;
+}
+
+.dark-third-theme-border{
+    border: 2px solid white;
+    background-color: transparent;
+}
+
 .dark-fourth-theme-background{
     background-color: #1a1a1a;
 }

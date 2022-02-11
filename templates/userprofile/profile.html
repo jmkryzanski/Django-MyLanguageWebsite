@@ -10,6 +10,14 @@ Bio {{user.profile.bio}}<br>
 {{request.user.username}}}
 {{request.user.profile.bio}}
 
+<br><br>
+Current languages for this profile:
+{% for p in request.user.profile.course.all %}
+
+{{p}}, 
+
+{% endfor %}
+
 </div>
 <a href="{% url 'editprofile' user.profile.slug %}">edit</a>
 

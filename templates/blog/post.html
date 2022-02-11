@@ -9,26 +9,18 @@
 <div class="row text-center">
     <div class="col-12 col-md-8">
         {% for post in object_list %}
-        <div class="card rounded shadow border-0 small-margin">
-            <div class="card-body">
-                <h5 class="card-title">{{post.title}}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">By {{post.author}}</h6>
-                <p class="card-text">{{post.caption|slice:"255"}}</p>
-                <a href="{% url 'individualpost' post.slug %}" class="stretched-link"></a>
-            </div>
-        </div>
-    {% endfor %}
+            <a href="{% url 'individualpost' post.slug %}"><h1 class="secondary-theme">{{post.title}}</h1></a>
+            <h6 class="mb-2 text-muted">By {{post.author}}</h6>
+            <p class="third-theme">{{post.caption|slice:"255"}}</p>
+            <a href="{% url 'individualpost' post.slug %}"></a>
+            <hr class="third-theme center1">
+        {% endfor %}
     </div>
-    <div class="col-12 col-md-4">
-        <div class="card rounded">
-            <div class="card-body">
-                <h5 class="card-title">Blog Archive</h5>
-                {% for post in object_list %}
-                <p class="card-text"></p>
-                <a class="course-title" href="{% url 'individualpost' post.slug %}">{{post.title}} | {{post.post_date}}</a>
-                {% endfor %}
-            </div>
-        </div>
+    <div class="col-12 col-md-4 border border-white">
+        <h1 class="secondary-theme">Blog Archive</h1>
+        {% for post in object_list %}
+        <a class="third-theme course-title" href="{% url 'individualpost' post.slug %}">{{post.title}} | {{post.post_date}}</a><br>
+        {% endfor %}
     </div>
 </div>
 

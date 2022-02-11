@@ -13,3 +13,188 @@ Current user courses:
 {{p}},
 
 {% endfor %}
+
+
+
+bertt
+<br>
+{{bet}}
+
+
+<head>
+    <title>Qunck</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
+    <script src="jquery.ui.touch-punch.min.js"></script>
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <style>
+        @import "compass/css3";
+
+/*Drag-able formating section*/
+ul { 
+   list-style-type: none;
+   height: auto; 
+   width: 49%;
+   overflow: auto;
+   margin: auto;
+   position: static;
+ /*  background: grey;
+   outline: green solid thick;*/
+   top: 0; left: 0; bottom: 0; right: 0;
+}
+li {
+   margin: 3px 3px 3px 0;
+   padding: 1px; 
+   float: left; 
+   width: 120px;
+   height: auto;
+   text-align: center;
+   font-size: 20px;
+}
+/*Simple formating section*/
+body{
+  text-align: center;
+  display: inline;
+  background-color: #70A05E;
+}
+punc{
+  font-size: 20px;
+  color: white;
+  position: static;
+}
+
+philoName{
+text-align: right;
+font-size: 25px;
+color: white;
+}
+
+container{
+  display: block;
+  width: 50%;
+  margin: auto;
+  text-align: left;
+  align: left;
+}
+
+buttonTable{
+  display: table;
+  width: auto;
+  margin: auto;
+  align:left;
+}
+
+inline{
+  display: inline-block;
+  margin-right: 75%;
+}
+
+inlineBottom{
+  display: inline-block;
+  margin-right: 40%;
+}
+/*Button Formating Section*/
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+$red:   #E0645C;
+$dark:  #444444;
+$light: #999999;
+$blue:  #2DB6CF;
+$green: #46b98a;
+$white: #FFFFFF;
+
+$arial: Arial,sans-serif;
+$font-face: 'Open Sans', sans-serif;
+
+h1 {
+  text-align: center;
+  text-transform: uppercase;
+  font-family: $font-face;
+  font-size: 27px;
+  color: $white;
+  font-weight: 700;
+  span {
+    font-weight: 400;
+  }
+}
+button {
+  border: 0 none;
+  border-radius: 2px 2px 2px 2px;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Arial,sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 20px;
+  margin-bottom: 0;
+  margin-top: 10px;
+  padding: 7px 10px;
+  text-transform: none;
+  transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  -webkit-transition: all 0.3s ease 0s;
+  width: 16.795%;
+  text-align: center;
+}
+
+    </style>
+
+<button style="margin: 10px;" id="btn-bet" onclick="bet()">Check</button><br>
+
+
+  </head>
+  <ul id="sortable">
+  </ul>
+
+  <script>
+
+function bet() {
+    console.log(arraylist);
+}
+
+//var sentence = ["the", "unexamined", "life", "is", "not", "worth", "living"];
+var sentence = ["hello", "how", "are", "you"];
+var currentSentence = [];
+var correctSentence = ["hello", "how", "are", "you"];
+
+$(function() {
+    $( "#sortable" ).sortable({
+      revert: true
+    });
+    /*$( "#draggable" ).draggable({
+      connectToSortable: "#sortable",
+      helper: "clone",
+      revert: "invalid"
+    });*/
+    $( "ul, li" ).disableSelection();
+  });
+
+ function checkSentence(){
+   if(sentence == currentSentence)
+   //if(sentence == correctSentence)
+     alert("You've done it!");
+ }
+/*codeBreak*/
+var arraylist = [];
+var word;
+var sentences = "";
+function getRandomWord(){
+  var int = Math.floor(Math.random()*sentence.length);
+   for(var i =0; i<sentence.length; i++){
+    while(arraylist.indexOf(int)!=-1)
+        int = Math.floor(Math.random()*sentence.length); 
+    arraylist.push(int);
+    word = sentence[int];
+    sentences += '<li class="ui-state-default">'+word+'</li>';
+   }
+   document.getElementById('sortable').innerHTML = sentences;
+}
+
+for(var i =0; i<sentence.length; i++){
+  var word = getRandomWord();
+  document.getElementById('here'+i).innerHTML = '<li class="ui-state-default">'+word+'</li>';
+}
+  </script>
+  

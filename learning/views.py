@@ -13,6 +13,7 @@ from django.core import serializers
 from gtts import gTTS
 from django.http import HttpResponse
 from django.http import JsonResponse
+import difflib
 
 def WelcomeView(request):
     if request.user.is_authenticated:
@@ -221,3 +222,24 @@ def addLanToProfile(request, lan):
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
+def mytest(request):
+    bet = difflib.SequenceMatcher(None, "iliketoplaysoccerwithmyfriends", "idontliketoplaysoccerwithmyfriends").ratio()
+    context = {
+        'bet': bet,
+    }
+    return render(request, 'learning/mytest.html', context)
+
+def mytest2(request):
+    bet = difflib.SequenceMatcher(None, "iliketoplaysoccerwithmyfriends", "idontliketoplaysoccerwithmyfriends").ratio()
+    context = {
+        'bet': bet,
+    }
+    return render(request, 'learning/mytest2.html', context)
+
+def mytest3(request):
+    bet = difflib.SequenceMatcher(None, "iliketoplaysoccerwithmyfriends", "idontliketoplaysoccerwithmyfriends").ratio()
+    context = {
+        'bet': bet,
+    }
+    return render(request, 'learning/mytest3.html', context)

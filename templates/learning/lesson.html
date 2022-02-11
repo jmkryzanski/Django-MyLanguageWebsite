@@ -61,6 +61,37 @@
     <a class="secondary-theme" href="{% url 'course' lan %}"><p class="secondary-theme">Return back to {{lesson.course}} lessons</p></a>
 </div>
 
+<!--                 -->
+<style>
+    #container{
+  width: 300px;
+  display: block;
+  margin: auto;
+}
+
+p {
+  float: right;
+}
+
+#list{
+  list-style: none;
+}
+
+#list li{
+  margin: 10px;
+  cursor: pointer;
+}
+</style>
+
+<div id='container'>
+    <h1 id='isRight' class="third-theme"></h1>
+    <ul id='list' class="third-theme">
+    </ul>
+  </div>
+<script>
+
+</script>
+<!--                -->
 </div>
 
 
@@ -108,7 +139,7 @@ var gameQuestions = [];
 var gameAnswers = [];
 var currentIndex = 0;
 var currentQuestion = '';
-var currentAanswer = '';
+var currentAnswer = '';
 
 for (var q = questionsarray, i = q.length; i--; ) {
     var random = Math.floor(Math.random() * (i + 1));
@@ -120,8 +151,8 @@ for (var q = questionsarray, i = q.length; i--; ) {
 
 console.log('Both arrays:\n' + gameQuestions + '\n' + gameAnswers)
 currentQuestion = gameQuestions[currentIndex];
-currentAanswer = gameAnswers[currentIndex];
-console.log(currentIndex + ' - ' + currentQuestion + ' - ' + currentAanswer);
+currentAnswer = gameAnswers[currentIndex];
+console.log(currentIndex + ' - ' + currentQuestion + ' - ' + currentAnswer);
 
 questionLabel.innerHTML = currentQuestion;
 
@@ -138,6 +169,7 @@ audioMessage.lang = 'pl';
 
 // add function to remove symbols in testa and testa, such as number or $
 // also accept answer if user input is within 2 characters of correct answer
+// also accept if user input is within 95% correct ratio of correct answer
 function checkIfQAMatch(q, a){
     // remove spaces
     testq = q.replace(/\s+/g, '');
@@ -158,9 +190,9 @@ function checkIfQAMatch(q, a){
 function newRandomQA(){
     currentIndex++;
     currentQuestion = gameQuestions[currentIndex];
-    currentAanswer = gameAnswers[currentIndex];
+    currentAnswer = gameAnswers[currentIndex];
     questionLabel.innerHTML = currentQuestion;
-    console.log(currentIndex + ' - ' + currentQuestion + ' - ' + currentAanswer);
+    console.log(currentIndex + ' - ' + currentQuestion + ' - ' + currentAnswer);
     $(answerTextarea).val('');
 }
 
@@ -184,7 +216,7 @@ function correctAnswer(){
 
 function wrongAnswerFirst() {
     idle = true;
-    result.innerHTML = "incorrect, the correct translation is" + currentAanswer;
+    result.innerHTML = "incorrect, the correct translation is" + currentAnswer;
     $(result).css('color', 'red');
     btnSubmit.innerHTML = "Continue";
     answerTextarea.disabled = true;
@@ -195,10 +227,10 @@ function wrongAnswer(){
     gameQuestions.push(gameQuestions.splice(currentIndex, 1)[0]);
     gameAnswers.push(gameAnswers.splice(currentIndex, 1)[0]);
     currentQuestion = gameQuestions[currentIndex];
-    currentAanswer = gameAnswers[currentIndex];
+    currentAnswer = gameAnswers[currentIndex];
     console.log(currentIndex + ' - ' + gameQuestions + ' - ' + gameAnswers);
     questionLabel.innerHTML = currentQuestion;
-    console.log(currentIndex + ' - ' + currentQuestion + ' - ' + currentAanswer);
+    console.log(currentIndex + ' - ' + currentQuestion + ' - ' + currentAnswer);
     $(answerTextarea).val('');
 }
 
@@ -214,7 +246,7 @@ function showEndScreen(){
 
 function submitAnswer(){ 
     if (idle == false) {
-        if (checkIfQAMatch(answerTextarea.value, currentAanswer)) {
+        if (checkIfQAMatch(answerTextarea.value, currentAnswer)) {
             if (currentIndex >= gameQuestions.length-1) {
                 console.log('finished');
                 result.innerHTML = "finished";
@@ -230,7 +262,7 @@ function submitAnswer(){
         }
     }
     else {
-        if (checkIfQAMatch(answerTextarea.value, currentAanswer)) {
+        if (checkIfQAMatch(answerTextarea.value, currentAnswer)) {
             if (currentIndex >= gameQuestions.length-1) {
                 console.log('finished');
                 result.innerHTML = "finished";
@@ -263,6 +295,83 @@ function submitOnEnter(event){
         submitAnswer();
     }
 }
+
+
+
+
+/*
+DRAG AND DROP GAME
+*/
+
+var list = document.getElementById('list')
+var base, randomized, dragging, draggedOver;
+var isRight = 'Not In Order!';
+
+const genRandom = (array) => {
+base = array.slice()
+randomized = array.sort(() => Math.random() - 0.5)
+if (randomized.join("") !== base.join("")){
+    renderItems(randomized)
+} else {
+    //recursion to account if the randomization returns the original array
+    genRandom()
+}
+}
+
+const renderItems = (data) =>{
+document.getElementById('isRight').innerText = isRight
+list.innerText = ''
+data.forEach(item=>{
+var node = document.createElement("li");    
+node.draggable = true
+node.style.backgroundColor = item
+node.style.backgroundColor = node.style.backgroundColor.length > 0  
+? item : 'lightblue'
+node.addEventListener('drag', setDragging) 
+node.addEventListener('dragover', setDraggedOver)
+node.addEventListener('drop', compare) 
+node.innerText = item
+list.appendChild(node)
+})
+}
+
+const compare = (e) =>{
+var index1 = randomized.indexOf(dragging);
+var index2 = randomized.indexOf(draggedOver);
+randomized.splice(index1, 1)
+randomized.splice(index2, 0, dragging)
+
+isRight = randomized.join("") === base.join("") 
+? 'In Order!': 'Not In Order!'
+
+renderItems(randomized)
+};
+
+
+const setDraggedOver = (e) => {
+  e.preventDefault();
+  draggedOver = Number.isNaN(parseInt(e.target.innerText)) ? e.target.innerText : parseInt(e.target.innerText)
+}
+
+const setDragging = (e) =>{
+dragging = Number.isNaN(parseInt(e.target.innerText)) ? e.target.innerText : parseInt(e.target.innerText)
+}
+
+string_to_array = function (currentAnswer) {
+     bet =  currentAnswer.trim().split(" ");
+     console.log(bet);
+     return bet;
+};
+//genRandom(gameAnswers);
+console.log(currentAnswer.split(" "));
+genRandom(currentAnswer.split(" "));
+
+///////////////////////////////
+
+
+
+
+
 
 </script>
 <script>
