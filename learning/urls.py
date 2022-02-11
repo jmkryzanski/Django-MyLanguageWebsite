@@ -24,4 +24,5 @@ urlpatterns = [
     path('test/', views.mytest, name="test"),
     path('test2/', views.mytest2, name="test2"),
     path('test3/', views.mytest3, name="test3"),
+    path('test4/', views.mytest4, name="test4"),
 ]

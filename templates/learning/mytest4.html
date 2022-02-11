@@ -1,0 +1,158 @@
+<style>
+  #container{
+  width: 300px;
+  display: block;
+  margin: auto;
+}
+
+p {
+  float: right;
+}
+
+#list{
+  list-style: none;
+}
+
+#list li{
+  margin: 10px;
+  cursor: pointer;
+}
+</style>
+<style>
+  #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+  #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+  #sortable li span { position: absolute; margin-left: -1.3em; }
+  </style>
+
+<div id='container'>
+  <h1 id='isRight'></h1>
+<ul id='list'>
+</ul>
+</div>
+
+<button style="margin: 10px;" id="btn-bet" onclick="bet()">Check</button><br>
+
+
+<ul id="sortable">
+  <!--<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 1</li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 2</li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 3</li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 4</li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 5</li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 6</li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 7</li>-->
+</ul>
+
+
+<script>
+
+function bet() {
+  console.log("answer: " + correctAnswer.join(""))
+  var children = $('#sortable').sortable('refreshPositions').children();
+  var bet = '';
+  var bet2 = '';
+  $.each(children, function() {
+    bet2 = bet.concat(bet2, $(this).text().trim());
+        console.log($(this).text().trim());
+        //console.log(bet2);
+
+    });
+    console.log(bet2);
+    compare();
+}
+
+  var list = document.getElementById('sortable')
+var base, randomized, dragging, draggedOver;
+var isRight = 'Not In Order!';
+
+const genRandom = (array) => {
+  base = array.slice()
+  randomized = array.sort(() => Math.random() - 0.5)
+  if (randomized.join("") !== base.join("")){
+      renderItems(randomized)
+   } else {
+     //recursion to account if the randomization returns the original array
+     genRandom()
+   }
+}
+
+const renderItems = (data) =>{
+  document.getElementById('isRight').innerText = isRight
+  list.innerText = ''
+  data.forEach(item=>{
+    var node = document.createElement("li");    
+    node.draggable = true
+    node.style.backgroundColor = item
+    node.style.backgroundColor = node.style.backgroundColor.length > 0  
+    ? item : 'lightblue'
+    node.addEventListener('drag', setDragging) 
+    node.addEventListener('dragover', setDraggedOver)
+    node.addEventListener('drop', compare) 
+    node.innerText = item
+    list.appendChild(node)
+  })
+}
+
+const compare = (e) =>{
+  //var index1 = randomized.indexOf(dragging);
+  //var index2 = randomized.indexOf(draggedOver);
+  //randomized.splice(index1, 1)
+  //randomized.splice(index2, 0, dragging)
+ 
+  //isRight = randomized.join("") === base.join("") 
+  //  ? 'In Order!': 'Not In Order!'
+
+  var children = $('#sortable').sortable('refreshPositions').children();
+  var bet = '';
+  var bet2 = '';
+  $.each(children, function() {
+    bet2 = bet.concat(bet2, $(this).text().trim());
+        console.log($(this).text().trim());
+        //console.log(bet2);
+
+    });
+    console.log(bet2);
+  if (bet2 === correctAnswer.join("")){
+    console.log("bet");
+  }
+  else{
+    console.log("nobet");
+  }
+
+
+ 
+  renderItems(randomized)
+};
+
+
+const setDraggedOver = (e) => {
+  e.preventDefault();
+  draggedOver = Number.isNaN(parseInt(e.target.innerText)) ? e.target.innerText : parseInt(e.target.innerText)
+}
+
+const setDragging = (e) =>{
+  dragging = Number.isNaN(parseInt(e.target.innerText)) ? e.target.innerText : parseInt(e.target.innerText)
+}
+
+// genRandom([0, 1, 2, 3, 4, 5, 6])
+//genRandom(['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'])
+correctAnswer = ['one', 'two', 'three', 'four'];
+myquestion = ['one', 'two', 'three', 'four'];
+genRandom(myquestion)
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <script>
+$("#sortable").sortable({
+  stop: function(ev, ui) {
+    //Get the updated positions by calling refreshPositions and then .children on the resulting object.
+    var children = $('#sortable').sortable('refreshPositions').children();
+    console.log('Positions: ');
+    //Loopp through each item in the children array and print out the text.
+    $.each(children, function() {
+        console.log($(this).text().trim());
+    });
+  }
+});
+  </script>
+  

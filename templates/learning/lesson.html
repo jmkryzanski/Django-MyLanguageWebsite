@@ -16,6 +16,13 @@
     {% endfor %}
 </div>
 -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
+    <script src="jquery.ui.touch-punch.min.js"></script>
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
 
 <style>
     h1, h2, h3{
@@ -64,30 +71,38 @@
 <!--                 -->
 <style>
     #container{
-  width: 300px;
-  display: block;
-  margin: auto;
+  /*width: 300px;*/
+  /*display: block;*/
+  /*margin: auto;*/
 }
 
-p {
-  float: right;
-}
-
-#list{
+#sortable{
   list-style: none;
 }
 
-#list li{
+#sortable li{
   margin: 10px;
   cursor: pointer;
+  text-align: center;
+  display: inline-block;
 }
+
+
+
 </style>
 
 <div id='container'>
     <h1 id='isRight' class="third-theme"></h1>
-    <ul id='list' class="third-theme">
+    <!--<ul id='list' class="third-theme">-->
+        <!--<ul id="sortable" ></ul>-->
     </ul>
   </div>
+
+
+  <ul id="sortable" ></ul>
+
+  <button style="margin: 10px;" id="btn-bet" onclick="bet()">Check</button><br>
+
 <script>
 
 </script>
@@ -120,7 +135,18 @@ plzworktest
 </h1>
 -->
 
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+
 <script>
+
+
+
+
+
 var questionsarray = {{ questions|safe }};
 var answersarray = {{ answers|safe }};
 var btnSubmit = document.getElementById("btn-submit");
@@ -255,10 +281,14 @@ function submitAnswer(){
             }
             else {
                 correctAnswer();
+
+                //generateDragAndDropGame();
             }   
         }
         else{
             wrongAnswerFirst();
+
+            //generateDragAndDropGame();
         }
     }
     else {
@@ -275,6 +305,8 @@ function submitAnswer(){
                 newRandomQA();
                 answerTextarea.disabled = false;
                 answerTextarea.focus();
+
+                //generateDragAndDropGame();
             }  
     }
         else{
@@ -284,6 +316,8 @@ function submitAnswer(){
             wrongAnswer();
             answerTextarea.disabled = false;
             answerTextarea.focus();
+
+            //generateDragAndDropGame();
         }
     }
 };
@@ -303,68 +337,134 @@ function submitOnEnter(event){
 DRAG AND DROP GAME
 */
 
-var list = document.getElementById('list')
-var base, randomized, dragging, draggedOver;
-var isRight = 'Not In Order!';
+//generateDragAndDropGame();
 
-const genRandom = (array) => {
-base = array.slice()
-randomized = array.sort(() => Math.random() - 0.5)
-if (randomized.join("") !== base.join("")){
+//function generateDragAndDropGame() {
+    
+
+    var list = document.getElementById('sortable')
+    var base, randomized, dragging, draggedOver;
+    var isRight = 'Not In Order!';
+
+
+
+function bet() {
+  console.log("answer: " + mycorrectAnswer.join(""))
+  var children = $('#sortable').sortable('refreshPositions').children();
+  var bet = '';
+  var bet2 = '';
+  $.each(children, function() {
+    bet2 = bet.concat(bet2, $(this).text().trim());
+        console.log($(this).text().trim());
+        //console.log(bet2);
+
+    });
+    console.log(bet2);
+    compare();
+}
+
+    const genRandom = (array) => {
+    base = array.slice()
+    randomized = array.sort(() => Math.random() - 0.5)
+
+    /* Makes it so that the randomized words are not the actual answer */
+    if (randomized.join("") !== base.join("")){
+        renderItems(randomized)
+    } else {
+        genRandom(array)
+    }
+
+        //renderItems(randomized)
+
+    }
+
+    
+    //$( "#draggable" ).draggable({
+      //connectToSortable: "#sortable",
+      //helper: "clone",
+      //revert: "invalid"
+    //});
+    //$( "ul, li" ).disableSelection();
+  
+
+    const renderItems = (data) =>{
+    document.getElementById('isRight').innerText = isRight
+    list.innerText = ''
+    data.forEach(item=>{
+        var node = document.createElement("li");    
+
+        //$(node).addClass("ui-state-default");
+        node.classList.add('ui-state-default');
+
+        node.draggable = true
+        node.style.backgroundColor = item
+        node.style.backgroundColor = node.style.backgroundColor.length > 0  
+        ? item : 'lightblue'
+        node.addEventListener('drag', setDragging) 
+        node.addEventListener('dragover', setDraggedOver)
+        node.addEventListener('drop', compare) 
+        node.innerText = item
+        list.appendChild(node)
+    })
+    }
+
+    const compare = (e) =>{
+    /*var index1 = randomized.indexOf(dragging);
+    var index2 = randomized.indexOf(draggedOver);
+    randomized.splice(index1, 1)
+    randomized.splice(index2, 0, dragging)
+
+    isRight = randomized.join("") === base.join("") 
+    ? 'In Order!': 'Not In Order!'
+
     renderItems(randomized)
-} else {
-    //recursion to account if the randomization returns the original array
-    genRandom()
-}
-}
+    };*/
+    
+    
+    var children = $('#sortable').sortable('refreshPositions').children();
+  var bet = '';
+  var bet2 = '';
+  $.each(children, function() {
+    bet2 = bet.concat(bet2, $(this).text().trim());
+        console.log($(this).text().trim());
+        //console.log(bet2);
 
-const renderItems = (data) =>{
-document.getElementById('isRight').innerText = isRight
-list.innerText = ''
-data.forEach(item=>{
-var node = document.createElement("li");    
-node.draggable = true
-node.style.backgroundColor = item
-node.style.backgroundColor = node.style.backgroundColor.length > 0  
-? item : 'lightblue'
-node.addEventListener('drag', setDragging) 
-node.addEventListener('dragover', setDraggedOver)
-node.addEventListener('drop', compare) 
-node.innerText = item
-list.appendChild(node)
-})
-}
+    });
+    console.log(bet2);
+  if (bet2 === mycorrectAnswer.join("")){
+    console.log("bet");
+  }
+  else{
+    console.log("nobet");
+  }
 
-const compare = (e) =>{
-var index1 = randomized.indexOf(dragging);
-var index2 = randomized.indexOf(draggedOver);
-randomized.splice(index1, 1)
-randomized.splice(index2, 0, dragging)
-
-isRight = randomized.join("") === base.join("") 
-? 'In Order!': 'Not In Order!'
-
-renderItems(randomized)
-};
+    };
 
 
-const setDraggedOver = (e) => {
-  e.preventDefault();
-  draggedOver = Number.isNaN(parseInt(e.target.innerText)) ? e.target.innerText : parseInt(e.target.innerText)
-}
+    const setDraggedOver = (e) => {
+      e.preventDefault();
+      draggedOver = Number.isNaN(parseInt(e.target.innerText)) ? e.target.innerText : parseInt(e.target.innerText)
+    }
 
-const setDragging = (e) =>{
-dragging = Number.isNaN(parseInt(e.target.innerText)) ? e.target.innerText : parseInt(e.target.innerText)
-}
+    const setDragging = (e) =>{
+    dragging = Number.isNaN(parseInt(e.target.innerText)) ? e.target.innerText : parseInt(e.target.innerText)
+    }
 
-string_to_array = function (currentAnswer) {
-     bet =  currentAnswer.trim().split(" ");
-     console.log(bet);
-     return bet;
-};
-//genRandom(gameAnswers);
-console.log(currentAnswer.split(" "));
-genRandom(currentAnswer.split(" "));
+    /*string_to_array = function (currentAnswer) {
+        bet =  currentAnswer.trim().split(" ");
+        console.log(bet);
+        return bet;
+    };*/
+
+    sayin = currentAnswer.split(" ")
+    console.log(sayin);
+    console.log(sayin.join(""))
+    mycorrectAnswer = sayin;
+    genRandom(currentAnswer.split(" "))
+    //genRandom(currentAnswer.split(" "))
+    //genRandom(['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'])
+    //genRandom(['hello', 'how', 'are', 'you'])
+//}
 
 ///////////////////////////////
 
@@ -517,4 +617,19 @@ function submitOnEnter(event){
 }
 */
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <script>
+$("#sortable").sortable({
+  stop: function(ev, ui) {
+    //Get the updated positions by calling refreshPositions and then .children on the resulting object.
+    var children = $('#sortable').sortable('refreshPositions').children();
+    console.log('Positions: ');
+    //Loopp through each item in the children array and print out the text.
+    $.each(children, function() {
+        console.log($(this).text().trim());
+    });
+  }
+});
+  </script>
 {% endblock %}

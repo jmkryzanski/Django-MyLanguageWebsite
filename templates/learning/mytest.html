@@ -107,7 +107,7 @@ $white: #FFFFFF;
 $arial: Arial,sans-serif;
 $font-face: 'Open Sans', sans-serif;
 
-h1 {
+/*h1 {
   text-align: center;
   text-transform: uppercase;
   font-family: $font-face;
@@ -137,7 +137,7 @@ button {
   -webkit-transition: all 0.3s ease 0s;
   width: 16.795%;
   text-align: center;
-}
+}*/
 
     </style>
 
@@ -155,20 +155,20 @@ function bet() {
 }
 
 //var sentence = ["the", "unexamined", "life", "is", "not", "worth", "living"];
-var sentence = ["hello", "how", "are", "you"];
+var sentence = ["hellooo", "how", "are", "you"];
 var currentSentence = [];
 var correctSentence = ["hello", "how", "are", "you"];
 
 $(function() {
     $( "#sortable" ).sortable({
-      revert: true
+      revert: false
     });
-    /*$( "#draggable" ).draggable({
-      connectToSortable: "#sortable",
-      helper: "clone",
-      revert: "invalid"
-    });*/
-    $( "ul, li" ).disableSelection();
+    //$( "#draggable" ).draggable({
+      //connectToSortable: "#sortable",
+      //helper: "clone",
+      //revert: "invalid"
+    //});
+    //$( "ul, li" ).disableSelection();
   });
 
  function checkSentence(){
@@ -194,7 +194,8 @@ function getRandomWord(){
 
 for(var i =0; i<sentence.length; i++){
   var word = getRandomWord();
-  document.getElementById('here'+i).innerHTML = '<li class="ui-state-default">'+word+'</li>';
+  //document.getElementById('here'+i).innerHTML = '<li class="ui-state-default">'+word+'</li>';
+  document.getElementById().innerHTML = '<li class="ui-state-default">'+word+'</li>';
 }
   </script>
   

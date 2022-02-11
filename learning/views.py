@@ -243,3 +243,10 @@ def mytest3(request):
         'bet': bet,
     }
     return render(request, 'learning/mytest3.html', context)
+    
+def mytest4(request):
+    bet = difflib.SequenceMatcher(None, "iliketoplaysoccerwithmyfriends", "idontliketoplaysoccerwithmyfriends").ratio()
+    context = {
+        'bet': bet,
+    }
+    return render(request, 'learning/mytest4.html', context)
