@@ -36,8 +36,9 @@ body{
     margin-bottom: 8px;
 }
 
+/* added !important here and .dark-third-theme for textarea of lessons to work with darkmode  */
 .third-theme, .card-body{
-    color: var(--thirdThemeColor);
+    color: var(--thirdThemeColor) !important;
 }
 
 .fourth-theme{
@@ -220,7 +221,7 @@ body.dark {
 }
 
 .dark-third-theme{
-    color: white;
+    color: white !important;
 }
 
 .dark-fourth-theme{
@@ -263,4 +264,13 @@ body.dark {
 
 .plzwork2{
     color: orange;
+}
+
+textarea:focus{
+   background-color: transparent !important;
+   /*color: gray !important;*/
+}
+
+textarea:disabled{
+    background-color: transparent !important;
 }

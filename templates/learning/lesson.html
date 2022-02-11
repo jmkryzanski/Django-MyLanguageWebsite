@@ -5,6 +5,8 @@
     <a href="{% url 'editlesson' lesson.course lesson.slug %}"><span><button class="btn btn-primary">Edit Lesson</button></span></a>
     <a href="{% url 'deletelesson' lesson.course lesson.slug %}"><span><button class="btn btn-primary">Delete Lesson</button></span></a>
 {% endif %}
+
+
 <!--
 <div class="third-theme">
     {{lesson.course}}
@@ -16,43 +18,58 @@
     {% endfor %}
 </div>
 -->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-  <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
-    <script src="jquery.ui.touch-punch.min.js"></script>
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
+<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">-->
+    <!--<script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">-->
 
 <style>
     h1, h2, h3{
         color: #f8a300;
     }
 
-    /*a{
-        text-decoration: none;
-        color: #f8a300;
-    }*/
+    #container{
+    /*width: 300px;*/
+    /*display: block;*/
+    /*margin: auto;*/
+    }
 
+    #sortable{
+    list-style: none;
+    }
+
+    #sortable li{
+        margin: 10px;
+        cursor: pointer;
+        text-align: center;
+        border-radius: 5px;
+        padding: 10px;
+        display: inline-block !important;
+        float: left;
+    }
 </style>
+
 <div class="col-12 third-theme">
 {% autoescape off %}
 {{lesson.content}}
 {% endautoescape %}
 </div>
 
-<div class="col-12">
-<div class="card" id="qa-card">
-    <div class="card-body text-center">
+
+<button id="btn-toggle-game" onclick="toggleGame()">Toggle Game</button>
+
+<div class="col-12 border border-white" id="qa-card">
+    <div id="translation-game">
+    <div class="text-center">
         {% csrf_token %}
     <form onsubmit="return false">
         <div class="form-group">
-            <div class="card-title"><h3>Translate the sentence to English:</h3></div>
-            <div style="font-size: 30px;" id="question-label" class="card-body text-center">            
+            <div><h3>Translate the sentence to English:</h3></div>
+            <div style="font-size: 30px;" id="question-label" class="third-theme text-center">            
             </div>
             <!--<button id="question-audio" onclick="playAudio()"><i class="fas fa-microphone"></i></button>-->
-            <span id='clickableAwesomeFont'><i onclick="playAudio()" style="font-size: 40px;" class="fas fa-volume-up"></i></span>
-            <textarea id="answer-textarea" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <span id='clickableAwesomeFont'><i onclick="playAudio()" style="font-size: 40px;" class="fas fa-volume-up third-theme"></i></span>
+            <textarea id="answer-textarea" class="form-control third-theme fourth-theme-background" id="exampleFormControlTextarea1" rows="3"></textarea>
             <button style="margin: 10px;" class="btn" id="btn-submit" onclick="submitAnswer()">Check</button><br>
             <p id="result"></p>
             <!--<button style="margin: 10px;" onclick="goBack()">Go back</button><br>
@@ -63,89 +80,24 @@
     </div>
 </div>
 
+<div class="dragdrop-game">
+<h1 id='isRight' class="third-theme"></h1>
+    <ul class="third-theme text-center" id="sortable" ></ul>  
+    <button style="margin: 10px;" class="btn" id="btn-bet" onclick="bet()">Check</button><br>
+</div>
+</div>
+
 <div class="card text-center" id="showend-card">
     <h1>Great job! You did it</h1>
     <a class="secondary-theme" href="{% url 'course' lan %}"><p class="secondary-theme">Return back to {{lesson.course}} lessons</p></a>
 </div>
 
-<!--                 -->
-<style>
-    #container{
-  /*width: 300px;*/
-  /*display: block;*/
-  /*margin: auto;*/
-}
-
-#sortable{
-  list-style: none;
-}
-
-#sortable li{
-  margin: 10px;
-  cursor: pointer;
-  text-align: center;
-  display: inline-block;
-}
-
-
-
-</style>
-
-<div id='container'>
-    <h1 id='isRight' class="third-theme"></h1>
-    <!--<ul id='list' class="third-theme">-->
-        <!--<ul id="sortable" ></ul>-->
-    </ul>
-  </div>
-
-
-  <ul id="sortable" ></ul>
-
-  <button style="margin: 10px;" id="btn-bet" onclick="bet()">Check</button><br>
-
-<script>
-
-</script>
-<!--                -->
 </div>
 
-
-<!--
-{{ questions|json_script:"questions" }}
-{{ answers|json_script:"answers" }}
-
-<h1 id="plz">
-
-</h1>
-
-questions:
-{{questions}}
-<hr>answers
-{{answers}}
-
-<h1 id="myq">
-</h1>
-<h1 id="mya">
-</h1>
-
-plzworktest
-<h1 id="myqtest">
-</h1>
-<h1 id="myatest">
-</h1>
--->
-
-
-
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
 <script>
-
-
-
-
 
 var questionsarray = {{ questions|safe }};
 var answersarray = {{ answers|safe }};
@@ -188,9 +140,9 @@ audioMessage.voice = voices[10]; // Note: some voices don't support altering par
 audioMessage.voiceURI = 'native';
 audioMessage.volume = 1; // 0 to 1
 audioMessage.rate = 0.8; // 0.1 to 10
-audioMessage.pitch = 0; //0 to 2
+audioMessage.pitch = 1; //0 to 2
 audioMessage.text = currentQuestion;
-audioMessage.lang = 'pl';
+audioMessage.lang = 'es';
 
 
 // add function to remove symbols in testa and testa, such as number or $
@@ -282,13 +234,13 @@ function submitAnswer(){
             else {
                 correctAnswer();
 
-                //generateDragAndDropGame();
+                dragDropGenerate();
             }   
         }
         else{
             wrongAnswerFirst();
 
-            //generateDragAndDropGame();
+            dragDropGenerate();
         }
     }
     else {
@@ -306,7 +258,7 @@ function submitAnswer(){
                 answerTextarea.disabled = false;
                 answerTextarea.focus();
 
-                //generateDragAndDropGame();
+                dragDropGenerate();
             }  
     }
         else{
@@ -317,7 +269,7 @@ function submitAnswer(){
             answerTextarea.disabled = false;
             answerTextarea.focus();
 
-            //generateDragAndDropGame();
+            dragDropGenerate();
         }
     }
 };
@@ -336,32 +288,58 @@ function submitOnEnter(event){
 /*
 DRAG AND DROP GAME
 */
-
-//generateDragAndDropGame();
-
-//function generateDragAndDropGame() {
-    
-
-    var list = document.getElementById('sortable')
-    var base, randomized, dragging, draggedOver;
-    var isRight = 'Not In Order!';
-
-
-
 function bet() {
   console.log("answer: " + mycorrectAnswer.join(""))
   var children = $('#sortable').sortable('refreshPositions').children();
-  var bet = '';
-  var bet2 = '';
+  var temp1 = '';
+  var temp2 = '';
   $.each(children, function() {
-    bet2 = bet.concat(bet2, $(this).text().trim());
-        console.log($(this).text().trim());
-        //console.log(bet2);
+    temp2 = temp1.concat(temp2, $(this).text().trim());
+        //console.log($(this).text().trim());
 
     });
-    console.log(bet2);
-    compare();
+    //console.log(temp2);
+    dragDropCompare();
 }
+
+
+const dragDropCompare = (e) =>{
+    /*var index1 = randomized.indexOf(dragging);
+    var index2 = randomized.indexOf(draggedOver);
+    randomized.splice(index1, 1)
+    randomized.splice(index2, 0, dragging)
+
+    isRight = randomized.join("") === base.join("") 
+    ? 'In Order!': 'Not In Order!'
+
+    renderItems(randomized)
+    };*/
+    
+    
+    var children = $('#sortable').sortable('refreshPositions').children();
+    var temp1 = '';
+    var temp2 = '';
+    $.each(children, function() {
+        temp2 = temp1.concat(temp2, $(this).text().trim());
+        //console.log($(this).text().trim());
+    });
+    if (temp2 === mycorrectAnswer.join("")){
+        console.log("correct");
+    }
+    else{
+        console.log("incorrect");
+    }
+    };
+
+
+dragDropGenerate();
+
+function dragDropGenerate() {
+var list = document.getElementById('sortable')
+var base, randomized, dragging, draggedOver;
+var isRight = 'Not In Order!';
+
+
 
     const genRandom = (array) => {
     base = array.slice()
@@ -396,59 +374,38 @@ function bet() {
         //$(node).addClass("ui-state-default");
         node.classList.add('ui-state-default');
 
-        node.draggable = true
-        node.style.backgroundColor = item
-        node.style.backgroundColor = node.style.backgroundColor.length > 0  
-        ? item : 'lightblue'
-        node.addEventListener('drag', setDragging) 
-        node.addEventListener('dragover', setDraggedOver)
-        node.addEventListener('drop', compare) 
+        //node.classList.add('third-theme-border');
+
+        if (questionLabel.classList.contains('dark-third-theme')){
+            node.classList.add('dark-third-theme-border');
+        }
+        else{
+            node.classList.add('third-theme-border');
+        }
+
+        //node.draggable = true
+        //node.style.backgroundColor = item
+        //node.style.backgroundColor = node.style.backgroundColor.length > 0  
+        //? item : 'lightblue'
+        //node.addEventListener('drag', setDragging) 
+        //node.addEventListener('dragover', setDraggedOver)
+        //node.addEventListener('drop', compare) 
         node.innerText = item
         list.appendChild(node)
     })
     }
 
-    const compare = (e) =>{
-    /*var index1 = randomized.indexOf(dragging);
-    var index2 = randomized.indexOf(draggedOver);
-    randomized.splice(index1, 1)
-    randomized.splice(index2, 0, dragging)
-
-    isRight = randomized.join("") === base.join("") 
-    ? 'In Order!': 'Not In Order!'
-
-    renderItems(randomized)
-    };*/
-    
-    
-    var children = $('#sortable').sortable('refreshPositions').children();
-  var bet = '';
-  var bet2 = '';
-  $.each(children, function() {
-    bet2 = bet.concat(bet2, $(this).text().trim());
-        console.log($(this).text().trim());
-        //console.log(bet2);
-
-    });
-    console.log(bet2);
-  if (bet2 === mycorrectAnswer.join("")){
-    console.log("bet");
-  }
-  else{
-    console.log("nobet");
-  }
-
-    };
 
 
-    const setDraggedOver = (e) => {
+
+    /*const setDraggedOver = (e) => {
       e.preventDefault();
       draggedOver = Number.isNaN(parseInt(e.target.innerText)) ? e.target.innerText : parseInt(e.target.innerText)
     }
 
     const setDragging = (e) =>{
     dragging = Number.isNaN(parseInt(e.target.innerText)) ? e.target.innerText : parseInt(e.target.innerText)
-    }
+    }*/
 
     /*string_to_array = function (currentAnswer) {
         bet =  currentAnswer.trim().split(" ");
@@ -456,180 +413,36 @@ function bet() {
         return bet;
     };*/
 
-    sayin = currentAnswer.split(" ")
-    console.log(sayin);
-    console.log(sayin.join(""))
-    mycorrectAnswer = sayin;
+    //sayin = currentAnswer.split(" ")
+    //console.log(sayin);
+
+    mycorrectAnswer = currentAnswer.split(" ")
+    
+    //console.log(mycorrectAnswer.join(""))
+    //mycorrectAnswer = sayin;
     genRandom(currentAnswer.split(" "))
     //genRandom(currentAnswer.split(" "))
     //genRandom(['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'])
     //genRandom(['hello', 'how', 'are', 'you'])
-//}
+}
 
 ///////////////////////////////
 
-
-
-
-
-
 </script>
-<script>
-// previous working version:
-/*
-questionsarray = {{ questions|safe }};
-var answersarray = {{ answers|safe }};
-var result = document.getElementById("result");
-var questionLabel = document.getElementById("question-label");
-var answerTextarea = document.getElementById("answer-textarea");
-//document.getElementById("answer-textarea").addEventListener("keypress", submitOnEnter);
-answerTextarea.addEventListener("keypress", submitOnEnter);
-var randomNumber = Math.floor(Math.random() * questionsarray.length);
 
-var rollQuestion = questionsarray.splice(randomNumber, 1);
-var rollAnswer = answersarray.splice(randomNumber, 1);
-var randomQuestion = rollQuestion[ 0 ];
-var randomAnswer = rollAnswer[ 0 ];
-questionLabel.innerHTML = randomQuestion;
-console.log(randomQuestion + ' - ' + randomAnswer);
-
-//audio variables
-var audioMessage = new SpeechSynthesisUtterance();
-var voices = window.speechSynthesis.getVoices();
-audioMessage.voice = voices[10]; // Note: some voices don't support altering params
-audioMessage.voiceURI = 'native';
-audioMessage.volume = 1; // 0 to 1
-audioMessage.rate = 0.8; // 0.1 to 10
-audioMessage.pitch = 0; //0 to 2
-audioMessage.text = randomQuestion;
-audioMessage.lang = 'pl';
-
-
-var testArray = [1, 2, 3, 4];
-
-function shuffle(o) {
-    for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-    return o;
-};
-
-var testrandom = shuffle(testArray);
-console.log(testrandom);
-
-/*audioMessage.onend = function(e) {
-console.log('Finished in ' + event.elapsedTime + ' seconds.');
-};
-speechSynthesis.speak(audioMessage);
-
-
-function checkIfQAMatch(q, a){
-    // remove spaces
-    testq = q.replace(/\s+/g, '');
-    testa = a.replace(/\s+/g, '');
-
-    // to lowercase
-    testq = testq.toLowerCase();
-    testa = testa.toLowerCase();
-    if (testq === testa) {
-        return true;
-    }
-    else {
-        return false;
-    }
-
-}
-
-/* go back
-var questionIndex = 0;
-var listRandomQ = [];
-var listRandomA = [];
-listRandomQ.push(randomQuestion);
-listRandomA.push(randomAnswer);
-console.log(listRandomQ + ' - ' + listRandomA);
-var previousAnswer;
-var previousQuestion;
-function goBack(){
-    questionIndex--;
-    listRandomQ.push(randomQuestion);
-    listRandomA.push(randomAnswer);
-    randomQuestion = listRandomQ[questionIndex];
-    randomAnswer = listRandomA[questionIndex];
-    console.log(randomQuestion + ' - ' + randomAnswer);
-    questionLabel.innerHTML = randomQuestion;
-    $(answerTextarea).val('');
-
-    console.log("back");
-}
-
-
-function goForward(){
-
-}
-
-function newRandomQA(){
-    randomNumber = Math.floor(Math.random() * questionsarray.length);
-
-    rollQuestion = questionsarray.splice(randomNumber, 1);
-    rollAnswer = answersarray.splice(randomNumber, 1);
-    randomQuestion = rollQuestion[ 0 ];
-    randomAnswer = rollAnswer[ 0 ];
-    console.log(randomQuestion + ' - ' + randomAnswer);
-    questionLabel.innerHTML = randomQuestion;
-    $(answerTextarea).val('');
-    /* go back
-    questionIndex++;
-    listRandomQ.push(randomQuestion);
-    listRandomA.push(randomAnswer);
-}
-
-function resetQA() {
-    questionsarray = {{ questions|safe }};
-    answersarray = {{ answers|safe }};
-}
-
-
-function playAudio(){
-    audioMessage.text = randomQuestion;
-    speechSynthesis.speak(audioMessage);
-}
-
-function submitAnswer(){
-    if (checkIfQAMatch(answerTextarea.value, randomAnswer)) { //if (answerTextarea.value === randomAnswer) {
-        if (questionsarray.length === 0) {
-            resetQA();
-            newRandomQA();
-        }
-        else {
-            result.innerHTML = "";
-            newRandomQA();
-        }        
-    }
-    else{
-        result.innerHTML = "incorrect"
-    }
-};
-
-function submitOnEnter(event){
-    if(event.which === 13){
-        event.target.form.dispatchEvent(new Event("submit", {cancelable: true}));
-        event.preventDefault(); // Prevents the addition of a new line in the text field (not needed in a lot of cases)
-        submitAnswer();
-    }
-}
-*/
-</script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-  <script>
-$("#sortable").sortable({
-  stop: function(ev, ui) {
-    //Get the updated positions by calling refreshPositions and then .children on the resulting object.
-    var children = $('#sortable').sortable('refreshPositions').children();
-    console.log('Positions: ');
-    //Loopp through each item in the children array and print out the text.
-    $.each(children, function() {
-        console.log($(this).text().trim());
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+<script>
+    $("#sortable").sortable({
+    stop: function(ev, ui) {
+        var children = $('#sortable').sortable('refreshPositions').children();
+        console.log('Positions: ');
+        $.each(children, function() {
+            console.log($(this).text().trim());
+        });
+    },
+    //revert: true,
     });
-  }
-});
-  </script>
+    $("#sortable").disableSelection();
+</script>
 {% endblock %}
