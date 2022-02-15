@@ -174,7 +174,7 @@ for (var q = questionsarray, i = q.length; i--; ) {
 //console.log("blank: " + gameQuestions[2].replace(gameQuestionKeywords[2], "______"));
 //console.log("random questions: " + gameQuestions)
 var temp1 = gameQuestionKeywords[currentIndex]
-keywordQuestionLabel.innerHTML = gameQuestions[currentIndex].replace(gameQuestionKeywords[0], "______") + '<br>' + gameAnswers[currentIndex];
+keywordQuestionLabel.innerHTML = gameAnswers[currentIndex] + '<br>' + gameQuestions[currentIndex].replace(gameQuestionKeywords[0], "______");
 function keywordSubmitAnswer() {
     if (checkIfQAMatch(keywordAnswerTextarea.value, temp1))
     {
