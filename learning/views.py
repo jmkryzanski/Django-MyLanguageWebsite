@@ -115,9 +115,11 @@ def ViewLessonView(request, lan, myslug, level):
     #questionslist = questionanswer.values_list('question')
     #answerslist = questionanswer.values_list('answer')
     questions = []
+    questionKeywords = []
     answers = []
     for q in questionanswer:
         questions.append(q.strquestion())
+        questionKeywords.append(q.strquestionkeyword())
     for a in questionanswer:
         answers.append(a.stranswer())
 
@@ -127,6 +129,7 @@ def ViewLessonView(request, lan, myslug, level):
         'lan': lan,
         'myslug': myslug,
         'questions': questions,
+        'questionKeywords': questionKeywords,
         'answers': answers,
     }
     return render(request, 'learning/lesson.html', context)

@@ -80,12 +80,39 @@
     </div>
 </div>
 
-<div class="dragdrop-game">
+<div id="dragdrop-game">
 <h1 id='isRight' class="third-theme"></h1>
     <ul class="third-theme text-center" id="sortable" ></ul>  
     <button style="margin: 10px;" class="btn" id="btn-bet" onclick="bet()">Check</button><br>
 </div>
 </div>
+
+<br><br>
+
+<div class="col-12 border border-white">
+    <div id="keyword-game">
+    <div class="text-center">
+        {% csrf_token %}
+    <form onsubmit="return false">
+        <div class="form-group">
+            <div><h3 class="text-center">Fill in the blank</h3></div>
+            <div style="font-size: 30px;" id="keyword-question-label" class="third-theme text-center">            
+            </div>
+            <!--<button id="question-audio" onclick="playAudio()"><i class="fas fa-microphone"></i></button>-->
+            <i onclick="playAudio()" style="font-size: 40px;" class="fas fa-volume-up third-theme"></i>
+            <textarea id="keyword-answer-textarea" class="form-control third-theme fourth-theme-background" rows="3"></textarea>
+            <button style="margin: 10px;" class="btn" id="keyword-btn-submit" onclick="keywordSubmitAnswer()">Check</button><br>
+            <p id="keyword-result"></p>
+            <!--<button style="margin: 10px;" onclick="goBack()">Go back</button><br>
+            <button style="margin: 10px;" onclick="goForward()">Go forward</button><br>-->
+            <label id="keyword-result-label"></label>
+        </div>
+    </form>
+    </div>
+</div>
+
+
+
 
 <div class="card text-center" id="showend-card">
     <h1>Great job! You did it</h1>
@@ -99,6 +126,14 @@
 
 <script>
 
+//keyword game (fill in the blank)
+var questionkeywordsarray = {{questionKeywords|safe}};
+var keywordBtnSubmit = document.getElementById("keyword-btn-submit");
+var keywordResult = document.getElementById("keyword-result");
+var keywordQuestionLabel = document.getElementById("keyword-question-label");
+var keywordAnswerTextarea = document.getElementById("keyword-answer-textarea");
+
+// translation game
 var questionsarray = {{ questions|safe }};
 var answersarray = {{ answers|safe }};
 var btnSubmit = document.getElementById("btn-submit");
@@ -114,7 +149,11 @@ var randomNumber = Math.floor(Math.random() * questionsarray.length);
 let idle = false;
 
 var gameQuestions = [];
+
+var gameQuestionKeywords = [];
+
 var gameAnswers = [];
+
 var currentIndex = 0;
 var currentQuestion = '';
 var currentAnswer = '';
@@ -122,10 +161,31 @@ var currentAnswer = '';
 for (var q = questionsarray, i = q.length; i--; ) {
     var random = Math.floor(Math.random() * (i + 1));
     var q1 = q.splice(random, 1)[0];
+    var qk = questionkeywordsarray.splice(random, 1)[0];
     var a2 = answersarray.splice(random, 1)[0];
     gameQuestions.push(q1);
+    gameQuestionKeywords.push(qk);
     gameAnswers.push(a2);
 }
+
+//console.log("random keywords: " + gameQuestionKeywords);
+//console.log("blank: " + gameQuestions[0].replace(gameQuestionKeywords[0], "______"));
+//console.log("blank: " + gameQuestions[1].replace(gameQuestionKeywords[1], "______"));
+//console.log("blank: " + gameQuestions[2].replace(gameQuestionKeywords[2], "______"));
+//console.log("random questions: " + gameQuestions)
+var temp1 = gameQuestionKeywords[currentIndex]
+keywordQuestionLabel.innerHTML = gameQuestions[currentIndex].replace(gameQuestionKeywords[0], "______") + '<br>' + gameAnswers[currentIndex];
+function keywordSubmitAnswer() {
+    if (checkIfQAMatch(keywordAnswerTextarea.value, temp1))
+    {
+        console.log("correct");
+    }
+    else{
+        console.log("nope");
+    }
+}
+//console.log("sentence with blank: "+ gameQuestions[0].replace(gameQuestionKeywords[random], "_________"))
+    
 
 console.log('Both arrays:\n' + gameQuestions + '\n' + gameAnswers)
 currentQuestion = gameQuestions[currentIndex];
@@ -152,10 +212,21 @@ function checkIfQAMatch(q, a){
     // remove spaces
     testq = q.replace(/\s+/g, '');
     testa = a.replace(/\s+/g, '');
-
+    
     // to lowercase
     testq = testq.toLowerCase();
     testa = testa.toLowerCase();
+
+    // remove accents/diacritics
+    // https://stackoverflow.com/questions/990904/remove-accents-diacritics-in-a-string-in-javascript
+    testq = testq.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    testa = testa.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+    // remove special characters
+    // https://stackoverflow.com/questions/35803540/how-to-remove-special-characters-from-a-string-using-javascript
+    testq = testq.replace(/(?!\w|\s)./g, '');
+    testa = testa.replace(/(?!\w|\s)./g, '');
+
     if (testq === testa) {
         return true;
     }

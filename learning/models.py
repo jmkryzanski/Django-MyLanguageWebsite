@@ -34,6 +34,7 @@ class QuestionAnswer(models.Model):
     question = models.CharField(max_length=255)
     answer = models.CharField(max_length=255)
     level = models.IntegerField()
+    questionKeyword = models.CharField(max_length=100, default=None, null=True)
 
     def __str__(self):
         return 'Lesson ' + self.lesson.lessonTitle + ' | Question ' + self.question + ' | Answer ' + '| ' + self.answer
@@ -43,6 +44,9 @@ class QuestionAnswer(models.Model):
 
     def strquestion(self):
         return self.question
+
+    def strquestionkeyword(self):
+        return self.questionKeyword
     
     def stranswer(self):
         return self.answer
