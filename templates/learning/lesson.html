@@ -1,4 +1,4 @@
-{% extends 'learning/base.html' %}
+{% extends 'learning/base2.html' %}
 {% block content %}
 
 {% if user.is_superuser %}
@@ -47,6 +47,11 @@
         display: inline-block !important;
         float: left;
     }
+
+    .hideli{
+        visibility: hidden;
+        display: none;
+    }
 </style>
 
 <div class="col-12 third-theme">
@@ -57,74 +62,42 @@
 
 
 <div>
-    <div id="progress-bar" class="text-center rounded" style="width:20%; background-color: #f8a300; color: white;">20%</div>
+    <div id="progress-bar" class="text-center rounded" style="background-color: #f8a300; color: white;"></div>
 </div>
 <br>
-<button onclick="move()">Click Me</button>
+<!--<button onclick="move()">Click Me</button>-->
 <br>
-
-
-<button id="btn-toggle-game" onclick="toggleGame()">Toggle Game</button>
-
-<div class="col-12 border border-white" id="qa-card">
-    <div id="translation-game">
-    <div class="text-center">
-        {% csrf_token %}
+<div id="game-card" class="col-12 border border-white text-center">
+    {% csrf_token %}
     <form onsubmit="return false">
-        <div class="form-group">
-            <div><h3>Translate the sentence to English:</h3></div>
-            <div style="font-size: 30px;" id="question-label" class="third-theme text-center">            
+        <div>
+            <h3 id="prompt-label" class="secondary-theme"></h3>
+            <h4 id="question-label" class="third-theme text-center"></h4>
+            <span id='btn-audio'><i onclick="playAudio()" style="font-size: 40px;" class="fas fa-volume-up third-theme text-center"></i></span>
+            <div id="dragdrop-div">    
+                <ul id="sortable" class="third-theme list-inline d-flex justify-content-center"></ul>
             </div>
-            <!--<button id="question-audio" onclick="playAudio()"><i class="fas fa-microphone"></i></button>-->
-            <span id='clickableAwesomeFont'><i onclick="playAudio()" style="font-size: 40px;" class="fas fa-volume-up third-theme"></i></span>
-            <textarea id="answer-textarea" class="form-control third-theme fourth-theme-background" id="exampleFormControlTextarea1" rows="3"></textarea>
-            <button style="margin: 10px;" class="btn" id="btn-submit" onclick="submitAnswer()">Check</button><br>
-            <p id="result"></p>
-            <!--<button style="margin: 10px;" onclick="goBack()">Go back</button><br>
-            <button style="margin: 10px;" onclick="goForward()">Go forward</button><br>-->
-            <label id="result"></label>
+            <div>
+                <textarea id="answer-textarea" class="form-control third-theme fourth-theme-background" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <div>
+                <button id="btn-submit" class="btn text-center" onclick="checkUserInput()">Check</button>
+            </div>
+            <div>
+                <p id="result-label"></p>
+                <label id="result-label"></label>
+            </div>
+        </div>
+        <div style="font-size: 30px;" id="keyword-question-label" class="third-theme text-center">            
         </div>
     </form>
+</div>
+
+<div class="col-12 border border-white text-center">
+    <div id="showend-card">
+        <h1>Great job! You did it</h1>
+        <a class="secondary-theme" href="{% url 'course' lan %}"><p class="secondary-theme">Return back to {{lesson.course}} lessons</p></a>
     </div>
-</div>
-
-<div id="dragdrop-game">
-<h1 id='isRight' class="third-theme"></h1>
-    <ul class="third-theme text-center" id="sortable" ></ul>  
-    <button style="margin: 10px;" class="btn" id="btn-bet" onclick="bet()">Check</button><br>
-</div>
-</div>
-
-<br><br>
-
-<div class="col-12 border border-white">
-    <div id="keyword-game">
-    <div class="text-center">
-        {% csrf_token %}
-    <form onsubmit="return false">
-        <div class="form-group">
-            <div><h3 class="text-center">Fill in the blank</h3></div>
-            <div style="font-size: 30px;" id="keyword-question-label" class="third-theme text-center">            
-            </div>
-            <!--<button id="question-audio" onclick="playAudio()"><i class="fas fa-microphone"></i></button>-->
-            <i onclick="playAudio()" style="font-size: 40px;" class="fas fa-volume-up third-theme"></i>
-            <textarea id="keyword-answer-textarea" class="form-control third-theme fourth-theme-background" rows="3"></textarea>
-            <button style="margin: 10px;" class="btn" id="keyword-btn-submit" onclick="keywordSubmitAnswer()">Check</button><br>
-            <p id="keyword-result"></p>
-            <!--<button style="margin: 10px;" onclick="goBack()">Go back</button><br>
-            <button style="margin: 10px;" onclick="goForward()">Go forward</button><br>-->
-            <label id="keyword-result-label"></label>
-        </div>
-    </form>
-    </div>
-</div>
-
-
-
-
-<div class="card text-center" id="showend-card">
-    <h1>Great job! You did it</h1>
-    <a class="secondary-theme" href="{% url 'course' lan %}"><p class="secondary-theme">Return back to {{lesson.course}} lessons</p></a>
 </div>
 
 </div>
@@ -133,39 +106,41 @@
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
 <script>
+//global variables
+const questionsarray = {{ questions|safe }};
+const answersarray = {{ answers|safe }};
+const questionkeywordsarray = {{questionKeywords|safe}};
+const gameCard = document.getElementById("game-card");
+var availableGames = ["translation", "dragdrop", "keyword"];
+var arrayRandomGames = [];
 
-//keyword game (fill in the blank)
-var questionkeywordsarray = {{questionKeywords|safe}};
-var keywordBtnSubmit = document.getElementById("keyword-btn-submit");
-var keywordResult = document.getElementById("keyword-result");
-var keywordQuestionLabel = document.getElementById("keyword-question-label");
-var keywordAnswerTextarea = document.getElementById("keyword-answer-textarea");
-
-// translation game
-var questionsarray = {{ questions|safe }};
-var answersarray = {{ answers|safe }};
-var btnSubmit = document.getElementById("btn-submit");
-var result = document.getElementById("result");
-var questionLabel = document.getElementById("question-label");
-var answerTextarea = document.getElementById("answer-textarea");
-answerTextarea.addEventListener("keypress", submitOnEnter);
-var qaCard = document.getElementById("qa-card");
-var showEndCard = document.getElementById("showend-card");
+const showEndCard = document.getElementById("showend-card");
 showEndCard.style.display = "none";
 
 var randomNumber = Math.floor(Math.random() * questionsarray.length);
 let idle = false;
 
 var gameQuestions = [];
-
 var gameQuestionKeywords = [];
-
 var gameAnswers = [];
-
 var currentIndex = 0;
 var currentQuestion = '';
 var currentAnswer = '';
 
+const dragdropDiv = document.getElementById("dragdrop-div");
+const promptLabel = document.getElementById("prompt-label");
+const btnAudio = document.getElementById("btn-audio");
+
+const btnSubmit = document.getElementById("btn-submit");
+const resultLabel = document.getElementById("result-label");
+const questionLabel = document.getElementById("question-label");
+const answerTextarea = document.getElementById("answer-textarea");
+answerTextarea.addEventListener("keypress", enterSubmit);
+
+const keywordQuestionLabel = document.getElementById("keyword-question-label");
+
+
+// randomize questions, keywords, and answers for entire game
 for (var q = questionsarray, i = q.length; i--; ) {
     var random = Math.floor(Math.random() * (i + 1));
     var q1 = q.splice(random, 1)[0];
@@ -176,29 +151,9 @@ for (var q = questionsarray, i = q.length; i--; ) {
     gameAnswers.push(a2);
 }
 
-//console.log("random keywords: " + gameQuestionKeywords);
-//console.log("blank: " + gameQuestions[0].replace(gameQuestionKeywords[0], "______"));
-//console.log("blank: " + gameQuestions[1].replace(gameQuestionKeywords[1], "______"));
-//console.log("blank: " + gameQuestions[2].replace(gameQuestionKeywords[2], "______"));
-//console.log("random questions: " + gameQuestions)
-var temp1 = gameQuestionKeywords[currentIndex]
-keywordQuestionLabel.innerHTML = gameAnswers[currentIndex] + '<br>' + gameQuestions[currentIndex].replace(gameQuestionKeywords[0], "______");
-function keywordSubmitAnswer() {
-    if (checkIfQAMatch(keywordAnswerTextarea.value, temp1))
-    {
-        console.log("correct");
-    }
-    else{
-        console.log("nope");
-    }
-}
-//console.log("sentence with blank: "+ gameQuestions[0].replace(gameQuestionKeywords[random], "_________"))
-    
 
-console.log('Both arrays:\n' + gameQuestions + '\n' + gameAnswers)
 currentQuestion = gameQuestions[currentIndex];
 currentAnswer = gameAnswers[currentIndex];
-console.log(currentIndex + ' - ' + currentQuestion + ' - ' + currentAnswer);
 
 questionLabel.innerHTML = currentQuestion;
 
@@ -210,9 +165,34 @@ audioMessage.volume = 1; // 0 to 1
 audioMessage.rate = 0.8; // 0.1 to 10
 audioMessage.pitch = 1; //0 to 2
 audioMessage.text = currentQuestion;
-audioMessage.lang = 'es';
+audioMessage.lang = 'pl';
 
+startGame();
 
+function startGame() {
+    for (i = 0; i < gameQuestions.length; i++){
+        let temp = Math.floor(Math.random() * gameQuestions.length);
+        arrayRandomGames[i] = availableGames[temp];
+    }
+
+    switch (arrayRandomGames[0]) {
+        case "translation":
+            console.log("yes");
+            showTranslationGame();
+            break;
+        case "dragdrop":
+            console.log("nope");
+            showDragdropGame();
+            dragdropGenerate();
+            break;
+        case "keyword":
+            console.log("no");
+            showKeywordGame();
+            break;
+    }
+}
+
+//translation game functions
 // add function to remove symbols in testa and testa, such as number or $
 // also accept answer if user input is within 2 characters of correct answer
 // also accept if user input is within 95% correct ratio of correct answer
@@ -220,7 +200,7 @@ function checkIfQAMatch(q, a){
     // remove spaces
     testq = q.replace(/\s+/g, '');
     testa = a.replace(/\s+/g, '');
-    
+
     // to lowercase
     testq = testq.toLowerCase();
     testa = testa.toLowerCase();
@@ -241,7 +221,6 @@ function checkIfQAMatch(q, a){
     else {
         return false;
     }
-
 }
 
 function newRandomQA(){
@@ -249,12 +228,23 @@ function newRandomQA(){
     currentQuestion = gameQuestions[currentIndex];
     currentAnswer = gameAnswers[currentIndex];
     questionLabel.innerHTML = currentQuestion;
-    console.log(currentIndex + ' - ' + currentQuestion + ' - ' + currentAnswer);
     $(answerTextarea).val('');
-}
 
-function resetQA() {
-    //console.log('finished');
+    switch (arrayRandomGames[currentIndex]) {
+        case "translation":
+            console.log("yes");
+            showTranslationGame();
+            break;
+        case "dragdrop":
+            console.log("nope");
+            showDragdropGame();
+            dragdropGenerate();
+            break;
+        case "keyword":
+            console.log("no");
+            showKeywordGame();
+            break;
+    }
 }
 
 function playAudio(){
@@ -264,17 +254,18 @@ function playAudio(){
 
 function correctAnswer(){
     idle = true;
-    result.innerHTML = "correct";
-    $(result).css('color', 'green');
+    resultLabel.innerHTML = "correct";
+    $(resultLabel).css('color', 'green');
     btnSubmit.innerHTML = "Continue";
     answerTextarea.disabled = true;
     btnSubmit.focus();
+    move();
 }
 
 function wrongAnswerFirst() {
     idle = true;
-    result.innerHTML = "incorrect, the correct translation is" + currentAnswer;
-    $(result).css('color', 'red');
+    resultLabel.innerHTML = "incorrect, the correct translation is" + currentAnswer;
+    $(resultLabel).css('color', 'red');
     btnSubmit.innerHTML = "Continue";
     answerTextarea.disabled = true;
     btnSubmit.focus();
@@ -283,12 +274,29 @@ function wrongAnswerFirst() {
 function wrongAnswer(){
     gameQuestions.push(gameQuestions.splice(currentIndex, 1)[0]);
     gameAnswers.push(gameAnswers.splice(currentIndex, 1)[0]);
+    gameQuestionKeywords.push(gameQuestionKeywords.splice(currentIndex, 1)[0]);
+
+    arrayRandomGames.push(arrayRandomGames.splice(currentIndex, 1)[0]);
+
     currentQuestion = gameQuestions[currentIndex];
     currentAnswer = gameAnswers[currentIndex];
-    console.log(currentIndex + ' - ' + gameQuestions + ' - ' + gameAnswers);
     questionLabel.innerHTML = currentQuestion;
-    console.log(currentIndex + ' - ' + currentQuestion + ' - ' + currentAnswer);
     $(answerTextarea).val('');
+    switch (arrayRandomGames[currentIndex]) {
+        case "translation":
+            console.log("yes");
+            showTranslationGame();
+            break;
+        case "dragdrop":
+            console.log("nope");
+            showDragdropGame();
+            dragdropGenerate();
+            break;
+        case "keyword":
+            console.log("no");
+            showKeywordGame();
+            break;
+    }
 }
 
 function playAudio(){
@@ -296,130 +304,218 @@ function playAudio(){
     speechSynthesis.speak(audioMessage);
 }
 
-function showEndScreen(){
-    qaCard.style.display = "none";
-    showEndCard.style.display = "block";
-}
-
-function submitAnswer(){ 
-    if (idle == false) {
-        if (checkIfQAMatch(answerTextarea.value, currentAnswer)) {
-            if (currentIndex >= gameQuestions.length-1) {
-                console.log('finished');
-                result.innerHTML = "finished";
-                $(result).css('color', 'aqua');
-                showEndScreen();
+function checkUserInput() {
+    // translation game
+    if (arrayRandomGames[currentIndex] === availableGames[0]){
+        if (idle == false) {
+            if (checkIfQAMatch(answerTextarea.value, currentAnswer)) {
+                if (currentIndex >= gameQuestions.length-1) {
+                    resultLabel.innerHTML = "finished";
+                    $(resultLabel).css('color', 'aqua');
+                    showEndScreen();
+                }
+                else {
+                    correctAnswer();
+                    keywordGenerate();
+                }   
             }
-            else {
-                correctAnswer();
-
-                dragDropGenerate();
-            }   
-        }
-        else{
-            wrongAnswerFirst();
-
-            dragDropGenerate();
-        }
-    }
-    else {
-        if (checkIfQAMatch(answerTextarea.value, currentAnswer)) {
-            if (currentIndex >= gameQuestions.length-1) {
-                console.log('finished');
-                result.innerHTML = "finished";
-                $(result).css('color', 'aqua');
+            else{
+                wrongAnswerFirst();
+                keywordGenerate();
             }
-            else {
+        }
+        else {
+            if (checkIfQAMatch(answerTextarea.value, currentAnswer)) {
+                if (currentIndex >= gameQuestions.length-1) {
+                    resultLabel.innerHTML = "finished";
+                    $(resultLabel).css('color', 'aqua');
+                }
+                else {
+                    idle = false;
+                    resultLabel.innerHTML = "";
+                    btnSubmit.innerHTML = "Check";
+                    newRandomQA();
+                    answerTextarea.disabled = false;
+                    answerTextarea.focus();
+                    keywordGenerate();
+                }  
+        }
+            else{
                 idle = false;
-                result.innerHTML = "";
+                resultLabel.innerHTML = "";
                 btnSubmit.innerHTML = "Check";
-                newRandomQA();
+                wrongAnswer();
                 answerTextarea.disabled = false;
                 answerTextarea.focus();
-
-                dragDropGenerate();
-            }  
-    }
-        else{
-            idle = false;
-            result.innerHTML = "";
-            btnSubmit.innerHTML = "Check";
-            wrongAnswer();
-            answerTextarea.disabled = false;
-            answerTextarea.focus();
-
-            dragDropGenerate();
+                keywordGenerate();
+            }
         }
     }
-};
 
-function submitOnEnter(event){
+    //dragdrop
+    else if (arrayRandomGames[currentIndex] === availableGames[1]){
+        var children = $('#sortable').sortable('refreshPositions').children();
+        var temp1 = '';
+        var temp2 = '';
+        $.each(children, function() {
+        temp2 = temp1.concat(temp2, $(this).text().trim());
+        });
+
+        //compare user input to question
+        if (temp2 === mycorrectAnswer.join("")){
+            if (idle == true){
+                newRandomQA();
+                keywordGenerate();
+                idle = false;
+                $("#sortable").sortable({
+                    disabled: false
+                });
+                //$("#sortable").disableSelection();
+                return;
+                
+            }
+            if (idle == false){
+                if (currentIndex >= gameQuestions.length-1) {
+                    resultLabel.innerHTML = "finished";
+                    $(resultLabel).css('color', 'aqua');
+                    showEndScreen();
+                }
+                else{
+                    correctAnswer();
+                    idle = true;
+                    $("#sortable").sortable({
+                        disabled: true
+                    });
+                    return;
+                }
+            }
+        }
+        else{
+            if (idle == true){
+                wrongAnswer();
+                keywordGenerate();
+                idle = false;
+                $("#sortable").sortable({
+                    disabled: false
+                });
+                return;
+                
+            }
+            if (idle == false){
+                $("#sortable").sortable({
+                    disabled: true
+                });
+                idle = true;
+                return;
+            }
+        }
+    }
+
+    //keyword
+    else if (arrayRandomGames[currentIndex] = availableGames[2]){
+        if (idle == false){
+
+            if (checkIfQAMatch(answerTextarea.value, gameQuestionKeywords[currentIndex])){
+                if (currentIndex >= gameQuestions.length-1) {
+                    resultLabel.innerHTML = "finished";
+                    $(resultLabel).css('color', 'aqua');
+                    showEndScreen();
+                }
+                else{
+                    correctAnswer();
+                    keywordGenerate();
+                }
+            }
+            else{
+                wrongAnswerFirst();
+                keywordGenerate();
+            }
+        }
+        else {
+            if (checkIfQAMatch(answerTextarea.value, gameQuestionKeywords[currentIndex])){
+                newRandomQA();
+                idle = false;
+                $(answerTextarea).val('');
+                return;
+            }
+            else{
+                idle = false;
+                resultLabel.innerHTML = "";
+                btnSubmit.innerHTML = "Check";
+                wrongAnswer();
+                answerTextarea.disabled = false;
+                answerTextarea.focus();
+                keywordGenerate();
+            }
+        }
+    }
+}
+
+
+function keywordGenerate() {
+
+}
+
+function enterSubmit(event){
     if(event.which === 13){
         event.target.form.dispatchEvent(new Event("submit", {cancelable: true}));
         event.preventDefault(); // Prevents the addition of a new line in the text field (not needed in a lot of cases)
-        submitAnswer();
+        checkUserInput();
     }
 }
 
-
-
-
-/*
-DRAG AND DROP GAME
-*/
-function bet() {
-  console.log("answer: " + mycorrectAnswer.join(""))
-  var children = $('#sortable').sortable('refreshPositions').children();
-  var temp1 = '';
-  var temp2 = '';
-  $.each(children, function() {
-    temp2 = temp1.concat(temp2, $(this).text().trim());
-        //console.log($(this).text().trim());
-
-    });
-    //console.log(temp2);
-    dragDropCompare();
+// other functions
+function showEndScreen(){
+    gameCard.style.display = "none";
+    showEndCard.style.display = "block";
+    move();
 }
 
-
-const dragDropCompare = (e) =>{
-    /*var index1 = randomized.indexOf(dragging);
-    var index2 = randomized.indexOf(draggedOver);
-    randomized.splice(index1, 1)
-    randomized.splice(index2, 0, dragging)
-
-    isRight = randomized.join("") === base.join("") 
-    ? 'In Order!': 'Not In Order!'
-
-    renderItems(randomized)
-    };*/
-    
-    
-    var children = $('#sortable').sortable('refreshPositions').children();
-    var temp1 = '';
-    var temp2 = '';
-    $.each(children, function() {
-        temp2 = temp1.concat(temp2, $(this).text().trim());
-        //console.log($(this).text().trim());
+function showTranslationGame(){
+    promptLabel.innerHTML = "Translate the sentence from English to Polish";
+    questionLabel.innerHTML = currentQuestion;
+    answerTextarea.style.display = "block";
+    keywordQuestionLabel.style.display = 'none';
+    answerTextarea.disabled = false;
+    answerTextarea.focus();
+    const all = document.querySelectorAll('li');
+    all.forEach(function(t,i){
+        t.classList.add('hideli');
     });
-    if (temp2 === mycorrectAnswer.join("")){
-        console.log("correct");
-    }
-    else{
-        console.log("incorrect");
-    }
-    };
+    $('li').hide();
+    dragdropDiv.style.display = "none";
+}
 
+function showDragdropGame(){
+    promptLabel.innerHTML = "Drag and drop the words into the correct order";
+    answerTextarea.style.display = "none";
+    keywordQuestionLabel.style.display = 'none';
+    const all = document.querySelectorAll('li');
+    all.forEach(function(t,i){
+        t.classList.remove('hideli');
+    });
+    dragdropDiv.style.display = "block";
+    dragdropGenerate();
+}
 
-dragDropGenerate();
+function showKeywordGame(){
+    promptLabel.innerHTML = "Fill in the blank";
+    questionLabel.innerHTML = gameAnswers[currentIndex] + '<br>' + gameQuestions[currentIndex].replace(gameQuestionKeywords[currentIndex], "______");
+    answerTextarea.style.display = "block";
+    answerTextarea.disabled = false;
+    answerTextarea.focus();
+    const all = document.querySelectorAll('li');
+    all.forEach(function(t,i){
+        t.classList.add('hideli');
+    });
+    $('li').hide();
+    dragdropDiv.style.display = "none";
 
-function dragDropGenerate() {
-var list = document.getElementById('sortable')
-var base, randomized, dragging, draggedOver;
-var isRight = 'Not In Order!';
+}
 
-
-
+function dragdropGenerate() {
+    var list = document.getElementById('sortable')
+    var base, randomized, dragging, draggedOver;
     const genRandom = (array) => {
     base = array.slice()
     randomized = array.sort(() => Math.random() - 0.5)
@@ -430,30 +526,12 @@ var isRight = 'Not In Order!';
     } else {
         genRandom(array)
     }
-
-        //renderItems(randomized)
-
     }
-
-    
-    //$( "#draggable" ).draggable({
-      //connectToSortable: "#sortable",
-      //helper: "clone",
-      //revert: "invalid"
-    //});
-    //$( "ul, li" ).disableSelection();
-  
-
     const renderItems = (data) =>{
-    document.getElementById('isRight').innerText = isRight
     list.innerText = ''
     data.forEach(item=>{
         var node = document.createElement("li");    
-
-        //$(node).addClass("ui-state-default");
         node.classList.add('ui-state-default');
-
-        //node.classList.add('third-theme-border');
 
         if (questionLabel.classList.contains('dark-third-theme')){
             node.classList.add('dark-third-theme-border');
@@ -461,91 +539,60 @@ var isRight = 'Not In Order!';
         else{
             node.classList.add('third-theme-border');
         }
+        node.classList.add('list-inline-item');
 
-        //node.draggable = true
-        //node.style.backgroundColor = item
-        //node.style.backgroundColor = node.style.backgroundColor.length > 0  
-        //? item : 'lightblue'
-        //node.addEventListener('drag', setDragging) 
-        //node.addEventListener('dragover', setDraggedOver)
-        //node.addEventListener('drop', compare) 
+
         node.innerText = item
         list.appendChild(node)
     })
     }
-
-
-
-
-    /*const setDraggedOver = (e) => {
-      e.preventDefault();
-      draggedOver = Number.isNaN(parseInt(e.target.innerText)) ? e.target.innerText : parseInt(e.target.innerText)
-    }
-
-    const setDragging = (e) =>{
-    dragging = Number.isNaN(parseInt(e.target.innerText)) ? e.target.innerText : parseInt(e.target.innerText)
-    }*/
-
-    /*string_to_array = function (currentAnswer) {
-        bet =  currentAnswer.trim().split(" ");
-        console.log(bet);
-        return bet;
-    };*/
-
-    //sayin = currentAnswer.split(" ")
-    //console.log(sayin);
-
-    mycorrectAnswer = currentAnswer.split(" ")
-    
-    //console.log(mycorrectAnswer.join(""))
-    //mycorrectAnswer = sayin;
-    genRandom(currentAnswer.split(" "))
-    //genRandom(currentAnswer.split(" "))
-    //genRandom(['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'])
-    //genRandom(['hello', 'how', 'are', 'you'])
+    mycorrectAnswer = currentAnswer.split(" ");
+    genRandom(currentAnswer.split(" "));
+    questionLabel.innerHTML = currentQuestion;
 }
 
-///////////////////////////////
+
+// progress bar
+var widthValue = 0.0;
+const progressBar = document.getElementById("progress-bar");
+var increment = 0.0;
+increment = (((currentIndex+1) / ((gameQuestions.length*1)))*100.0);
+progressBar.style.width = widthValue + "%";
+progressBar.innerHTML = progressBar.style.width;
+
+
+function move() {
+    var elem = document.getElementById("progress-bar");
+    var widthAnim = widthValue;
+    var id = setInterval(frame, 10);
+    var widthIncrement = increment;
+
+    widthValue = widthAnim + widthIncrement;
+
+    function frame() {
+        if (widthAnim >= widthValue || widthValue > 100) {
+        clearInterval(id);
+        } else {
+        widthAnim++;
+        elem.style.width = widthAnim + '%';
+        elem.innerHTML = widthValue + '%';
+        }
+    }
+}
 
 </script>
-
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 <script>
     $("#sortable").sortable({
     stop: function(ev, ui) {
         var children = $('#sortable').sortable('refreshPositions').children();
-        console.log('Positions: ');
-        $.each(children, function() {
-            console.log($(this).text().trim());
-        });
+        //$.each(children, function() {
+        //    //console.log($(this).text().trim());
+        //});
     },
-    //revert: true,
     });
     $("#sortable").disableSelection();
 </script>
-
-<script>
-    var widthValue = 20;
-  
-  function move() {
-    var elem = document.getElementById("progress-bar");
-    var widthAnim = widthValue;
-    var id = setInterval(frame, 10);
-    var widthIncrement = 10;
-  
-    widthValue = widthAnim + widthIncrement;
-  
-    function frame() {
-      if (widthAnim >= widthValue || widthValue > 100) {
-        clearInterval(id);
-      } else {
-        widthAnim++;
-        elem.style.width = widthAnim + '%';
-        elem.innerHTML = widthAnim * 1 + '%';
-      }
-    }
-  }
-  </script>
 
 {% endblock %}
