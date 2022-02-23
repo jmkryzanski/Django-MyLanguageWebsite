@@ -58,6 +58,9 @@
 {% autoescape off %}
 {{lesson.content}}
 {% endautoescape %}
+
+{{lesson.richContent|safe}}
+
 </div>
 
 
@@ -157,6 +160,9 @@ currentAnswer = gameAnswers[currentIndex];
 
 questionLabel.innerHTML = currentQuestion;
 
+var questionSplit = currentQuestion.split("//");
+console.log(questionSplit);
+
 var audioMessage = new SpeechSynthesisUtterance();
 var voices = window.speechSynthesis.getVoices();
 audioMessage.voice = voices[10]; // Note: some voices don't support altering params
@@ -197,6 +203,7 @@ function startGame() {
 // also accept answer if user input is within 2 characters of correct answer
 // also accept if user input is within 95% correct ratio of correct answer
 function checkIfQAMatch(q, a){
+
     // remove spaces
     testq = q.replace(/\s+/g, '');
     testa = a.replace(/\s+/g, '');
@@ -214,6 +221,22 @@ function checkIfQAMatch(q, a){
     // https://stackoverflow.com/questions/35803540/how-to-remove-special-characters-from-a-string-using-javascript
     testq = testq.replace(/(?!\w|\s)./g, '');
     testa = testa.replace(/(?!\w|\s)./g, '');
+
+    // if the game is translation, allow multiple correct answers
+    if (arrayRandomGames[currentIndex] === "translation"){
+        var testarray = currentAnswer.split("//");
+        console.log(testarray);
+        console.log(testarray[0]);
+        console.log(testarray[1]);
+        console.log(testarray[2]);
+        //console.log(currentAnswer.split("//").length);
+        for (i = 0; i < testarray.length; i++){
+            if (testq === testarray[i]){
+                return true;
+            }
+        }
+    }
+
 
     if (testq === testa) {
         return true;

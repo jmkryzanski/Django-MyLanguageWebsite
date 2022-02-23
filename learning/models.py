@@ -1,8 +1,11 @@
+from re import T
 from statistics import mode
+from tokenize import blank_re
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from ckeditor.fields import RichTextField
 
 class Course(models.Model):
     title = models.CharField(max_length=255)
@@ -15,7 +18,8 @@ class Course(models.Model):
 class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     lessonTitle = models.CharField(max_length=255)
-    content = models.TextField(default='content')
+    content = models.TextField(default='content', null=True, blank=True)
+    richContent = RichTextField(blank=True, null=True)
     orderingID = models.IntegerField()
     slug = models.SlugField(unique=True)
 
@@ -34,7 +38,7 @@ class QuestionAnswer(models.Model):
     question = models.CharField(max_length=255)
     answer = models.CharField(max_length=255)
     level = models.IntegerField()
-    questionKeyword = models.CharField(max_length=100, default=None, null=True)
+    questionKeyword = models.CharField(max_length=100, default=None, null=True, blank=True)
 
     def __str__(self):
         return 'Lesson ' + self.lesson.lessonTitle + ' | Question ' + self.question + ' | Answer ' + '| ' + self.answer
