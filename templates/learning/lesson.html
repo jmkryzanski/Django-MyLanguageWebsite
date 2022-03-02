@@ -114,7 +114,8 @@ const questionsarray = {{ questions|safe }};
 const answersarray = {{ answers|safe }};
 const questionkeywordsarray = {{questionKeywords|safe}};
 const gameCard = document.getElementById("game-card");
-var availableGames = ["translation", "dragdrop", "keyword"];
+//var availableGames = ["translation", "dragdrop", "keyword"];
+var availableGames = ["translation", "translation", "keyword"];
 var arrayRandomGames = [];
 
 const showEndCard = document.getElementById("showend-card");
@@ -159,9 +160,11 @@ currentQuestion = gameQuestions[currentIndex];
 currentAnswer = gameAnswers[currentIndex];
 
 questionLabel.innerHTML = currentQuestion;
+var questionLabelFormatA = currentAnswer;
+//console.log("format" + questionLabelFormatA);
 
-var questionSplit = currentQuestion.split("//");
-console.log(questionSplit);
+//var questionSplit = currentQuestion.split("//");
+//console.log(questionSplit);
 
 var audioMessage = new SpeechSynthesisUtterance();
 var voices = window.speechSynthesis.getVoices();
@@ -173,26 +176,32 @@ audioMessage.pitch = 1; //0 to 2
 audioMessage.text = currentQuestion;
 audioMessage.lang = 'pl';
 
+var hi2 = '';
+var hi3 = '';
+var hi4 = '';
+var hi5 = '';
+
 startGame();
 
 function startGame() {
     for (i = 0; i < gameQuestions.length; i++){
-        let temp = Math.floor(Math.random() * gameQuestions.length);
+        //let temp = Math.floor(Math.random() * gameQuestions.length);
+        let temp = Math.floor(Math.random() * availableGames.length);
         arrayRandomGames[i] = availableGames[temp];
     }
 
     switch (arrayRandomGames[0]) {
         case "translation":
-            console.log("yes");
+            //console.log("translation");
             showTranslationGame();
             break;
         case "dragdrop":
-            console.log("nope");
+            //console.log("dragdrop");
             showDragdropGame();
             dragdropGenerate();
             break;
         case "keyword":
-            console.log("no");
+            //console.log("keyword");
             showKeywordGame();
             break;
     }
@@ -223,15 +232,25 @@ function checkIfQAMatch(q, a){
     testa = testa.replace(/(?!\w|\s)./g, '');
 
     // if the game is translation, allow multiple correct answers
-    if (arrayRandomGames[currentIndex] === "translation"){
+    if (arrayRandomGames[currentIndex] === "translation" || arrayRandomGames[currentIndex] === "keyword"){
         var testarray = currentAnswer.split("//");
-        console.log(testarray);
-        console.log(testarray[0]);
-        console.log(testarray[1]);
-        console.log(testarray[2]);
+        //console.log(testarray);
+        //console.log(testarray[0]);
+        //console.log(testarray[1]);
+        //console.log(testarray[2]);
         //console.log(currentAnswer.split("//").length);
+        //console.log("testarray " + testarray);
+        //console.log("testarray0 " + testarray[0]);
+        //console.log("testarra1 " + testarray[1]);
+        //console.log("testq " + testq);
+        //console.log("testa " + testa);
         for (i = 0; i < testarray.length; i++){
-            if (testq === testarray[i]){
+            let tempv = testarray[i].replace(/\s+/g, '');
+            tempv = tempv.toLowerCase();
+            tempv = tempv.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            tempv = tempv.replace(/(?!\w|\s)./g, '');
+
+            if (testq === tempv){
                 return true;
             }
         }
@@ -253,18 +272,17 @@ function newRandomQA(){
     questionLabel.innerHTML = currentQuestion;
     $(answerTextarea).val('');
 
+    console.log(currentQuestion);
+    console.log(currentAnswer);
     switch (arrayRandomGames[currentIndex]) {
         case "translation":
-            console.log("yes");
             showTranslationGame();
             break;
         case "dragdrop":
-            console.log("nope");
             showDragdropGame();
             dragdropGenerate();
             break;
         case "keyword":
-            console.log("no");
             showKeywordGame();
             break;
     }
@@ -305,18 +323,18 @@ function wrongAnswer(){
     currentAnswer = gameAnswers[currentIndex];
     questionLabel.innerHTML = currentQuestion;
     $(answerTextarea).val('');
+
+    console.log(currentQuestion);
+    console.log(currentAnswer);
     switch (arrayRandomGames[currentIndex]) {
         case "translation":
-            console.log("yes");
             showTranslationGame();
             break;
         case "dragdrop":
-            console.log("nope");
             showDragdropGame();
             dragdropGenerate();
             break;
         case "keyword":
-            console.log("no");
             showKeywordGame();
             break;
     }
@@ -328,6 +346,10 @@ function playAudio(){
 }
 
 function checkUserInput() {
+    ///
+    //var test2 = currentAnswer.split("//");
+    //currentAnswer = test2[0];
+    ///
     // translation game
     if (arrayRandomGames[currentIndex] === availableGames[0]){
         if (idle == false) {
@@ -385,7 +407,9 @@ function checkUserInput() {
         });
 
         //compare user input to question
-        if (temp2 === mycorrectAnswer.join("")){
+        //console.log(temp2);
+        //console.log(hi3.replace(/\s+/g, ''));
+        if (temp2 === hi3.replace(/\s+/g, '')){//mycorrectAnswer.join("")){
             if (idle == true){
                 newRandomQA();
                 keywordGenerate();
@@ -437,7 +461,6 @@ function checkUserInput() {
     //keyword
     else if (arrayRandomGames[currentIndex] = availableGames[2]){
         if (idle == false){
-
             if (checkIfQAMatch(answerTextarea.value, gameQuestionKeywords[currentIndex])){
                 if (currentIndex >= gameQuestions.length-1) {
                     resultLabel.innerHTML = "finished";
@@ -523,7 +546,11 @@ function showDragdropGame(){
 
 function showKeywordGame(){
     promptLabel.innerHTML = "Fill in the blank";
-    questionLabel.innerHTML = gameAnswers[currentIndex] + '<br>' + gameQuestions[currentIndex].replace(gameQuestionKeywords[currentIndex], "______");
+    //questionLabel.innerHTML = gameAnswers[currentIndex] + '<br>' + gameQuestions[currentIndex].replace(gameQuestionKeywords[currentIndex], "______");
+
+    var sayin = gameAnswers[currentIndex].split("//");
+    questionLabel.innerHTML = sayin[0] + '<br>' + gameQuestions[currentIndex].replace(gameQuestionKeywords[currentIndex], "______");
+
     answerTextarea.style.display = "block";
     answerTextarea.disabled = false;
     answerTextarea.focus();
@@ -536,10 +563,19 @@ function showKeywordGame(){
 
 }
 
+
+
 function dragdropGenerate() {
+
+    //var hi = currentAnswer.split("//");
+    //console.log("hi " + hi);
+    //console.log(hi[0]);
+    //console.log(hi[1]);
+
     var list = document.getElementById('sortable')
     var base, randomized, dragging, draggedOver;
     const genRandom = (array) => {
+        //console.log("array " + array[0]);//.split(","));
     base = array.slice()
     randomized = array.sort(() => Math.random() - 0.5)
 
@@ -569,9 +605,20 @@ function dragdropGenerate() {
         list.appendChild(node)
     })
     }
-    mycorrectAnswer = currentAnswer.split(" ");
-    genRandom(currentAnswer.split(" "));
-    questionLabel.innerHTML = currentQuestion;
+
+    //hi2 = currentAnswer.split("//");
+    //hi3 = hi2[0];
+    //hi4 = hi3.split(" ");
+    //genRandom(hi4);
+    //questionLabel.innerHTML = currentQuestion;
+    hi2 = currentQuestion.split("//");
+    hi3 = hi2[0];
+    hi4 = hi3.split(" ");
+    genRandom(hi4);
+
+    hi5 = currentAnswer.split("//");
+    hi5 = hi5[0];
+    questionLabel.innerHTML = hi5;
 }
 
 
