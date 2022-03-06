@@ -9,4 +9,5 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('profile/', include('userprofile.urls')),
     path('contact/', include('contact.urls')),
+    path('excel/', include('excel.urls')),
 ]
