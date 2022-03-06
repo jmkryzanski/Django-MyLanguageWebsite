@@ -1,11 +1,11 @@
-from django.contrib import admin
-from .models import Question, Choice
-
-admin.site.register(Question)
-admin.site.register(Choice)
-
-class QuestionAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('question_text',)}
-
-class ChoiceAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('choice_text',)}
+#rom django.contrib import admin
+#rom .models import Question, Choice
+#
+#dmin.site.register(Question)
+#dmin.site.register(Choice)
+#
+#lass QuestionAdmin(admin.ModelAdmin):
+#   prepopulated_fields = {'slug': ('question_text',)}
+#
+#lass ChoiceAdmin(admin.ModelAdmin):
+#   prepopulated_fields = {'slug': ('choice_text',)}

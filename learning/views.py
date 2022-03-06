@@ -123,6 +123,7 @@ def ViewLessonView(request, lan, myslug, level):
     for a in questionanswer:
         answers.append(a.stranswer())
 
+
     context = {
         'lesson': lesson,
         'questionanswer': questionanswer,

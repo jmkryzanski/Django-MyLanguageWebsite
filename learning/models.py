@@ -34,14 +34,17 @@ class Lesson(models.Model):
         return reverse('home')
 
 class QuestionAnswer(models.Model):
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, blank=True, null=True)
     question = models.CharField(max_length=255)
     answer = models.CharField(max_length=255)
     level = models.IntegerField()
     questionKeyword = models.CharField(max_length=100, default=None, null=True, blank=True)
 
+    #def __str__(self):
+    #    return 'Lesson ' + self.lesson.lessonTitle + ' | Question ' + self.question + ' | Answer ' + '| ' + self.answer
+
     def __str__(self):
-        return 'Lesson ' + self.lesson.lessonTitle + ' | Question ' + self.question + ' | Answer ' + '| ' + self.answer
+        return ' | Question ' + self.question + ' | Answer ' + '| ' + self.answer
 
     def model_method(self):
         return self.question + ' - '  + self.answer
