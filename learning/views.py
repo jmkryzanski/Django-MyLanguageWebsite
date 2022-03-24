@@ -48,6 +48,10 @@ def CourseView(request, lan):
     Lesson.objects.all()
     #course_lessons = Lesson.objects.filter(language=lan)
     course_lessons = Lesson.objects.filter(course__title=lan).order_by('orderingID')
+
+    listLessonTitles = []
+    for c in course_lessons:
+        listLessonTitles.append(c.strtitle())
     #Guide.objects.order_by('orderingID')
 
     #course_guides = Guide.objects.filter(language=lan)
@@ -69,6 +73,7 @@ def CourseView(request, lan):
         'thisAdjectiveGuides': thisAdjectiveGuides,
         'thisAdverbGuides': thisAdverbGuides,
         'thisOtherGuides': thisOtherGuides,
+        'listLessonTitles': listLessonTitles,
     }
     #pronounGuides = Guide.objects.filter(category="pronouns")
 
@@ -122,7 +127,7 @@ def ViewLessonView(request, lan, myslug, level):
         questionKeywords.append(q.strquestionkeyword())
     for a in questionanswer:
         answers.append(a.stranswer())
-
+    #availableGames = ["translate", "dragdrop", "keyword", "reverse"]
 
     context = {
         'lesson': lesson,
@@ -132,6 +137,7 @@ def ViewLessonView(request, lan, myslug, level):
         'questions': questions,
         'questionKeywords': questionKeywords,
         'answers': answers,
+        #'availableGames': availableGames,
     }
     return render(request, 'learning/lesson.html', context)
 

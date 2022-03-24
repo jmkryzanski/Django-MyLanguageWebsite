@@ -22,6 +22,8 @@ class Lesson(models.Model):
     richContent = RichTextField(blank=True, null=True)
     orderingID = models.IntegerField()
     slug = models.SlugField(unique=True)
+    
+    numLevels = models.IntegerField(default=3, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.slug = self.slug or slugify(self.lessonTitle)
@@ -30,21 +32,32 @@ class Lesson(models.Model):
     def __str__(self):
         return self.course.title + ' | ' + self.lessonTitle
 
+    def strtitle(self):
+        return self.lessonTitle
+
     def get_absolute_url(self):
         return reverse('home')
 
 class QuestionAnswer(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, blank=True, null=True)
+
+    # first question is the one used for dragdrop and keyword, ones after that are acceptable
+    # inputs for translation
     question = models.CharField(max_length=255)
+
+    # first answer is used for keyword, ones after that are acceptable
+    # inputs for translation
     answer = models.CharField(max_length=255)
+
+    # add field called mainQuestions that shows the main translations of each word in the question
     level = models.IntegerField()
     questionKeyword = models.CharField(max_length=100, default=None, null=True, blank=True)
 
-    #def __str__(self):
-    #    return 'Lesson ' + self.lesson.lessonTitle + ' | Question ' + self.question + ' | Answer ' + '| ' + self.answer
-
     def __str__(self):
-        return ' | Question ' + self.question + ' | Answer ' + '| ' + self.answer
+        return 'Lesson ' + self.lesson.lessonTitle + ' | Question ' + self.question + ' | Answer ' + '| ' + self.answer + ' | Level ' + str(self.level)
+
+    #def __str__(self):
+    #    return ' | Question ' + self.question + ' | Answer ' + '| ' + self.answer
 
     def model_method(self):
         return self.question + ' - '  + self.answer
