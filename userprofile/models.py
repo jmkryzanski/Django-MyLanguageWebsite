@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from autoslug import AutoSlugField
-from learning.models import Course
+from learning.models import Course, Level
 
 # Create your models here.
 class Profile(models.Model):
@@ -12,6 +12,8 @@ class Profile(models.Model):
     bio = models.TextField(max_length=100)
     slug = AutoSlugField(populate_from='user', default='', unique=True)
     course = models.ManyToManyField(Course, blank=True)
+
+    levels = models.ManyToManyField(Level, blank=True)
 
     def __str__(self):
         return str(self.user)

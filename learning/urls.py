@@ -21,6 +21,9 @@ urlpatterns = [
     path('learn/<str:lan>/<str:myslug>/edit', EditLessonView.as_view(), name="editlesson"),
     path('learn/<str:lan>/<str:myslug>/delete', DeleteLessonView.as_view(), name="deletelesson"),
     path('addLanToProfile/<str:lan>/', views.addLanToProfile, name="addLanToProfile"),
+
+    path('testLevel/<str:lan>/<str:myslug>/<int:level>/', views.testLevel, name="testLevel"),
+
     path('test/', views.mytest, name="test"),
     path('test2/', views.mytest2, name="test2"),
     path('test3/', views.mytest3, name="test3"),

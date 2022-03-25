@@ -54,6 +54,12 @@
     }
 </style>
 
+
+<button id="ajaxtest2">plzwork</button>
+<a href="{% url 'testLevel' lan myslug level %}">Add course to home page</a>
+
+
+
 <div class="col-12 third-theme">
 {% autoescape off %}
 {{lesson.content}}
@@ -109,6 +115,26 @@
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
 <script>
+
+
+
+$('#ajaxtest2').click(function () {
+            $.ajax({
+                data: $(this).serialize(),
+                type: $(this).attr('method'),
+                url: "{% url 'testLevel' lan myslug level %}",
+                success: function (response) {
+                    alert("worked");
+                },
+                error: function (response) {
+                    console.log("didnt work")
+                }
+            });
+            return false;
+        });
+
+
+
 //global variables
 const questionsarray = {{ questions|safe }};
 const answersarray = {{ answers|safe }};
@@ -178,7 +204,6 @@ audioMessage.volume = 1; // 0 to 1
 audioMessage.rate = 0.8; // 0.1 to 10
 audioMessage.pitch = 1; //0 to 2
 audioMessage.text = currentQuestion.split("//")[0];
-console.log("ddd" + currentQuestion.split("//")[0]);
 //audioMessage.text = currentQuestion;
 audioMessage.lang = 'pl';
 

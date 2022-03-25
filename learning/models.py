@@ -38,6 +38,16 @@ class Lesson(models.Model):
     def get_absolute_url(self):
         return reverse('home')
 
+class Level(models.Model):
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    levelNumber = models.IntegerField()
+
+    def __str__(self):
+        return self.lesson.lessonTitle + ' | ' + str(self.levelNumber)
+
+    def strlevelnumber(self):
+        return str(self.levelNumber)
+
 class QuestionAnswer(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, blank=True, null=True)
 

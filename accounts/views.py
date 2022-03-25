@@ -1,3 +1,4 @@
+from logging import _levelToName
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
@@ -8,6 +9,7 @@ from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 from userprofile.models import Profile
+from learning.models import Level
 
 def register_view(request):
     if request.method == 'POST':
@@ -17,12 +19,26 @@ def register_view(request):
             new_user = authenticate(username=form.cleaned_data['username'],
                                     password=form.cleaned_data['password1'],)
             login(request, new_user)
+
+            defaultLevels = Level.objects.filter(levelNumber=1)
+            mylist = []
+            for d in defaultLevels:
+                mylist.append(d)
+
             Profile.objects.create(user=new_user, username=new_user.username, bio='bio...')
+
+            currentProfile = Profile.objects.get(user=new_user)
+            for m in mylist:
+                currentProfile.levels.add(m)
+
 
             return redirect(reverse('home'))
     else:
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
+
+
+
 
 
 def login_view(request):

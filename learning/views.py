@@ -4,7 +4,7 @@ from django.template import context
 from django.urls.base import reverse_lazy
 from .forms import LessonForm, GuideForm
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
-from learning.models import Course, Lesson, QuestionAnswer, Guide
+from learning.models import Course, Lesson, QuestionAnswer, Guide, Level
 from userprofile.models import Profile
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -63,6 +63,65 @@ def CourseView(request, lan):
     thisAdjectiveGuides = course_guides.filter(category="adjectives")
     thisAdverbGuides = course_guides.filter(category="adverbs")
     thisOtherGuides = course_guides.filter(category="other")
+
+    currentProfile = Profile.objects.get(user=request.user)
+    thisLevels = currentProfile.levels.all()
+
+    arrayLevels = []
+    for c in course_lessons:
+        temp = c.level_set.all()#.values('levelNumber')
+        arrayLevels.append(temp)
+        
+        #test.append(c.level_set.all())
+    
+    arrayLessonTitles = []
+    for c in course_lessons:
+        arrayLessonTitles.append(c.lessonTitle)
+
+    test = []
+    test.append(arrayLevels[0])
+    test.append(arrayLevels[1])
+    test.append(arrayLevels[2])
+
+    test2 = []
+    test2.append(currentProfile.levels.all()[0:1].get())
+    test2.append(currentProfile.levels.all()[1:2].get())
+    test2.append(currentProfile.levels.all()[2:3].get())
+    #test2.append(thisLevels[0])
+    #test2.append(thisLevels[1])
+    #test2.append(thisLevels[2])
+
+    #numMatches = []
+    #numMatches.append(test2[0].lesson.lessonTitle)
+    #numMatches.append(test2[1].lesson.lessonTitle)
+
+
+    #numMatches = 0
+    #if (test2[0].lesson.lessonTitle == arrayLessonTitles[0]):
+    #    numMatches+=1
+    #if (test2[1].lesson.lessonTitle == arrayLessonTitles[0]):
+    #    numMatches+=1
+    #if (test2[2].lesson.lessonTitle == arrayLessonTitles[0]):
+    #    numMatches+=1
+
+    mylist = [0 for x in range(22)]
+
+    sayin = []
+    sayin2 = []
+    for index, val in enumerate(arrayLessonTitles):
+        numMatches = 0
+        for index2, val2 in enumerate(thisLevels):
+    #for val in arrayLessonTitles:
+    #    for val2 in thisLevels:
+            #sayin.append(index)
+            #sayin2.append(index2)
+            if (val2.lesson.lessonTitle == val):
+                numMatches+=1
+                mylist[index] = numMatches
+
+
+
+    
     context = {
         'lan': lan,
         'course_lessons': course_lessons,
@@ -74,6 +133,16 @@ def CourseView(request, lan):
         'thisAdverbGuides': thisAdverbGuides,
         'thisOtherGuides': thisOtherGuides,
         'listLessonTitles': listLessonTitles,
+        'thislevels': thisLevels,
+        'arrayLevels': arrayLevels,
+        'arrayLessonTitles': arrayLessonTitles,
+        'test': test,
+        'test2': test2,
+        'numMatches': numMatches,
+        'sayin': sayin,
+        'sayin2': sayin2,
+        'mylist': mylist,
+
     }
     #pronounGuides = Guide.objects.filter(category="pronouns")
 
@@ -128,6 +197,22 @@ def ViewLessonView(request, lan, myslug, level):
     for a in questionanswer:
         answers.append(a.stranswer())
     #availableGames = ["translate", "dragdrop", "keyword", "reverse"]
+    
+    testlevel = Level.objects.get(lesson=lesson, levelNumber=level)
+    currentProfile = Profile.objects.get(user=request.user)
+
+    userUnlockedLevel = False
+    allLevels = currentProfile.levels.all()
+    for a in allLevels:
+        if (a.lesson.lessonTitle == lesson.lessonTitle and a.levelNumber == level):
+            userUnlockedLevel = True
+        #else:
+        #    levelInfo.append(0)
+
+    if not userUnlockedLevel:
+        return redirect('course', lan=lan)
+
+
 
     context = {
         'lesson': lesson,
@@ -137,7 +222,9 @@ def ViewLessonView(request, lan, myslug, level):
         'questions': questions,
         'questionKeywords': questionKeywords,
         'answers': answers,
-        #'availableGames': availableGames,
+        'level': level,
+        'testlevel': testlevel,
+        'currentProfile': currentProfile,
     }
     return render(request, 'learning/lesson.html', context)
 
@@ -226,6 +313,19 @@ def addLanToProfile(request, lan):
             'currentProfile': currentProfile,
         }
         #return render(request, 'learning/home.html', context)
+        return HomeView(request)
+    else:
+        return redirect('home')
+
+def testLevel(request, lan, myslug, level):
+    if is_ajax(request):
+        level2 = level+1
+        lesson = Lesson.objects.get(course__title=lan, slug=myslug)
+        currentLevel = Level.objects.get(lesson=lesson, levelNumber=level2)
+        currentProfile = Profile.objects.get(user=request.user)
+
+        levelToAdd = currentLevel
+        currentProfile.levels.add(levelToAdd)
         return HomeView(request)
     else:
         return redirect('home')
