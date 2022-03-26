@@ -98,7 +98,7 @@ def CourseView(request, lan):
     #numMatches.append(test2[1].lesson.lessonTitle)
 
 
-    #numMatches = 0
+    numMatches = 0
     #if (test2[0].lesson.lessonTitle == arrayLessonTitles[0]):
     #    numMatches+=1
     #if (test2[1].lesson.lessonTitle == arrayLessonTitles[0]):
@@ -210,6 +210,8 @@ def ViewLessonView(request, lan, myslug, level):
     if not userUnlockedLevel:
         return redirect('course', lan=lan)
 
+    numLevels = lesson.numLevels
+
 
 
     context = {
@@ -223,6 +225,7 @@ def ViewLessonView(request, lan, myslug, level):
         'level': level,
         'testlevel': testlevel,
         'currentProfile': currentProfile,
+        'numLevels': numLevels,
     }
     return render(request, 'learning/lesson.html', context)
 
@@ -315,7 +318,7 @@ def addLanToProfile(request, lan):
     else:
         return redirect('home')
 
-def testLevel(request, lan, myslug, level):
+def levelCompleted(request, lan, myslug, level):
     if is_ajax(request):
         level2 = level+1
         lesson = Lesson.objects.get(course__title=lan, slug=myslug)

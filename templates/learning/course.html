@@ -57,6 +57,10 @@ mylistbaby
 <br><br>
 -->
 
+<button id="ajaxtest">plzwork</button>
+<a href="{% url 'addLanToProfile' lan %}">Add course to home page</a>
+
+
 <div class="row text-center">
     <div class="col-12 col-md-8">
         {% for lesson in course_lessons %}
@@ -66,6 +70,8 @@ mylistbaby
                     //change navbar to red and white
                 </script>
             {% endif %}
+
+            {{lesson.numLevels}}
             
 
 
@@ -78,10 +84,6 @@ mylistbaby
                 <a href="{% url 'lesson' lan lesson.slug 2 %}">Level 2</a>
             </div>
         </div>-->
-
-        <button id="ajaxtest">plzwork</button>
-
-        <a href="{% url 'addLanToProfile' lan %}">Add course to home page</a>
         <div>
             <i style="font-size: 50px;"class="far fa-comments third-theme"></i><br>
             <!--<h5 class="secondary-theme lessonTitle">{{lesson.lessonTitle}}</h5>-->
@@ -207,7 +209,7 @@ mylistbaby
             return false;
         });
 //    })
-const listTitles ={{ listLessonTitles|safe }};
+const listTitles = {{ listLessonTitles|safe }};
 const lessonTitle = document.getElementsByClassName("lessonTitle");
 for (let i = 0; i < lessonTitle.length; i++) {
   lessonTitle[i].innerHTML = listTitles[i].split('//')[1];//listTitles[i].substring(3);

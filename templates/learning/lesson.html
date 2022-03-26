@@ -53,10 +53,12 @@
         display: none;
     }
 </style>
+{{level}}
 
+{{numLevels}}
 
 <button id="ajaxtest2">plzwork</button>
-<a href="{% url 'testLevel' lan myslug level %}">Add course to home page</a>
+<a href="{% url 'levelCompleted' lan myslug level %}">Add course to home page</a>
 
 
 
@@ -119,22 +121,23 @@
 
 
 $('#ajaxtest2').click(function () {
-            $.ajax({
-                data: $(this).serialize(),
-                type: $(this).attr('method'),
-                url: "{% url 'testLevel' lan myslug level %}",
-                success: function (response) {
-                    alert("worked");
-                },
-                error: function (response) {
-                    console.log("didnt work")
-                }
-            });
-            return false;
-        });
+    $.ajax({
+        data: $(this).serialize(),
+        type: $(this).attr('method'),
+        url: "{% url 'levelCompleted' lan myslug level %}",
+        success: function (response) {
+            alert("worked");
+        },
+        error: function (response) {
+            console.log("didnt work")
+        }
+    });
+    return false;
+});
 
 
-
+const currentLevel = {{level}};
+const numberOfLevels = {{numLevels}};
 //global variables
 const questionsarray = {{ questions|safe }};
 const answersarray = {{ answers|safe }};
@@ -689,6 +692,20 @@ function enterSubmit(event){
 
 // other functions
 function showEndScreen(){
+    if (currentLevel < numberOfLevels) {
+        $.ajax({
+            data: $(this).serialize(),
+            type: $(this).attr('method'),
+            url: "{% url 'levelCompleted' lan myslug level %}",
+            success: function (response) {
+                alert("worked");
+            },
+            error: function (response) {
+                console.log("didnt work")
+            }
+        });
+        //return false;
+    }
     gameCard.style.display = "none";
     showEndCard.style.display = "block";
     move();
@@ -757,12 +774,6 @@ function showReverseGame(){
 }
 
 function dragdropGenerate() {
-
-    //var hi = currentAnswer.split("//");
-    //console.log("hi " + hi);
-    //console.log(hi[0]);
-    //console.log(hi[1]);
-
     var list = document.getElementById('sortable')
     var base, randomized, dragging, draggedOver;
     const genRandom = (array) => {
