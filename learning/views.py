@@ -78,15 +78,17 @@ def CourseView(request, lan):
     for c in course_lessons:
         arrayLessonTitles.append(c.lessonTitle)
 
-    test = []
-    test.append(arrayLevels[0])
-    test.append(arrayLevels[1])
-    test.append(arrayLevels[2])
+    #test = []
+    #test.append(arrayLevels[0])
+    #test.append(arrayLevels[1])
+    #test.append(arrayLevels[2])
 
-    test2 = []
-    test2.append(currentProfile.levels.all()[0:1].get())
-    test2.append(currentProfile.levels.all()[1:2].get())
-    test2.append(currentProfile.levels.all()[2:3].get())
+    #test2 = []
+    #test2.append(currentProfile.levels.all()[0:1].get())
+    #test2.append(currentProfile.levels.all()[1:2].get())
+    #test2.append(currentProfile.levels.all()[2:3].get())
+
+
     #test2.append(thisLevels[0])
     #test2.append(thisLevels[1])
     #test2.append(thisLevels[2])
@@ -106,8 +108,6 @@ def CourseView(request, lan):
 
     mylist = [0 for x in range(22)]
 
-    sayin = []
-    sayin2 = []
     for index, val in enumerate(arrayLessonTitles):
         numMatches = 0
         for index2, val2 in enumerate(thisLevels):
@@ -136,11 +136,9 @@ def CourseView(request, lan):
         'thislevels': thisLevels,
         'arrayLevels': arrayLevels,
         'arrayLessonTitles': arrayLessonTitles,
-        'test': test,
-        'test2': test2,
+        #'test': test,
+        #'test2': test2,
         'numMatches': numMatches,
-        'sayin': sayin,
-        'sayin2': sayin2,
         'mylist': mylist,
 
     }
