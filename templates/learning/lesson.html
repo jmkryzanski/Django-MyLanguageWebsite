@@ -224,6 +224,18 @@ function startGame() {
         arrayRandomGames[i] = availableGames[temp];
     }
 
+
+    // if a question has one or two words and is assigned drag drop, change its assigned game to translation
+    for (i = 0; i < gameQuestions.length; i++){
+        if (gameQuestions[i].split('//')[0].split(" ").length < 3){
+            if (arrayRandomGames[i] === availableGames[1]){
+                console.log("sayin - " + gameQuestions[i] + " - " + arrayRandomGames[i]);
+                arrayRandomGames[i] = availableGames[0];
+                console.log("sayin - " + gameQuestions[i] + " - " + arrayRandomGames[i]);
+            }
+        }
+    }
+
     switch (arrayRandomGames[0]) {
         case "translation":
             //console.log("translation");
@@ -248,16 +260,7 @@ function startGame() {
     //console.log(gameQuestions);
     //console.log(("hi hello mm //betff").split('//')[0].split(" ").length);
 
-    // if a question has one or two words and is assigned drag drop, change its assigned game to translation
-    for (i = 0; i < gameQuestions.length; i++){
-        if (gameQuestions[i].split('//')[0].split(" ").length < 3){
-            if (arrayRandomGames[i] === availableGames[1]){
-                console.log("sayin - " + gameQuestions[i] + " - " + arrayRandomGames[i]);
-                arrayRandomGames[i] = availableGames[0];
-                console.log("sayin - " + gameQuestions[i] + " - " + arrayRandomGames[i]);
-            }
-        }
-    }
+    
     
 }
 
@@ -291,7 +294,7 @@ function checkIfQAMatch(q, a){
     testa = testa.replace(/(?!\w|\s)./g, '');
 
     // if the game is translation, allow multiple correct answers
-    if (arrayRandomGames[currentIndex] === "translation" || arrayRandomGames[currentIndex] === "keyword"){
+    if (arrayRandomGames[currentIndex] === "translation"){ //|| arrayRandomGames[currentIndex] === "keyword"){
         var testarray = currentAnswer.split("//");
         //console.log(testarray);
         //console.log(testarray[0]);
@@ -314,6 +317,18 @@ function checkIfQAMatch(q, a){
             }
         }
     }
+
+    else if (arrayRandomGames[currentIndex] === "keyword"){
+        console.log(q);
+        console.log(gameQuestionKeywords[currentIndex].split("//"));
+        var sayinarray = gameQuestionKeywords[currentIndex].split("//");
+        for (i = 0; i <= sayinarray.length; i++){
+            if (sayinarray[i] === q){
+                return true;
+            }
+        }
+    }
+
     else if (arrayRandomGames[currentIndex] === "reverse"){
         var testarray2 = currentQuestion.split("//");
         //console.log(testarray);
@@ -743,7 +758,11 @@ function showKeywordGame(){
     //questionLabel.innerHTML = gameAnswers[currentIndex] + '<br>' + gameQuestions[currentIndex].replace(gameQuestionKeywords[currentIndex], "______");
 
     var sayin = gameAnswers[currentIndex].split("//");
-    questionLabel.innerHTML = sayin[0] + '<br>' + gameQuestions[currentIndex].split("//")[0].replace(gameQuestionKeywords[currentIndex], "______");
+    //var sayin2 = gameQuestionKeywords[currentIndex].split("//");
+    console.log(gameQuestions[currentIndex].split("//")[0]);
+    console.log(gameQuestionKeywords[currentIndex].split("//"));
+    console.log(gameQuestionKeywords[currentIndex].split("//")[0]);
+    questionLabel.innerHTML = sayin[0] + '<br>' + gameQuestions[currentIndex].split("//")[0].replace(gameQuestionKeywords[currentIndex].split("//")[0], "______");
 
     answerTextarea.style.display = "block";
     answerTextarea.disabled = false;
@@ -783,16 +802,16 @@ function dragdropGenerate() {
     randomized = array.sort(() => Math.random() - 0.5)
 
     /* Makes it so that the randomized words are not the actual answer */
-    if (randomized.join("") !== base.join("")){
+    /*if (randomized.join("") !== base.join("")){
         renderItems(randomized)
     } else {
         genRandom(array)
-    }
+    }*/
 
-    /*[array[0], array[1]] = [array[1], array[0]];
+    [array[0], array[1]] = [array[1], array[0]];
     base = array.slice()
     randomized = array.sort(() => Math.random() - 0.5)
-    renderItems(randomized)*/
+    renderItems(randomized)
 
     }
     const renderItems = (data) =>{

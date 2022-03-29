@@ -241,10 +241,13 @@ for (i = 0; i < numLevels.length; i++){
         third[i].style.display = "none";
     }
     else if (numLevels[i] === 0){
-        levelLabel[i].style.display = "none";
-        first[i].style.display = "none";
-        second[i].style.display = "none";
-        third[i].style.display = "none";
+        if (levelLabel[i]){
+            levelLabel[i].style.display = "none";
+            first[i].style.display = "none";
+            second[i].style.display = "none";
+            third[i].style.display = "none";
+        }
+        
     }
 }
 
