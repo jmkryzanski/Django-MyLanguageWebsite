@@ -1,98 +1,157 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Language website</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
-<style>
-
-html{
-        min-height: 100vh;
-    }
-body{
-  background-color: #3778c2;
-}
-.register-form {
-    width: 700px;
-    margin: 30px auto;
-    margin-top: 300px;
-}
-.register-form form {        
-    margin-bottom: 15px;
-    background: #f7f7f7;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-    padding: 30px;
-}
-.register-form h2 {
-    margin: 0 0 15px;
-}
-
-.register-form{
-    padding: 0px;
-}
-
-.form-control, .register-btn {
-    min-height: 38px;
-    border-radius: 2px;
-}
-.input-group-addon .fa {
-    font-size: 18px;
-}
-.register-btn {
-    font-size: 15px;
-    font-weight: bold;
-}
-
-.center-block {
-    display: table;
-    margin-left: auto;
-    margin-right: auto;
-}
-</style>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign in</title>
 </head>
-<body>
-<div class="register-form">
-    <form method="post">
-      {% csrf_token %}
-        <h1 class="text-center">Register</h1>
-        {% for field in form %}   
-        <div class="form-group">
-        	<div class="input-group">
-                {{field.label_tag}}
-                {{field}}
-                {% if field.help_text %}
-                    <br><small style="color: grey">{{ field.help_text }}</small>
-                {% endif %}
-            </div>
-        </div>
-        {% endfor %}        
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary register-btn btn-block">Sign in</button>
-        </div>
-    </form>
-</div>
-</body>
-</html>
 
-<!--<h2>Sign up Form</h2>
-<form method="post">
-  {% csrf_token %}
-  {% for field in form %}
-    <p>
-      {{ field.label_tag }}<br>
-      {{ field }}
-      {% if field.help_text %}
-        <small style="color: grey">{{ field.help_text }}</small>
-      {% endif %}
-      {% for error in field.errors %}
-        <p style="color: red">{{ error }}</p>
-      {% endfor %}
-    </p>
-  {% endfor %}
-  <button type="submit">Sign up</button>
-</form>
--->
+<style>
+        body {
+        background: linear-gradient(to right, #90c3fd, #3778c2);
+        font-family: 'Ubuntu', sans-serif;
+    }
+    
+    .main {
+        background-color: #FFFFFF;
+        width: 400px;
+        height: 400px;
+        margin: 7em auto;
+        border-radius: 1.5em;
+        box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+    }
+    
+    .sign {
+        padding-top: 40px;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: bold;
+        font-size: 23px;
+    }
+    
+    .un {
+    width: 76%;
+    color: rgb(38, 50, 56);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    background: rgba(136, 126, 126, 0.04);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    box-sizing: border-box;
+    border: 2px solid rgba(0, 0, 0, 0.02);
+    margin-bottom: 50px;
+    margin-left: 46px;
+    text-align: center;
+    margin-bottom: 27px;
+    font-family: 'Ubuntu', sans-serif;
+    }
+    
+    form.form1 {
+        padding-top: 40px;
+    }
+    
+    .pass {
+            width: 76%;
+    color: rgb(38, 50, 56);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    background: rgba(136, 126, 126, 0.04);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    box-sizing: border-box;
+    border: 2px solid rgba(0, 0, 0, 0.02);
+    margin-bottom: 50px;
+    margin-left: 46px;
+    text-align: center;
+    margin-bottom: 27px;
+    font-family: 'Ubuntu', sans-serif;
+    }
+    
+   
+    .un:focus, .pass:focus {
+        border: 2px solid rgba(0, 0, 0, 0.18) !important;
+        
+    }
+    
+    .submit {
+      cursor: pointer;
+        border-radius: 5em;
+        color: #fff;
+        background: linear-gradient(to right, #ffc24f, #f8a300);
+        border: 0;
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        font-family: 'Ubuntu', sans-serif;
+        margin-left: 35%;
+        font-size: 13px;
+        box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+    }
+    
+    .forgot {
+        text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+        color: #E1BEE7;
+        padding-top: 15px;
+    }
+    
+    a {
+        text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+        color: #E1BEE7;
+        text-decoration: none
+    }
+    
+    @media (max-width: 600px) {
+        .main {
+            border-radius: 0px;
+        }
+    }
+        
+        
+</style>
+
+<body>
+  <div class="main" style="margin-top: 300px;">
+    <p class="sign" align="center">Create an Account!</p>
+    <form method="post" >
+        {% csrf_token %}
+        <div class="form-group">
+          <input class="un" type="text" class="form-control" name="username" placeholder="Username" required="required">
+        </div>
+
+      <div class="form-group">
+          <input class="pass" type="password" class="form-control" name="password1" placeholder="Password" required="required">
+      </div>
+      <div class="form-group">
+        <input class="pass" type="password" class="form-control" name="password2" placeholder="Confirm Password" required="required">
+      </div>
+      <div class="form-group">
+        <input class="un" type="email" class="form-control" name="email" placeholder="Email" required="required">
+      </div>
+
+    {% if form.errors %}
+          {{form.errors.username}}{{form.errors.password1}}{{form.errors.password2}}
+        {% endif %}
+      
+      <div class="form-group">
+        <button class="submit" align="center" type="submit">Register</button>
+      </div>
+      <br><p style="text-align: center;">Your language journey is about to begin!</p>
+
+      
+
+
+    </form>
+
+    </div>
+     
+</body>
+
+
+</html>

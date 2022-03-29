@@ -15,24 +15,30 @@ def register_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            new_user = form.save()
-            new_user = authenticate(username=form.cleaned_data['username'],
-                                    password=form.cleaned_data['password1'],)
-            login(request, new_user)
-
-            defaultLevels = Level.objects.filter(levelNumber=1)
-            mylist = []
-            for d in defaultLevels:
-                mylist.append(d)
-
-            Profile.objects.create(user=new_user, username=new_user.username, bio='bio...')
-
-            currentProfile = Profile.objects.get(user=new_user)
-            for m in mylist:
-                currentProfile.levels.add(m)
+            email = form.cleaned_data('email')
+            if Profile.objects.filter(email__iexact=email).count() == 1:
+                new_user = form.save()
+                new_user = authenticate(username=form.cleaned_data['username'],
+                                        password=form.cleaned_data['password1'],)
+                login(request, new_user)
 
 
-            return redirect(reverse('home'))
+                
+
+
+                defaultLevels = Level.objects.filter(levelNumber=1)
+                mylist = []
+                for d in defaultLevels:
+                    mylist.append(d)
+
+                Profile.objects.create(user=new_user, username=new_user.username, bio='bio...')
+
+                currentProfile = Profile.objects.get(user=new_user)
+                for m in mylist:
+                    currentProfile.levels.add(m)
+
+
+                return redirect(reverse('home'))
     else:
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})

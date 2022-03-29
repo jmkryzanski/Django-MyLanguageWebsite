@@ -14,6 +14,7 @@ from gtts import gTTS
 from django.http import HttpResponse
 from django.http import JsonResponse
 import difflib
+from django.contrib.auth.decorators import login_required
 
 def WelcomeView(request):
     if request.user.is_authenticated:
@@ -27,6 +28,7 @@ def WelcomeView(request):
     template_name = 'learning/home.html'
 '''
 
+@login_required
 def HomeView(request):
     currentProfile = Profile.objects.get(user=request.user)
 
