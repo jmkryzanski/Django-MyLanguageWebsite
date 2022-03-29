@@ -10,6 +10,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     username = models.CharField(max_length=20)
     bio = models.TextField(max_length=100)
+    email = models.EmailField(max_length=100, unique=True)
     slug = AutoSlugField(populate_from='user', default='', unique=True)
     course = models.ManyToManyField(Course, blank=True)
 

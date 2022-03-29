@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 from userprofile.models import Profile
 from learning.models import Level
+from .forms import UserCreationForm
 
 def register_view(request):
     if request.method == 'POST':
@@ -25,7 +26,7 @@ def register_view(request):
             for d in defaultLevels:
                 mylist.append(d)
 
-            Profile.objects.create(user=new_user, username=new_user.username, bio='bio...')
+            Profile.objects.create(user=new_user, username=new_user.username, bio='bio...', email=new_user.email)
 
             currentProfile = Profile.objects.get(user=new_user)
             for m in mylist:
