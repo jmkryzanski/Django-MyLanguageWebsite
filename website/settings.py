@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-*m*uqtrmv=*#4!-8_8mrnyt1z(v64rh7_8l*kt4h3rnvq2gagq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['stark-stream-00377.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1','stark-stream-00377.herokuapp.com']
 
 FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
                         "django_excel.TemporaryExcelFileUploadHandler")
