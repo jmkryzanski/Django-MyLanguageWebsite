@@ -10,36 +10,6 @@
     <title>Language learning</title>
   </head>
 <body class="d-flex flex-column min-vh-100">
-  <nav class="navbar fourth-theme-background navbar-expand-sm navbar-dark">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav nav-fill w-100 mx-auto text-center">
-        <a class="nav-item nav-link navbar-text" href="{% url 'home' %}"><!--<span><img class="navbar-img" src="{% static 'img/homeicon.jpg' %}"></span> -->Home</a>
-        <a class="nav-item nav-link navbar-text" href="{% url 'learn' %}"><!--<span><img class="navbar-img" src="{% static 'img/brainicon.jpg' %}"></span> -->Learn</a>
-        <a class="nav-item nav-link navbar-text" href="{% url 'post' %}"><!--<span><img class="navbar-img" src="{% static 'img/blogicon.jpg' %}"></span> -->Blog</a>
-        <a class="nav-item nav-link navbar-text" >
-          <div class="toggle">
-          <input hidden type="checkbox" class="checkbox" id="chk" />
-          <label class="label" for="chk">Dark</label>
-          </div>
-        </a>
-        {% if user.is_authenticated %}
-        <li class="nav-item dropdown">
-            <a class="nav-link navbar-text" data-bs-toggle="dropdown" href="#"
-                role="button" aria-expanded="false"><!--<span><img class="navbar-img" src="{% static 'img/profileicon.jpg' %}"></span> -->{{request.user.profile.user}}</a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li> <a style="font-size: 26px;" class="dropdown-item" href="{% url 'profile' request.user.profile.slug %}">Profile</a></li>
-              <li> <a style="font-size: 26px;" class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-            </ul>
-        </li>
-        {% else %}
-        <a class="nav-item nav-link navbar-text" href={% url 'mylogin' %}><!--<span><button class="btn btn-lg">Login</button></span>-->Login</a>
-        {% endif %}
-      </div>
-    </div>
-  </nav>
 <div class="container">
     {% block content %}
     {% endblock %}

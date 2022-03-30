@@ -9,37 +9,161 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <title>Language learning</title>
   </head>
+  <style>
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+} 
+nav{
+  display: flex;
+  height: 80px;
+  width: 100%;
+  background: #3778c2; 
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 50px 0 100px;
+  flex-wrap: wrap;
+}
+nav .logo{
+  color: #fff;
+  font-size: 35px;
+  font-weight: 600;
+}
+nav ul{
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+}
+nav ul li{
+  margin: 0 5px;
+}
+nav ul li a{
+  color: #f2f2f2;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 8px 15px;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+nav ul li a.active,
+nav ul li a:hover{
+  color: #111;
+  background: #fff;
+}
+nav .menu-btn i{
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  display: none;
+}
+input[type="checkbox"]{
+  display: none;
+}
+@media (max-width: 1000px){
+  nav{
+    padding: 0 40px 0 50px;
+  }
+}
+@media (max-width: 920px) {
+  nav .menu-btn i{
+    display: block;
+  }
+  #click:checked ~ .menu-btn i:before{
+    content: "\f00d";
+  }
+  nav ul{
+    position: fixed;
+    top: 80px;
+    left: -100%;
+    background: black;
+    height: 100vh;
+    width: 100%;
+    text-align: center;
+    display: block;
+    transition: all 0.3s ease;
+  }
+  #click:checked ~ ul{
+    left: 0;
+  }
+  nav ul li{
+    width: 100%;
+    margin: 40px 0;
+  }
+  nav ul li a{
+    width: 100%;
+    margin-left: -100%;
+    display: block;
+    font-size: 20px;
+    transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  #click:checked ~ ul li a{
+    margin-left: 0px;
+  }
+  nav ul li a.active,
+  nav ul li a:hover{
+    background: none;
+    color: cyan;
+  }
+}
+.content{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: -1;
+  width: 100%;
+  padding: 0 30px;
+  color: #1b1b1b;
+}
+.content div{
+  font-size: 40px;
+  font-weight: 700;
+}
+ul{
+  margin-bottom: 0px;
+}
+label{
+  color: white;
+}
+.hover-underline:hover
+{
+text-decoration: none;
+border-bottom: 5px solid #f8a300;
+}
+  </style>
 <body class="d-flex flex-column min-vh-100">
-  <nav class="navbar fourth-theme-background navbar-expand-sm navbar-dark">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav nav-fill w-100 mx-auto text-center">
-        <a class="nav-item nav-link navbar-text" href="{% url 'home' %}"><!--<span><img class="navbar-img" src="{% static 'img/homeicon.jpg' %}"></span> -->Home</a>
-        <a class="nav-item nav-link navbar-text" href="{% url 'learn' %}"><!--<span><img class="navbar-img" src="{% static 'img/brainicon.jpg' %}"></span> -->Learn</a>
-        <a class="nav-item nav-link navbar-text" href="{% url 'post' %}"><!--<span><img class="navbar-img" src="{% static 'img/blogicon.jpg' %}"></span> -->Blog</a>
-        <a class="nav-item nav-link navbar-text" >
-          <div class="toggle">
+  <nav>
+    <div class="logo">
+       Website
+    </div>
+    <input type="checkbox" id="click">
+    <label for="click" class="menu-btn">
+    <i class="fas fa-bars"></i>
+    </label>
+    <ul>
+       <li><a class="hover-underline" href="{% url 'home' %}"><!--<span><img class="navbar-img" src="{% static 'img/homeicon.jpg' %}"></span> -->Home</a></li>
+       <li><a class="hover-underline" href="{% url 'learn' %}"><!--<span><img class="navbar-img" src="{% static 'img/brainicon.jpg' %}"></span> -->Learn</a></li>
+       <li><a class="hover-underline" href="{% url 'post' %}"><!--<span><img class="navbar-img" src="{% static 'img/blogicon.jpg' %}"></span> -->Blog</a></li>
+       <li>
+        <a class="hover-underline">
           <input hidden type="checkbox" class="checkbox" id="chk" />
           <label class="label" for="chk">Dark</label>
-          </div>
         </a>
-        {% if user.is_authenticated %}
-        <li class="nav-item dropdown">
-            <a class="nav-link navbar-text" data-bs-toggle="dropdown" href="#"
-                role="button" aria-expanded="false"><!--<span><img class="navbar-img" src="{% static 'img/profileicon.jpg' %}"></span> -->{{request.user.profile.user}}</a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li> <a style="font-size: 26px;" class="dropdown-item" href="{% url 'profile' request.user.profile.slug %}">Profile</a></li>
-              <li> <a style="font-size: 26px;" class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-            </ul>
-        </li>
-        {% else %}
-        <a class="nav-item nav-link navbar-text" href={% url 'mylogin' %}><!--<span><button class="btn btn-lg">Login</button></span>-->Login</a>
-        {% endif %}
-      </div>
-    </div>
-  </nav>
+      </li>
+      {% if user.is_authenticated %}
+        <li> <a class="hover-underline" href="{% url 'profile' request.user.profile.slug %}">Profile</a></li>
+        <li> <a class="hover-underline" href="{% url 'logout' %}">Logout</a></li>
+      {% else %}
+        <li><a class="hover-underline" href={% url 'mylogin' %}><!--<span><button class="btn btn-lg">Login</button></span>-->Login</a></li>
+      {% endif %}
+    </ul>
+ </nav>
+
 <div class="container">
     {% block content %}
     {% endblock %}
@@ -75,6 +199,58 @@
     <a class="third-theme" href="https://website.com/">website.com</a>
   </div>
 </footer>
+<!--
+<style>
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.spacer {
+    flex: 1;
+}
+
+.footer {
+    height: 250px;
+    background-color: #3778c2; 
+}
+</style>
+
+  
+  <div class="spacer"></div>
+  <footer class="footer text-center">
+    <div class="container">
+      <h1 class="secondary-theme m-4">website name</h1>
+    <section class="mb-4">
+      <p class="normal-text">
+        Learn languages the fun way
+      </p>
+    </section>
+    <section class="">
+      <div class="row">
+        <div class="col-12"><br><br>
+          <ul style="list-style: none;">
+            <li>
+              <a class="third-theme" href="{% url 'about' %}">About</a>
+            </li>
+            <li>
+              <a class="third-theme" href="{% url 'contact' %}">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div id="fotter-copyright" class="text-center">
+    © 2022 Copyright:
+    <a class="third-theme" href="https://website.com/">website.com</a>
+  </div>
+  </footer>
+-->
+
+
 
 <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

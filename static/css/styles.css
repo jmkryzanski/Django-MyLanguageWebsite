@@ -1,6 +1,6 @@
 :root{
     --primThemeColor: #3778c2;       /*#6daffe;*/
-    --secThemeColor: #f8a300;
+    --secThemeColor: /*#f8a300;*/#3c3c3c;
     --thirdThemeColor: black;
     --fourthThemeColor: black;
     --primPolandColor: red;
