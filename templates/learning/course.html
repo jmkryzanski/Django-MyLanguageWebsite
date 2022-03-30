@@ -1,9 +1,7 @@
 {% extends 'learning/base.html' %}
 {% block content %}
 
-{% if user.is_superuser %}
-    <a href="{% url 'createlesson' %}"><span><button class="btn btn-primary">Create Lesson</button></span></a>
-{% endif %}
+
 
 <style>
     .navigation-container {
@@ -61,15 +59,56 @@ mylistbaby
 <br><br>
 -->
 
-<button id="ajaxtest">plzwork</button>
-<a href="{% url 'addLanToProfile' lan %}">Add course to home page</a>
 
+<style>
+    .mybtn {
+  color: #3c3c3c;
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  text-decoration: none;
+  margin: 1rem;
+  padding: 0.5rem;
+  border: 2px solid #f8a300;
+  border-radius: 0.5rem;
+  position: relative;
+  top: 0;
+  transition: all 300ms ease-in-out;
+  box-shadow: 0 0.6em #f8a300, 0 0.9em rgba(0, 0, 0, 0);
+}
 
+.mybtn:hover {
+  background: #e5dc15;
+  color: #0e79b2;
+}
 
+.mybtn.b-1:hover {
+  top: 0.2em;
+  box-shadow: 0 0.4em #c2bb11, 0 0.7em rgba(0, 0, 0, 0);
+}
 
+.mybtn.b-1:active {
+  top: 0.4em;
+  box-shadow: 0 0.2em #c2bb11, 0 0.5em rgba(0, 0, 0, 0);
+}
 
+.mybtn.b-2:active {
+  top: 0.6em;
+  box-shadow: 0 0.2em rgba(0, 0, 0, 0.4);
+}
 
-<div class="row text-center">
+.mybtn.b-3:hover {
+  top: -0.5em;
+  box-shadow: 0 0.6em #c2bb11, 0 1.3em rgba(0, 0, 0, 0.4);
+}
+
+.mybtn.b-3:active {
+  top: 0.4em;
+  box-shadow: 0 0.2em #c2bb11, 0 0.5em rgba(0, 0, 0, 0.4);
+}
+
+</style>
+
+<div class="row">
     <div class="col-12 col-md-8">
         {% for lesson in course_lessons %}
 
@@ -79,34 +118,85 @@ mylistbaby
                 </script>
             {% endif %}
             <div class="col d-flex justify-content-center">
-                <div class="card text-center learn-card-nohover fourth-theme-background" style="padding: 15px 0px;" >
+                <div class="card text-center learn-card-nohover fourth-theme-background" style="padding: 5px 0px;" >
                     <i style="font-size: 50px;"class="far fa-comments third-theme"></i>
                     <h5 class="secondary-theme lessonTitle"></h5>
                     <div class="navigation-container">
-                        <a class="first-level third-theme numberCircle" href="{% url 'lesson' lan lesson.slug 1 %}">1</a>
-                        <a class="second-level third-theme numberCircle" href="{% url 'lesson' lan lesson.slug 2 %}">2</a>
-                        <a class="third-level third-theme numberCircle"  href="{% url 'lesson' lan lesson.slug 3 %}">3</a>
+                        <a class="first-level third-theme mybtn b-1" href="{% url 'lesson' lan lesson.slug 1 %}">1</a>
+                        <!--<a class="second-level third-theme numberCircle" href="{% url 'lesson' lan lesson.slug 2 %}">2</a>
+                        <a class="third-level third-theme numberCircle"  href="{% url 'lesson' lan lesson.slug 3 %}">3</a>-->
+                        <a class="second-level third-theme mybtn b-1" href="{% url 'lesson' lan lesson.slug 2 %}">2</a>
+                        <a class="third-level third-theme mybtn b-1" href="{% url 'lesson' lan lesson.slug 3 %}">3</a>
                     </div>  
                 </div>
             </div>
-
-
-<!--
-        <div>
-            <i style="font-size: 50px;"class="far fa-comments third-theme"></i><br>
-            <h5 class="secondary-theme lessonTitle"></h5>
-            <h5 class="secondary-theme level-label">Level</h5>
-
-            <div class="navigation-container">
-            <a class="first-level third-theme numberCircle" href="{% url 'lesson' lan lesson.slug 1 %}">1</a>
-            <a class="second-level third-theme numberCircle" href="{% url 'lesson' lan lesson.slug 2 %}">2</a>
-            <a class="third-level third-theme numberCircle"  href="{% url 'lesson' lan lesson.slug 3 %}">3</a>
-            </div>  
-        </div>
-    -->
-
-    {% endfor %}
+        {% endfor %}
     </div>
+    
+    <div class="col">
+      <div class="row">
+        <div class="col-12 col-md-4 border border-white text-center" style="width: 100%; border-radius: 25px;">
+            <a class="capitalize-first-letter" href="{% url 'guide' lan %}"><span><h1 class="secondary-theme card-title">{{lan}} Grammar Guide</h1></span></a>
+            <hr class="third-theme center1">
+            <div class="guide-title">
+                {% for p in thisCaseGuides %}
+                    {% if p.orderingID == 1 %}
+                        <h3 class="secondary-theme card-title">Cases</h3>
+                    {% endif %}
+                    <a class="third-theme" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+                {% endfor %}
+                {% for p in thisPronounGuides %}
+                    {% if p.orderingID == 1 %}
+                        <h3 class="secondary-theme card-title">Pronouns</h3>
+                    {% endif %}
+                    <a class="third-theme" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+                {% endfor %}
+                {% for p in thisVerbGuides %}
+                    {% if p.orderingID == 1 %}
+                        <h3 class="secondary-theme card-title">Verbs</h3>
+                    {% endif %}
+                    <a class="third-theme" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+                {% endfor %}
+                {% for p in thisAdjectiveGuides %}
+                    {% if p.orderingID == 1 %}
+                        <h3 class="secondary-theme card-title">Adjectives</h3>
+                    {% endif %}
+                    <a class="third-theme" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+                {% endfor %}
+                {% for p in thisAdverbGuides %}
+                    {% if p.orderingID == 1 %}
+                        <h3 class="secondary-theme card-title">Adverbs</h3>
+                    {% endif %}
+                    <a class="third-theme" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+                {% endfor %}
+                {% for p in thisOtherGuides %}
+                    {% if p.orderingID == 1 %}
+                        <h3 class="secondary-theme card-title">Other</h3>
+                    {% endif %}
+                        <a class="third-theme" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+                {% endfor %}
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-4 border border-white">
+            test2<br>
+        test2<br>
+        test2<br>
+        test2<br>
+        test2<br>
+        test2<br>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+<div class="row text-center">
+
     <!--<div class="col-12 col-md-4">
         <div class="card rounded">
             <div class="card-body third-theme-background">
@@ -154,49 +244,15 @@ mylistbaby
             </div>
         </div>
     </div>-->
-    <div class="col-12 col-md-4 border border-white">
-        <a class="capitalize-first-letter" href="{% url 'guide' lan %}"><span><h1 class="secondary-theme card-title">{{lan}} Grammar Guide</h1></span></a>
-        <hr class="third-theme center1">
-        <div class="guide-title">
-            {% for p in thisCaseGuides %}
-                {% if p.orderingID == 1 %}
-                    <h3 class="secondary-theme card-title">Cases</h3>
-                {% endif %}
-                <a class="third-theme" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
-            {% endfor %}
-            {% for p in thisPronounGuides %}
-                {% if p.orderingID == 1 %}
-                    <h3 class="secondary-theme card-title">Pronouns</h3>
-                {% endif %}
-                <a class="third-theme" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
-            {% endfor %}
-            {% for p in thisVerbGuides %}
-                {% if p.orderingID == 1 %}
-                    <h3 class="secondary-theme card-title">Verbs</h3>
-                {% endif %}
-                <a class="third-theme" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
-            {% endfor %}
-            {% for p in thisAdjectiveGuides %}
-                {% if p.orderingID == 1 %}
-                    <h3 class="secondary-theme card-title">Adjectives</h3>
-                {% endif %}
-                <a class="third-theme" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
-            {% endfor %}
-            {% for p in thisAdverbGuides %}
-                {% if p.orderingID == 1 %}
-                    <h3 class="secondary-theme card-title">Adverbs</h3>
-                {% endif %}
-                <a class="third-theme" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
-            {% endfor %}
-            {% for p in thisOtherGuides %}
-                {% if p.orderingID == 1 %}
-                    <h3 class="secondary-theme card-title">Other</h3>
-                {% endif %}
-                    <a class="third-theme" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
-            {% endfor %}
-        </div>
-    </div>
+
 </div>
+
+{% if user.is_superuser %}
+    <a href="{% url 'createlesson' %}"><span><button class="btn btn-primary">Create Lesson</button></span></a>
+{% endif %}
+<button id="ajaxtest">plzwork</button>
+<a href="{% url 'addLanToProfile' lan %}">Add course to home page</a>
+
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
