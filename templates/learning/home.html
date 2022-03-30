@@ -4,13 +4,18 @@
 
 {% if user %}
 <div class="text-center">
-    <h1 class="secondary-theme">Welcome, {{currentProfile.username}}</h1>
-    <h3 class="third-theme">Current languages:<br>
+    <h1 class="secondary-theme title-text">Welcome, {{currentProfile.username}}</h1>
+    <h3 class="third-theme">Your languages:<br>
         {% for c in currentProfile.course.all %}
-        <br>
-        <img style="width: 150px; height: auto;" src="{{ c.image.url }}">
-        <br>
-        
+
+        <div class="col d-flex justify-content-center">
+            <a href="{% url 'course' c.title %}">
+            <div class="card text-center learn-card fourth-theme-background">
+                <img class="img-fluid learn-flag" src="{{ c.image.url }}">
+                <p class="third-theme capitalize-first-letter">{{c.title}}</p>
+            </div>
+            </a>
+        </div>
         {% endfor %}
     </h3>
 </div>

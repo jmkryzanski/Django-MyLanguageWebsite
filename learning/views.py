@@ -31,7 +31,6 @@ def WelcomeView(request):
 @login_required
 def HomeView(request):
     currentProfile = Profile.objects.get(user=request.user)
-
     #courseToAdd = currentCourse
     #currentProfile.course.add(courseToAdd)
 

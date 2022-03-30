@@ -1,7 +1,13 @@
 :root{
+    /* blue to white */
     --primThemeColor: #3778c2;       /*#6daffe;*/
-    --secThemeColor: /*#f8a300;*/#3c3c3c;
-    --thirdThemeColor: black;
+
+    /* black to orange */
+    --secThemeColor: #3c3c3c;
+
+    /* black to white */
+    --thirdThemeColor: #3c3c3c;
+
     --fourthThemeColor: black;
     --primPolandColor: red;
     --secPolandColor: white;
@@ -17,6 +23,41 @@ body{
 
 .primary-theme{
     color: var(--primThemeColor);
+}
+
+.my-nav-item {
+    display: inline-block;
+    position: relative;
+    color: var(--primThemeColor);
+  }
+  
+.my-nav-item:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primThemeColor);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+  
+  .my-nav-item:hover:after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+
+.my-nav-item{
+    color: var(--primThemeColor);
+    text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 8px 15px;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
 }
 
 /*li > a{
@@ -61,9 +102,13 @@ h1, h2, h3, h4, h5, h6{
     margin-bottom: 20px;
 }
 
+h1.title-text{
+    margin: 20px 0;
+}
+
 footer {
     background-color: var(--primThemeColor);
-    border-top:5px solid white;
+    border-top:1px solid var(--primThemeColor);
 }
 
 .login-register-btns{
@@ -78,7 +123,25 @@ footer {
 a{
     /*color: orange;*/
     text-decoration: none;
-    color: var(--primThemeColor);
+    color: var(--secThemeColor);
+}
+.learn-card:hover{
+    background-color: #e0e0e0;
+}
+.learn-card{
+    width: 18rem;
+    border-radius: 25px;
+    margin: 25px 0;
+}
+.learn-card-nohover{
+    width: 24rem;
+    border-radius: 25px;
+    margin: 15px 0;
+}
+
+.learn-flag{
+    margin: 15px;
+    border-radius: 25px;
 }
 
 /* remove underline and capitalize first letter for links */
@@ -155,8 +218,8 @@ hr.center1{
 .navbar {
     margin-bottom: 20px;
     border-radius: 5px;
-    background-color: var(--primThemeColor);
-    border-bottom:5px solid white;
+    background-color: white;
+    border-bottom:1px solid var(--primThemeColor);
 }
 
 .navbar-text{
@@ -217,7 +280,7 @@ body.dark {
 }
 
 .dark-secondary-theme{
-    color: var(--secThemeColor);
+    color: #f8a300;
 }
 
 .dark-third-theme{

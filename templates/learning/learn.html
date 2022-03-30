@@ -2,28 +2,43 @@
 {% block content %}
 {% load static %}
 
-<h1 class="secondary-theme text-center">Available Languages</h1>
+<h1 class="secondary-theme text-center title-text">Available Languages</h1>
 
-<div class="text-center">
-    <h3 class="card-title">Polish</h3>
-    <a class="capitalize-first-letter" href="polish"><img class="img-fluid small-margin" src="{% static 'img/polishflag.jpg' %}"></a>
-</div>  
-
-<div class="text-center">
-    <h3 class="card-title">Spanish</h3>
-    <a class="capitalize-first-letter" href="spanish"><img class="img-fluid small-margin" src="{% static 'img/spanishflag.jpg' %}"></a>
+<div class="col d-flex justify-content-center">
+    <a href="polish">
+    <div class="card text-center learn-card fourth-theme-background">
+        <img class="img-fluid learn-flag" src="{% static 'img/polishflag.jpg' %}">
+        <p class="third-theme">Polish</p>
+    </div>
+    </a>
 </div>
 
-<div class="text-center">
-    <h3 class="card-title">Russian</h3>
-    <a class="capitalize-first-letter" href="russian"><img class="img-fluid small-margin" src="{% static 'img/russianflag.jpg' %}"></a>
-</div> 
+<div class="col d-flex justify-content-center">
+    <a href="spanish">
+    <div class="card text-center learn-card fourth-theme-background">
+        <img class="img-fluid learn-flag" src="{% static 'img/spanishflag.jpg' %}">
+        <p class="third-theme">Spanish</p>
+    </div>
+    </a>
+</div>
 
-<div class="text-center">
-    <h3 class="card-title">Italian</h3>
-    <a class="capitalize-first-letter" href="italian"><img class="img-fluid small-margin" src="{% static 'img/italianflag.jpg' %}"></a>
-</div> 
+<div class="col d-flex justify-content-center">
+    <a href="russian">
+    <div class="card text-center learn-card fourth-theme-background">
+        <img class="img-fluid learn-flag" src="{% static 'img/russianflag.jpg' %}">
+        <p class="third-theme">Russian</p>
+    </div>
+    </a>
+</div>
 
+<div class="col d-flex justify-content-center">
+    <a href="italian">
+    <div class="card text-center learn-card fourth-theme-background">
+        <img class="img-fluid learn-flag" src="{% static 'img/italianflag.jpg' %}">
+        <p class="third-theme">Italian</p>
+    </div>
+    </a>
+</div>
 
 {% if user.is_superuser %}
     <a href="{% url 'createlesson' %}"><span><button class="btn btn-primary">Create Lesson</button></span></a>
