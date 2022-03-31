@@ -38,10 +38,6 @@ def register_view(request):
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
-
-
-
-
 def login_view(request):
     form = AuthenticationForm(data=request.POST or None)
     if request.method == 'POST':
