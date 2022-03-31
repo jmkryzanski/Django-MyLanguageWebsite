@@ -12,6 +12,8 @@ from userprofile.models import Profile
 from learning.models import Level
 from .forms import UserCreationForm
 
+
+
 def register_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
