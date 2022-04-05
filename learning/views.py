@@ -362,3 +362,6 @@ def mytest4(request):
         'bet': bet,
     }
     return render(request, 'learning/mytest4.html', context)
+
+def mytest5(request):
+    return render(request, 'learning/mytest5.html')
