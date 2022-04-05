@@ -9,12 +9,17 @@
     --thirdThemeColor: #3c3c3c;
 
     --fourthThemeColor: black;
+
+    /* blue to orange */
+    --fifthThemeColor: #3778c2;
+
     --primPolandColor: red;
     --secPolandColor: white;
 }
 
 body{
     background-color: white;
+    font-family: sans-serif;
 }
 
 .far:hover{
@@ -23,6 +28,14 @@ body{
 
 .primary-theme{
     color: var(--primThemeColor);
+}
+
+.fifth-theme{
+    color: var(--fifthThemeColor);
+}
+
+.fifth-theme-background{
+    background-color: var(--fifthThemeColor);
 }
 
 .my-nav-item {
@@ -190,15 +203,19 @@ a{
     cursor: pointer
 }
 
+textarea{
+    margin-bottom: 20px;
+}
+
 .btn{
-    background-color: white;
-    color: orange;
+    /*background-color: white;
+    color: orange;*/
     border: 2px solid white;
 }
 
 #btn-submit{
-    background-color: var(--secThemeColor);
-    color: white;
+    /*background-color: var(--secThemeColor);
+    color: white;*/
     border: 2px solid white;
     border-radius: 10px;
     font-size: 30px;
@@ -291,6 +308,10 @@ body.dark {
     color: white;
 }
 
+.dark-fifth-theme{
+    color: #f8a300;
+}
+
 .dark-primary-theme-background{
     background-color: yellow;
 }
@@ -317,6 +338,10 @@ body.dark {
     background-color: #1a1a1a;
 }
 
+.dark-fifth-theme-background{
+    background-color: #f8a300;
+}
+
 .some-class{
     background-color: magenta;
 }
@@ -329,6 +354,12 @@ body.dark {
     color: orange;
 }
 
+#result-label{
+    margin: 10px 0px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
 textarea:focus{
    background-color: transparent !important;
    /*color: gray !important;*/
@@ -337,3 +368,49 @@ textarea:focus{
 textarea:disabled{
     background-color: transparent !important;
 }
+
+
+.game-button {
+    color: #3c3c3c;
+    font-family: "Montserrat", sans-serif;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin: 1rem;
+    padding: 0.5rem;
+    border: 2px solid #f8a300;
+    border-radius: 0.5rem;
+    position: relative;
+    top: 0;
+    transition: all 300ms ease-in-out;
+    box-shadow: 0 0.6em #f8a300, 0 0.9em rgba(0, 0, 0, 0);
+  }
+
+  .game-button:hover {
+    background: #e5dc15;
+    color: #0e79b2;
+  }
+  
+  .game-button.b-1:hover {
+    top: 0.2em;
+    box-shadow: 0 0.4em #c2bb11, 0 0.7em rgba(0, 0, 0, 0);
+  }
+  
+  .game-button.b-1:active {
+    top: 0.4em;
+    box-shadow: 0 0.2em #c2bb11, 0 0.5em rgba(0, 0, 0, 0);
+  }
+  
+  .game-button.b-2:active {
+    top: 0.6em;
+    box-shadow: 0 0.2em rgba(0, 0, 0, 0.4);
+  }
+  
+  .game-button.b-3:hover {
+    top: -0.5em;
+    box-shadow: 0 0.6em #c2bb11, 0 1.3em rgba(0, 0, 0, 0.4);
+  }
+  
+  .game-button.b-3:active {
+    top: 0.4em;
+    box-shadow: 0 0.2em #c2bb11, 0 0.5em rgba(0, 0, 0, 0.4);
+  }

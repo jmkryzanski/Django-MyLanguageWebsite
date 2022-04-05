@@ -60,54 +60,6 @@ mylistbaby
 -->
 
 
-<style>
-    .mybtn {
-  color: #3c3c3c;
-  font-family: "Montserrat", sans-serif;
-  text-transform: uppercase;
-  text-decoration: none;
-  margin: 1rem;
-  padding: 0.5rem;
-  border: 2px solid #f8a300;
-  border-radius: 0.5rem;
-  position: relative;
-  top: 0;
-  transition: all 300ms ease-in-out;
-  box-shadow: 0 0.6em #f8a300, 0 0.9em rgba(0, 0, 0, 0);
-}
-
-.mybtn:hover {
-  background: #e5dc15;
-  color: #0e79b2;
-}
-
-.mybtn.b-1:hover {
-  top: 0.2em;
-  box-shadow: 0 0.4em #c2bb11, 0 0.7em rgba(0, 0, 0, 0);
-}
-
-.mybtn.b-1:active {
-  top: 0.4em;
-  box-shadow: 0 0.2em #c2bb11, 0 0.5em rgba(0, 0, 0, 0);
-}
-
-.mybtn.b-2:active {
-  top: 0.6em;
-  box-shadow: 0 0.2em rgba(0, 0, 0, 0.4);
-}
-
-.mybtn.b-3:hover {
-  top: -0.5em;
-  box-shadow: 0 0.6em #c2bb11, 0 1.3em rgba(0, 0, 0, 0.4);
-}
-
-.mybtn.b-3:active {
-  top: 0.4em;
-  box-shadow: 0 0.2em #c2bb11, 0 0.5em rgba(0, 0, 0, 0.4);
-}
-
-</style>
-
 <div class="row">
     <div class="col-12 col-md-8">
         {% for lesson in course_lessons %}
@@ -122,11 +74,11 @@ mylistbaby
                     <i style="font-size: 50px;"class="far fa-comments third-theme"></i>
                     <h5 class="secondary-theme lessonTitle"></h5>
                     <div class="navigation-container">
-                        <a class="first-level third-theme mybtn b-1" href="{% url 'lesson' lan lesson.slug 1 %}">1</a>
+                        <a class="first-level third-theme game-button b-1" href="{% url 'lesson' lan lesson.slug 1 %}">1</a>
                         <!--<a class="second-level third-theme numberCircle" href="{% url 'lesson' lan lesson.slug 2 %}">2</a>
                         <a class="third-level third-theme numberCircle"  href="{% url 'lesson' lan lesson.slug 3 %}">3</a>-->
-                        <a class="second-level third-theme mybtn b-1" href="{% url 'lesson' lan lesson.slug 2 %}">2</a>
-                        <a class="third-level third-theme mybtn b-1" href="{% url 'lesson' lan lesson.slug 3 %}">3</a>
+                        <a class="second-level third-theme game-button b-1" href="{% url 'lesson' lan lesson.slug 2 %}">2</a>
+                        <a class="third-level third-theme game-button b-1" href="{% url 'lesson' lan lesson.slug 3 %}">3</a>
                     </div>  
                 </div>
             </div>
