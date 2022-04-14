@@ -60,6 +60,12 @@ mylistbaby
 -->
 
 
+
+
+
+
+
+
 <div class="row">
     <div class="col-12 col-md-8">
         {% for lesson in course_lessons %}
@@ -70,7 +76,9 @@ mylistbaby
                 </script>
             {% endif %}
             <div class="col d-flex justify-content-center">
-                <div class="card text-center learn-card-nohover fourth-theme-background" style="padding: 5px 0px;" >
+                <div class="card text-center learn-card-nohover fourth-theme-background sixth-theme-border" style="padding: 5px 0px;" >
+                    <!--{{lesson.numLevels}}-->
+
                     <i style="font-size: 50px;"class="far fa-comments third-theme"></i>
                     <h5 class="secondary-theme lessonTitle"></h5>
                     <div class="navigation-container">
@@ -79,15 +87,21 @@ mylistbaby
                         <a class="third-level third-theme numberCircle"  href="{% url 'lesson' lan lesson.slug 3 %}">3</a>-->
                         <a class="second-level third-theme game-button b-1" href="{% url 'lesson' lan lesson.slug 2 %}">2</a>
                         <a class="third-level third-theme game-button b-1" href="{% url 'lesson' lan lesson.slug 3 %}">3</a>
-                    </div>  
+                    </div>
+
+                    <div style="box-shadow: 0 0.2em rgb(218, 218, 218), 0 0.9em rgba(0, 0, 0, 0); border-radius: 25px; margin: 15px;">
+                        <div class="text-center progress-bar" style="background-color: #f8a300; color: white; border-radius: 25px;"></div>
+                    </div>
+
                 </div>
+
             </div>
         {% endfor %}
     </div>
     
     <div class="col">
       <div class="row">
-        <div class="col-12 col-md-4 border border-white text-center" style="width: 100%; border-radius: 25px;">
+        <div class="col-12 col-md-4 sixth-theme-border text-center" style="width: 100%; border-radius: 25px;">
             <a class="capitalize-first-letter" href="{% url 'guide' lan %}"><span><h1 class="secondary-theme card-title">{{lan}} Grammar Guide</h1></span></a>
             <hr class="third-theme center1">
             <div class="guide-title">
@@ -209,6 +223,54 @@ mylistbaby
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+
+
+
+
+// progress bar
+const numLevelsPerLesson = {{mylist|safe}};
+var progressBar = document.getElementsByClassName("progress-bar");
+for (let i = 0; i < progressBar.length; i++){
+    console.log(numLevelsPerLesson[i]);
+    progressBar[i].style.width = (((numLevelsPerLesson[i])/3.0)*100) + "%";
+    progressBar[i].innerHTML = progressBar[i].style.width;
+    //progressBar[i].innerText = "a";
+    progressBar[i].textContent = '\u3000';
+}
+
+
+
+/*var increment = 0.0;
+increment = (((currentIndex+1) / ((gameQuestions.length*1)))*100.0);
+progressBar.style.width = widthValue + "%";
+progressBar.innerHTML = progressBar.style.width;
+*/
+
+/*
+function move() {
+    var elem = document.getElementById("progress-bar");
+    var widthAnim = widthValue;
+    var id = setInterval(frame, 10);
+    var widthIncrement = increment;
+
+    widthValue = widthAnim + widthIncrement;
+
+    function frame() {
+        if (widthAnim >= widthValue || widthValue > 100) {
+        clearInterval(id);
+        } else {
+        widthAnim++;
+        elem.style.width = widthAnim + '%';
+        elem.innerHTML = widthValue + '%';
+        }
+    }
+}*/
+
+
+
+
+
+
 //    $(document).ready(function () {
         $('#ajaxtest').click(function () {
             $.ajax({
@@ -242,11 +304,18 @@ var numLevels = {{ mylist|safe }};
 //var nodeList = document.querySelectorAll(".sayin");
 
 
+/*
 //for (i = 0; i < nodeList.length; i++){
 for (i = 0; i < numLevels.length; i++){
     //nodeList[i].innerHTML = numLevels[i];
+
+    if (numLevels[i] === 0){
+        first[i].style.display = "none";
+        second[i].style.display = "none";
+        third[i].style.display = "none";
+    }
     
-    if (numLevels[i] === 1){
+    else if (numLevels[i] === 1){
         //second[i].style.pointerEvents = "none";
         //third[i].style.pointerEvents = "none";
         second[i].style.display = "none";
@@ -266,6 +335,37 @@ for (i = 0; i < numLevels.length; i++){
         
     }
 }
+*/
+for (i = 0; i < numLevels.length; i++){
+    if (numLevels[i] === 0){
+        first[i].style.display = "none";
+        first[i].style.pointerEvents = "none";
+        first[i].style.filter = "grayscale(100%) blur(2px)";
+        second[i].style.display = "none";
+        second[i].style.pointerEvents = "none";
+        second[i].style.filter = "grayscale(100%) blur(2px)";
+        third[i].style.display = "none";
+        third[i].style.pointerEvents = "none";
+        third[i].style.filter = "grayscale(100%) blur(2px)";
+    }
+    else if (numLevels[i] === 1){
+        second[i].style.pointerEvents = "none";
+        second[i].style.filter = "grayscale(100%) blur(2px)";
+        third[i].style.pointerEvents = "none";
+        third[i].style.filter = "grayscale(100%) blur(2px)";
+    }
+    else if (numLevels[i] === 2){
+        third[i].style.pointerEvents = "none";
+        third[i].style.filter = "grayscale(100%) blur(2px)";
+    }
+}
+
+
+
+
+
+
+
 
 </script>
 

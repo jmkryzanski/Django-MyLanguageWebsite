@@ -13,6 +13,9 @@
     /* blue to orange */
     --fifthThemeColor: #3778c2;
 
+    /* almost greyed white to light black, for card borders in course and lesson */
+    --sixthThemeColor: rgba(223, 223, 223, 1);
+
     --primPolandColor: red;
     --secPolandColor: white;
 }
@@ -36,6 +39,17 @@ body{
 
 .fifth-theme-background{
     background-color: var(--fifthThemeColor);
+}
+
+.sixth-theme-border{
+    border-radius: 25px;
+    border: 1px solid var(--sixthThemeColor);
+    box-shadow: 0.4em 0.4em var(--sixthThemeColor);
+}
+
+.dark-sixth-theme-border{
+    border-radius: 25px;
+    border: 1px solid white;
 }
 
 .my-nav-item {
@@ -88,6 +102,10 @@ body{
 .card-title{
     margin-top: 8px;
     margin-bottom: 8px;
+}
+
+.lessonTitle{
+    margin: 10px 0px;
 }
 
 /* added !important here and .dark-third-theme for textarea of lessons to work with darkmode  */

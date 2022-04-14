@@ -62,8 +62,11 @@
 <!--<button onclick="move()">Click Me</button>-->
 <br>
 
-<div id="game-card" class="col-12 border text-center" style="border-radius: 25px;">
-    <div style="border :1px solid grey; border-radius: 25px; margin: 15px;">
+<div id="game-card" class="col-12 text-center sixth-theme-border">
+
+    
+
+    <div style="box-shadow: 0 0.2em rgb(218, 218, 218), 0 0.9em rgba(0, 0, 0, 0); border-radius: 25px; margin: 15px;">
         <div id="progress-bar" class="text-center" style="background-color: #f8a300; color: white; border-radius: 25px;"></div>
     </div>
     {% csrf_token %}
@@ -76,7 +79,7 @@
                 <ul id="sortable" class="third-theme list-inline d-flex justify-content-center"></ul>
             </div>
             <div>
-                <textarea id="answer-textarea" class="form-control third-theme fourth-theme-background" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea id="answer-textarea" class="form-control third-theme fourth-theme-background" rows="3"></textarea>
             </div>
             <div>
                 <button id="btn-submit" class="btn text-center fifth-theme-background" style="color: white;" onclick="checkUserInput()">Check</button>
