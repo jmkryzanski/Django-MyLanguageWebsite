@@ -94,7 +94,7 @@
     </form>
 </div>
 
-<div class="col-12 text-center">
+<div class="col-12 text-center sixth-theme-border">
     <div id="showend-card">
         <h1>Great job! You did it</h1>
         <a class="secondary-theme" href="{% url 'course' lan %}"><p class="secondary-theme">Return back to {{lesson.course}} lessons</p></a>
@@ -873,6 +873,7 @@ var increment = 0.0;
 increment = (((currentIndex+1) / ((gameQuestions.length*1)))*100.0);
 progressBar.style.width = widthValue + "%";
 progressBar.innerHTML = progressBar.style.width;
+progressBar.textContent = '\u3000';
 
 
 function move() {
@@ -890,6 +891,7 @@ function move() {
         widthAnim++;
         elem.style.width = widthAnim + '%';
         elem.innerHTML = widthValue + '%';
+        elem.textContent = '\u3000';
         }
     }
 }

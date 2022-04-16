@@ -23,5 +23,7 @@
 {% autoescape off %}
 {{guide.content}}
 {% endautoescape %}
-
+<div class="col-12 third-theme">
+{{guide.richContent|safe}}
+</div>
 {% endblock %}
