@@ -8,6 +8,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <title>Language learning</title>
+    <style>
+      html{ background-color: grey; }
+      body { background-color: rgb(230, 230, 230); }
+    </style>
   </head>
 <body class="d-flex flex-column min-vh-100">
   <nav class="navbar navbar-light navbar-expand-lg bg-faded justify-content-center fourth-theme-background">
@@ -55,7 +59,7 @@
   </nav>
 
 
-<div class="container">
+<div class="container seventh-theme" style="border-radius: 25px; border: 2px solid #b1b1b1;">
     {% block content %}
     {% endblock %}
 </div>
@@ -128,6 +132,8 @@
         $('.fifth-theme').toggleClass('dark-fifth-theme')
         $('.sixth-theme-border').toggleClass('dark-sixth-theme-border')
 
+        $('.seventh-theme').toggleClass('dark-seventh-theme')
+
         $('body').toggleClass('dark')
       }
       else{
@@ -149,6 +155,8 @@
         $('.fourth-theme-background').toggleClass('dark-fourth-theme-background')
         $('.fifth-theme').toggleClass('dark-fifth-theme')
         $('.sixth-theme-border').toggleClass('dark-sixth-theme-border')
+
+        $('.seventh-theme').toggleClass('dark-seventh-theme')
         $('body').toggleClass('dark')
       }
       localStorage.setItem('darkModeStatus', chk.checked);
@@ -174,6 +182,8 @@
         $('.fourth-theme-background').toggleClass('dark-fourth-theme-background')
         $('.fifth-theme').toggleClass('dark-fifth-theme')
         $('.sixth-theme-border').toggleClass('dark-sixth-theme-border')
+
+        $('.seventh-theme').toggleClass('dark-seventh-theme')
         $('body').toggleClass('dark')
         
         document.body.classList.add("dark"); 

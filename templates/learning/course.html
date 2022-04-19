@@ -65,44 +65,12 @@ mylistbaby
 
 
 
-
-<div class="row">
-    <div class="col-12 col-md-8">
-        {% for lesson in course_lessons %}
-
-            {% if lesson.title == 'polish' %}
-                <script>
-                    //change navbar to red and white
-                </script>
-            {% endif %}
-            <div class="col d-flex justify-content-center">
-                <div class="card text-center learn-card-nohover fourth-theme-background sixth-theme-border" style="padding: 5px 0px;" >
-                    <!--{{lesson.numLevels}}-->
-
-                    <i style="font-size: 50px;"class="far fa-comments third-theme"></i>
-                    <h5 class="secondary-theme lessonTitle"></h5>
-                    <div class="navigation-container">
-                        <a class="first-level third-theme game-button b-1" href="{% url 'lesson' lan lesson.slug 1 %}">1</a>
-                        <!--<a class="second-level third-theme numberCircle" href="{% url 'lesson' lan lesson.slug 2 %}">2</a>
-                        <a class="third-level third-theme numberCircle"  href="{% url 'lesson' lan lesson.slug 3 %}">3</a>-->
-                        <a class="second-level third-theme game-button b-1" href="{% url 'lesson' lan lesson.slug 2 %}">2</a>
-                        <a class="third-level third-theme game-button b-1" href="{% url 'lesson' lan lesson.slug 3 %}">3</a>
-                    </div>
-
-                    <div style="box-shadow: 0 0.2em rgb(218, 218, 218), 0 0.9em rgba(0, 0, 0, 0); border-radius: 25px; margin: 15px;">
-                        <div class="text-center progress-bar" style="background-color: #f8a300; color: white; border-radius: 25px;"></div>
-                    </div>
-
-                </div>
-
-            </div>
-        {% endfor %}
-    </div>
-    
+<h1 class="capitalize-first-letter primary-theme text-center">{{lan}}</h1>
+<div class="row">    
     <div class="col" style="margin-top: 15px;">
       <div class="row">
         <div class="col-12 col-md-4 sixth-theme-border" style="width: 100%; border-radius: 25px;">
-            <a class="capitalize-first-letter text-center" href="{% url 'guide' lan %}"><span><h2 class="fifth-theme" style="margin-top: 8px; margin-bottom: 8px;">{{lan}} Grammar Guide</h2></span></a>
+            <a class="capitalize-first-letter text-center" href="{% url 'guide' lan %}"><span><h2 class="fifth-theme" style="margin-top: 8px; margin-bottom: 8px;">Grammar Guide</h2></span></a>
             <hr class="third-theme center1">
             <div class="guide-title" style="padding-left: 38px;">
                 {% for p in thisCaseGuides %}
@@ -155,6 +123,37 @@ mylistbaby
         test2<br>
         </div>
       </div>
+    </div>
+    <div class="col-12 col-md-8">
+        {% for lesson in course_lessons %}
+
+            {% if lesson.title == 'polish' %}
+                <script>
+                    //change navbar to red and white
+                </script>
+            {% endif %}
+            <div class="col d-flex justify-content-center">
+                <div class="card text-center learn-card-nohover fourth-theme-background sixth-theme-border" style="padding: 5px 0px;" >
+                    <!--{{lesson.numLevels}}-->
+
+                    <i style="font-size: 50px;"class="far fa-comments third-theme"></i>
+                    <h5 class="secondary-theme lessonTitle"></h5>
+                    <div class="navigation-container">
+                        <a class="first-level third-theme game-button b-1" href="{% url 'lesson' lan lesson.slug 1 %}">1</a>
+                        <!--<a class="second-level third-theme numberCircle" href="{% url 'lesson' lan lesson.slug 2 %}">2</a>
+                        <a class="third-level third-theme numberCircle"  href="{% url 'lesson' lan lesson.slug 3 %}">3</a>-->
+                        <a class="second-level third-theme game-button b-1" href="{% url 'lesson' lan lesson.slug 2 %}">2</a>
+                        <a class="third-level third-theme game-button b-1" href="{% url 'lesson' lan lesson.slug 3 %}">3</a>
+                    </div>
+
+                    <div style="box-shadow: 0 0.2em rgb(218, 218, 218), 0 0.9em rgba(0, 0, 0, 0); border-radius: 25px; margin: 15px;">
+                        <div class="text-center progress-bar" style="background-color: #f8a300; color: white; border-radius: 25px;"></div>
+                    </div>
+
+                </div>
+
+            </div>
+        {% endfor %}
     </div>
     
   </div>
