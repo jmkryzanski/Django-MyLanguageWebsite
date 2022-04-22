@@ -1,35 +1,13 @@
 {% extends 'learning/base2.html' %}
 {% block content %}
 
-
-<!--
-<div class="third-theme">
-    {{lesson.course}}
-    {{lesson.lessonTitle}}
-    {% for qa in questionanswer %}
-        <br>
-        Question: {{qa.question}}
-        Answer: {{qa.answer}}<br>
-    {% endfor %}
-</div>
--->
-<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">-->
-    <!--<script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">-->
-
 <style>
     h1, h2, h3{
         color: #f8a300;
     }
-
-    #container{
-    }
-
     #sortable{
     list-style: none;
     }
-
     #sortable li{
         margin: 10px;
         cursor: pointer;
@@ -39,7 +17,6 @@
         display: inline-block !important;
         float: left;
     }
-
     .hideli{
         visibility: hidden;
         display: none;
@@ -49,7 +26,6 @@
 
 {{numLevels}}-->
 
-
 <div class="col-12 third-theme">
 {% autoescape off %}
 {{lesson.content}}
@@ -58,23 +34,16 @@
 {{lesson.richContent|safe}}
 </div>
 
-<br>
-<!--<button onclick="move()">Click Me</button>-->
-<br>
-
 <div id="game-card" class="col-12 text-center sixth-theme-border">
-
-    
-
-    <div style="box-shadow: 0 0.2em rgb(218, 218, 218), 0 0.9em rgba(0, 0, 0, 0); border-radius: 25px; margin: 15px;">
-        <div id="progress-bar" class="text-center" style="background-color: #f8a300; color: white; border-radius: 25px;"></div>
+    <div class="lesson-progress-bar-div">
+        <div id="progress-bar" class="text-center lesson-progress-bar"></div>
     </div>
     {% csrf_token %}
     <form onsubmit="return false">
         <div>
             <h3 id="prompt-label" class="secondary-theme"></h3>
             <h4 id="question-label" class="third-theme text-center"></h4>
-            <span id='btn-audio'><i onclick="playAudio()" style="font-size: 40px;" class="fas fa-volume-up third-theme text-center"></i></span>
+            <span id='btn-audio'><i onclick="playAudio()" class="fas fa-volume-up third-theme text-center"></i></span>
             <div id="dragdrop-div">    
                 <ul id="sortable" class="third-theme list-inline d-flex justify-content-center"></ul>
             </div>
@@ -82,14 +51,14 @@
                 <textarea id="answer-textarea" class="form-control third-theme fourth-theme-background" rows="3"></textarea>
             </div>
             <div>
-                <button id="btn-submit" class="btn text-center fifth-theme-background" style="color: white;" onclick="checkUserInput()">Check</button>
+                <button id="btn-submit" class="btn text-center fifth-theme-background" onclick="checkUserInput()">Check</button>
             </div>
             <div>
                 <p id="result-label"></p>
                 <label id="result-label"></label>
             </div>
         </div>
-        <div style="font-size: 30px;" id="keyword-question-label" class="third-theme text-center">            
+        <div id="keyword-question-label" class="third-theme text-center">            
         </div>
     </form>
 </div>
