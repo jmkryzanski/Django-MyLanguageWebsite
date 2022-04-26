@@ -288,11 +288,38 @@ def ViewGuideView(request, lan):
 
     return render(request, 'learning/guide.html', context)
 
-class IndividualGuideView(DetailView):
-    model = Guide
+def IndividualGuideView(request, lan, myslug):
+    Lesson.objects.all()
+    course_guides = Guide.objects.all().filter(course__title=lan).order_by('orderingID')
+    thisCaseGuides = course_guides.filter(category="cases")
+    thisPronounGuides = course_guides.filter(category="pronouns")
+    #thisPronounGuides.all().order_by('orderingID')
+    thisVerbGuides = course_guides.filter(category="verbs")
+    thisAdjectiveGuides = course_guides.filter(category="adjectives")
+    thisAdverbGuides = course_guides.filter(category="adverbs")
+    thisOtherGuides = course_guides.filter(category="other")
+    guide = Guide.objects.all().get(course__title=lan, slug=myslug)
+    context = {
+        'thisCaseGuides': thisCaseGuides,
+        #'course_guides': course_guides,
+        'thisPronounGuides': thisPronounGuides,
+        'thisVerbGuides': thisVerbGuides,
+        'thisAdjectiveGuides': thisAdjectiveGuides,
+        'thisAdverbGuides': thisAdverbGuides,
+        'thisOtherGuides': thisOtherGuides,
+        'guide': guide,
+
+    }
+    
+
+    return render(request, 'learning/individualguide.html', context)
+
+    '''model = Guide
     template_name = 'learning/individualguide.html'
     slug_url_kwarg = 'myslug'
     slug_field = 'slug'
+    '''
+
 
 def AboutView(request):
     return render(request, 'learning/about.html')
