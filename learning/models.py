@@ -54,11 +54,11 @@ class QuestionAnswer(models.Model):
 
     # first question is the one used for dragdrop and keyword, ones after that are acceptable
     # inputs for translation
-    question = models.CharField(max_length=255)
+    question = models.CharField(max_length=600)
 
     # first answer is used for keyword, ones after that are acceptable
     # inputs for translation
-    answer = models.CharField(max_length=255)
+    answer = models.CharField(max_length=600)
 
     # add field called mainQuestions that shows the main translations of each word in the question
     level = models.IntegerField()
