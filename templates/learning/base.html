@@ -37,7 +37,7 @@
                 </li>
                 {% if user.is_authenticated %}
                 <li>
-                  <a class="my-nav-item primary-theme" href="{% url 'profile' request.user.profile.username %}">Profile</a>
+                  <a class="my-nav-item primary-theme" href="{% url 'profile' request.user.profile.user %}">Profile</a>
                 </li>
                 <li>
                   <a class="my-nav-item primary-theme" href="{% url 'logout' %}">Logout</a>
