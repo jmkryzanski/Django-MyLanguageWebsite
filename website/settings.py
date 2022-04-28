@@ -27,7 +27,11 @@ SECRET_KEY = 'django-insecure-*m*uqtrmv=*#4!-8_8mrnyt1z(v64rh7_8l*kt4h3rnvq2gagq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+<<<<<<< HEAD
 ALLOWED_HOSTS = ['127.0.0.1','stark-stream-00377.herokuapp.com']
+=======
+ALLOWED_HOSTS = ['jon-languages.herokuapp.com', '127.0.0.1']
+>>>>>>> 8d6f1818dc94aaa2aaf370ab2160ac30776ca493
 
 FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
                         "django_excel.TemporaryExcelFileUploadHandler")
@@ -156,6 +160,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 PROJECT_ROOT   =   os.path.join(os.path.abspath(__file__))
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8d6f1818dc94aaa2aaf370ab2160ac30776ca493
 STATIC_URL = 'static/'
 
 #STATICFILES_DIRS = ['static']
@@ -164,6 +172,7 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+#STATIC_ROOT  =   os.path.join(PROJECT_ROOT, 'staticfiles')
 
 
 MEDIA_URL = '/media/'
@@ -172,8 +181,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+<<<<<<< HEAD
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+=======
+#STATICFILES_DIRS = (
+#    os.path.join(PROJECT_ROOT, 'static'),
+#)
+>>>>>>> 8d6f1818dc94aaa2aaf370ab2160ac30776ca493
 
 LOGIN_REDIRECT_URL = '/home'
 LOGOUT_REDIRECT_URL = 'welcome'
@@ -183,8 +198,16 @@ LOGOUT_REDIRECT_URL = 'welcome'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+<<<<<<< HEAD
 #import dj_database_url 
 #prod_db  =  dj_database_url.config(conn_max_age=500)
 #DATABASES['default'].update(prod_db)
 
 django_heroku.settings(locals())
+=======
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+import dj_database_url 
+prod_db  =  dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(prod_db)
+>>>>>>> 8d6f1818dc94aaa2aaf370ab2160ac30776ca493

@@ -89,6 +89,7 @@ class Guide(models.Model):
     orderingID = models.IntegerField()
     slug = models.SlugField(unique=True)
     category = models.CharField(max_length=255)
+    richContent = RichTextField(blank=True, null=True)
 
     def __str__(self):
         return 'Course- ' + self.course.title + ' |  Guide Category- ' + self.category + ' | Guide Title- ' + self.guideTitle

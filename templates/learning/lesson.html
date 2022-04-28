@@ -1,40 +1,13 @@
 {% extends 'learning/base2.html' %}
 {% block content %}
 
-
-
-
-<!--
-<div class="third-theme">
-    {{lesson.course}}
-    {{lesson.lessonTitle}}
-    {% for qa in questionanswer %}
-        <br>
-        Question: {{qa.question}}
-        Answer: {{qa.answer}}<br>
-    {% endfor %}
-</div>
--->
-<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">-->
-    <!--<script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">-->
-
 <style>
     h1, h2, h3{
         color: #f8a300;
     }
-
-    #container{
-    /*width: 300px;*/
-    /*display: block;*/
-    /*margin: auto;*/
-    }
-
     #sortable{
     list-style: none;
     }
-
     #sortable li{
         margin: 10px;
         cursor: pointer;
@@ -44,7 +17,6 @@
         display: inline-block !important;
         float: left;
     }
-
     .hideli{
         visibility: hidden;
         display: none;
@@ -54,58 +26,52 @@
 
 {{numLevels}}-->
 
-
-
-
 <div class="col-12 third-theme">
 {% autoescape off %}
 {{lesson.content}}
 {% endautoescape %}
 
 {{lesson.richContent|safe}}
-
 </div>
 
-
-<div>
-    <div id="progress-bar" class="text-center rounded" style="background-color: #f8a300; color: white;"></div>
-</div>
-<br>
-<!--<button onclick="move()">Click Me</button>-->
-<br>
-<div id="game-card" class="col-12 border border-white text-center">
+<div id="game-card" class="col-12 text-center sixth-theme-border">
+    <div class="lesson-progress-bar-div">
+        <div id="progress-bar" class="text-center lesson-progress-bar"></div>
+    </div>
     {% csrf_token %}
     <form onsubmit="return false">
         <div>
             <h3 id="prompt-label" class="secondary-theme"></h3>
             <h4 id="question-label" class="third-theme text-center"></h4>
-            <span id='btn-audio'><i onclick="playAudio()" style="font-size: 40px;" class="fas fa-volume-up third-theme text-center"></i></span>
+            <span id='btn-audio'><i onclick="playAudio()" class="fas fa-volume-up third-theme text-center"></i></span>
             <div id="dragdrop-div">    
                 <ul id="sortable" class="third-theme list-inline d-flex justify-content-center"></ul>
             </div>
             <div>
-                <textarea id="answer-textarea" class="form-control third-theme fourth-theme-background" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea id="answer-textarea" class="form-control third-theme fourth-theme-background" rows="3"></textarea>
             </div>
             <div>
-                <button id="btn-submit" class="btn text-center" onclick="checkUserInput()">Check</button>
+                <button id="btn-submit" class="btn text-center fifth-theme-background" onclick="checkUserInput()">Check</button>
             </div>
             <div>
                 <p id="result-label"></p>
                 <label id="result-label"></label>
             </div>
         </div>
-        <div style="font-size: 30px;" id="keyword-question-label" class="third-theme text-center">            
+        <div id="keyword-question-label" class="third-theme text-center">            
         </div>
     </form>
 </div>
 
-<div class="col-12 border border-white text-center">
+<div class="col-12 text-center sixth-theme-border">
     <div id="showend-card">
         <h1>Great job! You did it</h1>
         <a class="secondary-theme" href="{% url 'course' lan %}"><p class="secondary-theme">Return back to {{lesson.course}} lessons</p></a>
     </div>
 </div>
 
+<br>
+<br>
 {% if user.is_superuser %}
     <a href="{% url 'editlesson' lesson.course lesson.slug %}"><span><button class="btn btn-primary">Edit Lesson</button></span></a>
     <a href="{% url 'deletelesson' lesson.course lesson.slug %}"><span><button class="btn btn-primary">Delete Lesson</button></span></a>
@@ -118,10 +84,8 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-
+<!-- jsDelivr :: Sortable :: Latest (https://www.jsdelivr.com/package/npm/sortablejs) -->
 <script>
-
-
 
 $('#ajaxtest2').click(function () {
     $.ajax({
@@ -166,6 +130,9 @@ var gameAnswers = [];
 var currentIndex = 0;
 var currentQuestion = '';
 var currentAnswer = '';
+
+var isFirstQuestion = true;
+var isDragDropCorrect = false;
 
 const dragdropDiv = document.getElementById("dragdrop-div");
 const promptLabel = document.getElementById("prompt-label");
@@ -238,6 +205,7 @@ function startGame() {
             }
         }
     }
+    
 
     switch (arrayRandomGames[0]) {
         case "translation":
@@ -258,6 +226,7 @@ function startGame() {
             showReverseGame();
             break;
     }
+    isFirstQuestion = false;
     //console.log(arrayRandomGames);
     //console.log(gameAnswers);
     //console.log(gameQuestions);
@@ -399,17 +368,17 @@ function playAudio(){
 
 function correctAnswer(){
     idle = true;
-    resultLabel.innerHTML = "correct";
+    resultLabel.innerHTML = "Correct!";
     $(resultLabel).css('color', 'green');
     btnSubmit.innerHTML = "Continue";
-    //answerTextarea.disabled = true;
+    answerTextarea.disabled = true;
     btnSubmit.focus();
     move();
 }
 
 function wrongAnswerFirst() {
     idle = true;
-    resultLabel.innerHTML = "incorrect, the correct translation is" + currentAnswer;
+    resultLabel.innerHTML = "Incorrect, the correct translation is" + currentAnswer;
     $(resultLabel).css('color', 'red');
     btnSubmit.innerHTML = "Continue";
     answerTextarea.disabled = true;
@@ -515,10 +484,14 @@ function checkUserInput() {
         temp2 = temp1.concat(temp2, $(this).text().trim());
         });
 
-        //compare user input to question
-        //console.log(temp2);
-        //console.log(hi3.replace(/\s+/g, ''));
-        if (temp2 === hi3.replace(/\s+/g, '')){//mycorrectAnswer.join("")){
+        // allow multiple correct answers for drag drop
+        for (const element of currentQuestion.split("//")){
+            if (temp2 === element.replace(/\s+/g, '')){
+                isDragDropCorrect = true;
+            }
+        }
+
+        if (isDragDropCorrect){//if (temp2 === hi3.replace(/\s+/g, '')){//mycorrectAnswer.join("")){
             if (idle == true){
                 newRandomQA();
                 keywordGenerate();
@@ -526,6 +499,7 @@ function checkUserInput() {
                 $("#sortable").sortable({
                     disabled: false
                 });
+                resultLabel.innerHTML = "";
                 //$("#sortable").disableSelection();
                 return;
                 
@@ -542,6 +516,8 @@ function checkUserInput() {
                     $("#sortable").sortable({
                         disabled: true
                     });
+
+                    resultLabel.innerHTML = "Correct!";
                     return;
                 }
             }
@@ -554,6 +530,8 @@ function checkUserInput() {
                 $("#sortable").sortable({
                     disabled: false
                 });
+
+                resultLabel.innerHTML = "Incorrect";
                 return;
                 
             }
@@ -562,6 +540,8 @@ function checkUserInput() {
                     disabled: true
                 });
                 idle = true;
+
+                resultLabel.innerHTML = "";
                 return;
             }
         }
@@ -591,6 +571,8 @@ function checkUserInput() {
                 newRandomQA();
                 idle = false;
                 $(answerTextarea).val('');
+
+                resultLabel.innerHTML = "";
                 return;
             }
             else{
@@ -646,7 +628,6 @@ function checkUserInput() {
     
 
     //translation reverse
-    
     else if (arrayRandomGames[currentIndex] === availableGames[3]){
         //console.log("reverse");
         if (idle == false) {
@@ -735,7 +716,7 @@ function showTranslationGame(){
     answerTextarea.style.display = "block";
     keywordQuestionLabel.style.display = 'none';
     answerTextarea.disabled = false;
-    answerTextarea.focus();
+    if (!isFirstQuestion){ answerTextarea.focus();}
     const all = document.querySelectorAll('li');
     all.forEach(function(t,i){
         t.classList.add('hideli');
@@ -769,7 +750,7 @@ function showKeywordGame(){
 
     answerTextarea.style.display = "block";
     answerTextarea.disabled = false;
-    answerTextarea.focus();
+    if (!isFirstQuestion){ answerTextarea.focus();}
     const all = document.querySelectorAll('li');
     all.forEach(function(t,i){
         t.classList.add('hideli');
@@ -786,7 +767,7 @@ function showReverseGame(){
     answerTextarea.style.display = "block";
     keywordQuestionLabel.style.display = 'none';
     answerTextarea.disabled = false;
-    answerTextarea.focus();
+    if (!isFirstQuestion){ answerTextarea.focus();}
     const all = document.querySelectorAll('li');
     all.forEach(function(t,i){
         t.classList.add('hideli');
@@ -861,6 +842,7 @@ var increment = 0.0;
 increment = (((currentIndex+1) / ((gameQuestions.length*1)))*100.0);
 progressBar.style.width = widthValue + "%";
 progressBar.innerHTML = progressBar.style.width;
+progressBar.textContent = '\u3000';
 
 
 function move() {
@@ -878,6 +860,7 @@ function move() {
         widthAnim++;
         elem.style.width = widthAnim + '%';
         elem.innerHTML = widthValue + '%';
+        elem.textContent = '\u3000';
         }
     }
 }

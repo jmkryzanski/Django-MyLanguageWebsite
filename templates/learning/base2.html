@@ -11,12 +11,13 @@
   </head>
 <body class="d-flex flex-column min-vh-100">
   <nav class="navbar navbar-light navbar-expand-lg bg-faded justify-content-center fourth-theme-background">
-    <div class="container" style="margin-bottom: 0px;">
+    <div class="container navbar-container">
       <a href="/" class="my-nav-item primary-theme d-flex w-50 me-auto">Website</a>
       <input hidden type="checkbox" class="checkbox" id="chk" />
-      <label class="label" for="chk"><img id="dark-light-icon" style="height: 38px; padding-top: 3px;" src="{% static 'img/darkmode1.png' %}"></label>
+      <label class="label my-nav-item" for="chk"><img id="dark-light-icon" src="{% static 'img/darkmode1.png' %}"></label>
     </div>
 </nav>
+
 <div class="container">
     {% block content %}
     {% endblock %}
@@ -42,6 +43,8 @@
         $('.third-theme-border').toggleClass('dark-third-theme-border')
         $('.fourth-theme').toggleClass('dark-fourth-theme')
         $('.fourth-theme-background').toggleClass('dark-fourth-theme-background')
+        $('.fifth-theme').toggleClass('dark-fifth-theme')
+        $('.fifth-theme-background').toggleClass('dark-fifth-theme-background')
         $('body').toggleClass('dark')
       }
       else{
@@ -55,6 +58,8 @@
         $('.third-theme-border').toggleClass('dark-third-theme-border')
         $('.fourth-theme').toggleClass('dark-fourth-theme')
         $('.fourth-theme-background').toggleClass('dark-fourth-theme-background')
+        $('.fifth-theme').toggleClass('dark-fifth-theme')
+        $('.fifth-theme-background').toggleClass('dark-fifth-theme-background')
         $('body').toggleClass('dark')
       }
       localStorage.setItem('darkModeStatus', chk.checked);
@@ -72,13 +77,13 @@
         $('.third-theme-border').toggleClass('dark-third-theme-border')
         $('.fourth-theme').toggleClass('dark-fourth-theme')
         $('.fourth-theme-background').toggleClass('dark-fourth-theme-background')
+        $('.fifth-theme').toggleClass('dark-fifth-theme')
+        $('.fifth-theme-background').toggleClass('dark-fifth-theme-background')
         $('body').toggleClass('dark')
-        
         document.body.classList.add("dark"); 
         document.getElementById('chk').checked = true;
       }
     });
-
  </script>        
 </body>
 </html>
