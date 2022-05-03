@@ -10,7 +10,7 @@
     <title>Language learning</title>
   </head>
 <body class="d-flex flex-column min-vh-100">
-  <nav class="navbar navbar-light navbar-expand-lg bg-faded justify-content-center fourth-theme-background">
+  <nav class="navbar navbar-light navbar-expand-lg bg-faded justify-content-center seventh-theme-background">
     <div class="container navbar-container">
         <a href="/" class="my-nav-item primary-theme d-flex w-50 me-auto">Website</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsingNavbar3">
@@ -57,7 +57,7 @@
     {% endblock %}
 </div>
 
-<footer class="text-center mt-auto third-theme fourth-theme-background">
+<footer class="text-center mt-auto third-theme seventh-theme-background">
   <div class="container">
       <h1 class="secondary-theme m-4">website name</h1>
     <section class="mb-4">
@@ -107,6 +107,7 @@
         $('.fifth-theme').toggleClass('dark-fifth-theme')
         $('.sixth-theme-border').toggleClass('dark-sixth-theme-border')
         $('.sixth-theme-border-noshadow').toggleClass('dark-sixth-theme-border-noshadow')
+        $('.seventh-theme-background').toggleClass('dark-seventh-theme-background')
         $('body').toggleClass('dark')
       }
       else{
@@ -123,6 +124,7 @@
         $('.fifth-theme').toggleClass('dark-fifth-theme')
         $('.sixth-theme-border').toggleClass('dark-sixth-theme-border')
         $('.sixth-theme-border-noshadow').toggleClass('dark-sixth-theme-border-noshadow')
+        $('.seventh-theme-background').toggleClass('dark-seventh-theme-background')
         $('body').toggleClass('dark')
       }
       localStorage.setItem('darkModeStatus', chk.checked);
@@ -143,6 +145,7 @@
         $('.fifth-theme').toggleClass('dark-fifth-theme')
         $('.sixth-theme-border').toggleClass('dark-sixth-theme-border')
         $('.sixth-theme-border-noshadow').toggleClass('dark-sixth-theme-border-noshadow')
+        $('.seventh-theme-background').toggleClass('dark-seventh-theme-background')
         $('body').toggleClass('dark')
         document.body.classList.add("dark"); 
         document.getElementById('chk').checked = true;

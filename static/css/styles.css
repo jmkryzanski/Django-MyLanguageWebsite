@@ -16,8 +16,13 @@
     /* almost greyed white to light black, for card borders in course and lesson */
     --sixthThemeColor: rgba(223, 223, 223, 1);
 
+    /* white to slightly lighter black, used for navbar, footer, and content inside 3d cards */
+    --seventhThemeColor: white;
+
     --primPolandColor: red;
     --secPolandColor: white;
+
+    --orangeColor: #f8a300;
 
     --cardBorderColor: rgb(150, 150, 150);
     --darkerBackground: rgb(17, 17, 17);
@@ -71,13 +76,15 @@ body{
 }
 footer {
     background-color: var(--primThemeColor);
-    border-top:1px solid var(--primThemeColor);
+    /*border-top:1px solid var(--primThemeColor);*/
+    border-top:1px solid gray;
 }
 .navbar {
     margin-bottom: 20px;
     border-radius: 5px;
     background-color: white;
-    border-bottom:1px solid var(--primThemeColor);
+    /*border-bottom:1px solid var(--primThemeColor);*/
+    border-bottom:1px solid gray;
 }
 .navbar-nav li:hover>ul.dropdown-menu{
     display: block;
@@ -125,7 +132,10 @@ footer {
 .my-nav-item:hover:after {
     transform: scaleX(1);
     transform-origin: bottom left;
+    text-decoration: none;
+    color: var(--secThemeColor);
 }
+
 .my-nav-item{
     color: var(--primThemeColor);
     text-decoration: none;
@@ -199,7 +209,7 @@ body.dark {
     color: white;
 }
 .dark-fourth-theme-background{
-    background-color: #1a1a1a;
+    background-color: var(--darkerBackground);
 }
 .fifth-theme{
     color: var(--fifthThemeColor);
@@ -234,6 +244,12 @@ body.dark {
     border: 1px solid var(--cardBorderColor);
     /*border: 1px solid grey;*/
     /*box-shadow: 0.4em 0.4em gray;*/
+}
+.seventh-theme-background{
+    background-color: var(--seventhThemeColor);
+}
+.dark-seventh-theme-background{
+    background-color: #1a1a1a;
 }
 
 /******************************/

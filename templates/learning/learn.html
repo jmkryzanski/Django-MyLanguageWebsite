@@ -1,48 +1,46 @@
 {% extends 'learning/base.html' %}
 {% block content %}
 {% load static %}
-<div class="sixth-theme-border fourth-theme-background">
-    <h1 class="secondary-theme text-center title-text">Available Languages</h1>
+<h1 class="secondary-theme text-center title-text">Available Languages</h1>
 
-    <div class="col d-flex justify-content-center">
-        <a href="polish">
-        <div class="card text-center learn-card fourth-theme-background">
-            <img class="img-fluid learn-flag" src="{% static 'img/polishflag.jpg' %}">
-            <p class="third-theme" style="font-size: 30px;">Polish</p>
-        </div>
-        </a>
+<div class="col d-flex justify-content-center">
+    <a href="polish">
+    <div class="card text-center learn-card fourth-theme-background">
+        <img class="img-fluid learn-flag" src="{% static 'img/polishflag.jpg' %}">
+        <p class="third-theme" style="font-size: 30px;">Polish</p>
     </div>
-
-    <div class="col d-flex justify-content-center">
-        <a href="spanish">
-        <div class="card text-center learn-card fourth-theme-background">
-            <img class="img-fluid learn-flag" src="{% static 'img/spanishflag.jpg' %}">
-            <p class="third-theme" style="font-size: 30px;">Spanish</p>
-        </div>
-        </a>
-    </div>
-
-    <div class="col d-flex justify-content-center">
-        <a href="russian">
-        <div class="card text-center learn-card fourth-theme-background">
-            <img class="img-fluid learn-flag" src="{% static 'img/russianflag.jpg' %}">
-            <p class="third-theme" style="font-size: 30px;">Russian</p>
-        </div>
-        </a>
-    </div>
-
-    <div class="col d-flex justify-content-center">
-        <a href="italian">
-        <div class="card text-center learn-card fourth-theme-background">
-            <img class="img-fluid learn-flag" src="{% static 'img/italianflag.jpg' %}">
-            <p class="third-theme" style="font-size: 30px;">Italian</p>
-        </div>
-        </a>
-    </div>
-
-    {% if user.is_superuser %}
-        <a href="{% url 'createlesson' %}"><span><button class="btn btn-primary">Create Lesson</button></span></a>
-    {% endif %}
+    </a>
 </div>
+
+<div class="col d-flex justify-content-center">
+    <a href="spanish">
+    <div class="card text-center learn-card fourth-theme-background">
+        <img class="img-fluid learn-flag" src="{% static 'img/spanishflag.jpg' %}">
+        <p class="third-theme" style="font-size: 30px;">Spanish</p>
+    </div>
+    </a>
+</div>
+
+<div class="col d-flex justify-content-center">
+    <a href="russian">
+    <div class="card text-center learn-card fourth-theme-background">
+        <img class="img-fluid learn-flag" src="{% static 'img/russianflag.jpg' %}">
+        <p class="third-theme" style="font-size: 30px;">Russian</p>
+    </div>
+    </a>
+</div>
+
+<div class="col d-flex justify-content-center">
+    <a href="italian">
+    <div class="card text-center learn-card fourth-theme-background">
+        <img class="img-fluid learn-flag" src="{% static 'img/italianflag.jpg' %}">
+        <p class="third-theme" style="font-size: 30px;">Italian</p>
+    </div>
+    </a>
+</div>
+
+{% if user.is_superuser %}
+    <a href="{% url 'createlesson' %}"><span><button class="btn btn-primary">Create Lesson</button></span></a>
+{% endif %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 {% endblock %}

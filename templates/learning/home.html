@@ -3,7 +3,7 @@
 {% load static %}
 
 {% if user %}
-<div class="text-center sixth-theme-border fourth-theme-background">
+<div class="text-center">
     <h1 class="secondary-theme title-text">Welcome, {{currentProfile.username}}!</h1>
     <h3 class="third-theme">Your languages:<br>
         {% for c in currentProfile.course.all %}
