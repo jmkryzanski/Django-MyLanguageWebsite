@@ -1,8 +1,5 @@
 {% extends 'learning/base.html' %}
 {% block content %}
-
-
-
 <style>
     .navigation-container {
   width: 60%;
@@ -32,88 +29,42 @@
 
 </style>
 
-<!--{{thislevels}}kkk
-<br><br>
-<br><br>
-{{test2}}
-<br><br>
-<br><br>
-{{arrayLevels}}
-<br><br>
-{{arrayLessonTitles}}
-<br><br>
-{{test}}
+<!--
+    {% for guide in object_list %}
+    {{guide.course}}
+    {{guide.guideTitle}}
 
-sssss
-{{numMatches}}
-<br>mysayin
-{{sayin}}
-<br>
-<br>ddd<br>
-{{sayin2}}
-ssssss
-
-<br><br>
-mylistbaby
-{{mylist}}
-<br><br>
--->
+    <a class="third-theme" href="{% url 'individualguide' guide.course guide.slug  %}"><span><h2>{{guide.guideTitle}}</h2></span></a><br>
 
 
+    {% autoescape off %}
+    {{guide.content}}<br><br>
+    {% endautoescape %}
+{% endfor %}-->
+<h1 class="text-center fifth-theme capitalize-first-letter">{{lan}} Grammar</h1>
+<div class="col-12">
+    {% for lesson in course_lessons %}
+        <div class="col d-flex justify-content-center">
+            <div class="card text-center learn-card-nohover seventh-theme-background sixth-theme-border">
+                <!--{{lesson.numLevels}}-->
 
+                <i class="lesson-icon far fa-comments third-theme"></i>
+                <h5 class="secondary-theme lesson-title"></h5>
+                <div class="navigation-container">
+                    <a class="first-level third-theme level-button b-1" href="{% url 'lesson' lan lesson.slug 1 %}">1</a>
+                    <a class="second-level third-theme level-button b-1" href="{% url 'lesson' lan lesson.slug 2 %}">2</a>
+                    <a class="third-level third-theme level-button b-1" href="{% url 'lesson' lan lesson.slug 3 %}">3</a>
+                </div>
 
+                <!--<div class="course-progress-bar-div">
+                    <div class="text-center course-progress-bar progress-bar"></div>
+                </div>-->
 
+            </div>
 
-
-<h1 class="capitalize-first-letter text-center fifth-theme title-text">{{lan}}</h1>
-
-<div class="row">
-    <div class="col-12 col-md-4">
-        <div class="seventh-theme-background sixth-theme-border">
-            <a class="fifth-theme" href="guide">
-            <h1 class="text-center fifth-theme capitalize-first-letter">Reference</h1></a>
-            <p class="third-theme text-center">In-depth grammar guide</p>
-            <p class="third-theme text-center">In-depth grammar guide</p>
-            <p class="third-theme text-center">In-depth grammar guide</p>
-            <p class="third-theme text-center">In-depth grammar guide</p>
-            <p class="third-theme text-center">In-depth grammar guide</p>
         </div>
-        
-    </div>
-    <div class="col-12 col-md-4">
-        <div class="seventh-theme-background sixth-theme-border">
-            <a class="fifth-theme" href="grammar">
-            <h1 class="text-center fifth-theme capitalize-first-letter">Grammar</h1></a>
-            <p class="third-theme text-center">Learn grammar in context with interactive exercise</p>
-            <p class="third-theme text-center">Learn grammar in context with interactive exercise</p>
-            <p class="third-theme text-center">Learn grammar in context with interactive exercise</p>
-            <p class="third-theme text-center">Learn grammar in context with interactive exercise</p>
-            <p class="third-theme text-center">Learn grammar in context with interactive exercise</p>
-        </div>
-    </div>
-    <div class="col-12 col-md-4">
-        <div class="seventh-theme-background sixth-theme-border">
-            <a href="grammar">
-            <h1 class="text-center fifth-theme capitalize-first-letter">Vocabulary</h1></a>
-            <p class="third-theme text-center">Learn vocabulary in context with interactive exercise</p>
-            <p class="third-theme text-center">Learn vocabulary in context with interactive exercise</p>
-            <p class="third-theme text-center">Learn vocabulary in context with interactive exercise</p>
-            <p class="third-theme text-center">Learn vocabulary in context with interactive exercise</p>
-            <p class="third-theme text-center">Learn vocabulary in context with interactive exercise</p>
-        </div>
-    </div>
+    {% endfor %}
 </div>
-
-
-
-{% if user.is_superuser %}
-    <a href="{% url 'createlesson' %}"><span><button class="btn btn-primary">Create Lesson</button></span></a>
-{% endif %}
-<button id="ajaxtest">plzwork</button>
-<a href="{% url 'addLanToProfile' lan %}">Add course to home page</a>
-
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 
@@ -261,8 +212,4 @@ for (i = 0; i < numLevels.length; i++){
 
 
 </script>
-
-
-
-
 {% endblock %}

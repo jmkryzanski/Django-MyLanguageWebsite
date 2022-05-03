@@ -77,14 +77,14 @@ body{
 footer {
     background-color: var(--primThemeColor);
     /*border-top:1px solid var(--primThemeColor);*/
-    border-top:1px solid gray;
+    border-top:1px solid var(--sixthThemeColor);
 }
 .navbar {
     margin-bottom: 20px;
     border-radius: 5px;
     background-color: white;
     /*border-bottom:1px solid var(--primThemeColor);*/
-    border-bottom:1px solid gray;
+    border-bottom:1px solid var(--sixthThemeColor);
 }
 .navbar-nav li:hover>ul.dropdown-menu{
     display: block;
@@ -320,7 +320,7 @@ input:disabled{
 .guide-item {
     display: inline-block;
     position: relative;
-    color: grey;
+    color: var(--sixthThemeColor);
     font-size: 30px;
 }
 .guide-item{
@@ -341,7 +341,7 @@ input:disabled{
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: grey;
+    background-color: var(--sixthThemeColor);
     transform-origin: bottom right;
     transition: transform 0.25s ease-out;
 }

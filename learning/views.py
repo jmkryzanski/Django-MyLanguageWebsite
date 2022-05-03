@@ -46,7 +46,7 @@ class LearnView(ListView):
     slug_field = 'slug'
 
 def CourseView(request, lan):
-    Lesson.objects.all()
+    '''Lesson.objects.all()
     #course_lessons = Lesson.objects.filter(language=lan)
     course_lessons = Lesson.objects.filter(course__title=lan).order_by('orderingID')
 
@@ -122,25 +122,25 @@ def CourseView(request, lan):
 
 
 
-    
+    '''
     context = {
         'lan': lan,
-        'course_lessons': course_lessons,
-        'thisCaseGuides': thisCaseGuides,
-        #'course_guides': course_guides,
-        'thisPronounGuides': thisPronounGuides,
-        'thisVerbGuides': thisVerbGuides,
-        'thisAdjectiveGuides': thisAdjectiveGuides,
-        'thisAdverbGuides': thisAdverbGuides,
-        'thisOtherGuides': thisOtherGuides,
-        'listLessonTitles': listLessonTitles,
-        'thislevels': thisLevels,
-        'arrayLevels': arrayLevels,
-        'arrayLessonTitles': arrayLessonTitles,
-        #'test': test,
-        #'test2': test2,
-        'numMatches': numMatches,
-        'mylist': mylist,
+        #'course_lessons': course_lessons,
+        #'thisCaseGuides': thisCaseGuides,
+        ##'course_guides': course_guides,
+        #'thisPronounGuides': thisPronounGuides,
+        #'thisVerbGuides': thisVerbGuides,
+        #'thisAdjectiveGuides': thisAdjectiveGuides,
+        #'thisAdverbGuides': thisAdverbGuides,
+        #'thisOtherGuides': thisOtherGuides,
+        #'listLessonTitles': listLessonTitles,
+        #'thislevels': thisLevels,
+        #'arrayLevels': arrayLevels,
+        #'arrayLessonTitles': arrayLessonTitles,
+        ##'test': test,
+        ##'test2': test2,
+        #'numMatches': numMatches,
+        #'mylist': mylist,
 
     }
     #pronounGuides = Guide.objects.filter(category="pronouns")
@@ -180,6 +180,88 @@ class DeleteLessonView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         return self.request.user.is_superuser
 
+def ViewGrammarView(request, lan):
+    Lesson.objects.all()
+    #course_lessons = Lesson.objects.filter(language=lan)
+    course_lessons = Lesson.objects.filter(course__title=lan).order_by('orderingID')
+
+    listLessonTitles = []
+    for c in course_lessons:
+        listLessonTitles.append(c.strtitle())
+
+    currentProfile = Profile.objects.get(user=request.user)
+    thisLevels = currentProfile.levels.all()
+
+    arrayLevels = []
+    for c in course_lessons:
+        temp = c.level_set.all()#.values('levelNumber')
+        arrayLevels.append(temp)
+        
+        #test.append(c.level_set.all())
+    
+    arrayLessonTitles = []
+    for c in course_lessons:
+        arrayLessonTitles.append(c.lessonTitle)
+
+    #test = []
+    #test.append(arrayLevels[0])
+    #test.append(arrayLevels[1])
+    #test.append(arrayLevels[2])
+
+    #test2 = []
+    #test2.append(currentProfile.levels.all()[0:1].get())
+    #test2.append(currentProfile.levels.all()[1:2].get())
+    #test2.append(currentProfile.levels.all()[2:3].get())
+
+
+    #test2.append(thisLevels[0])
+    #test2.append(thisLevels[1])
+    #test2.append(thisLevels[2])
+
+    #numMatches = []
+    #numMatches.append(test2[0].lesson.lessonTitle)
+    #numMatches.append(test2[1].lesson.lessonTitle)
+
+
+    numMatches = 0
+    #if (test2[0].lesson.lessonTitle == arrayLessonTitles[0]):
+    #    numMatches+=1
+    #if (test2[1].lesson.lessonTitle == arrayLessonTitles[0]):
+    #    numMatches+=1
+    #if (test2[2].lesson.lessonTitle == arrayLessonTitles[0]):
+    #    numMatches+=1
+
+    mylist = [0 for x in range(22)]
+
+    for index, val in enumerate(arrayLessonTitles):
+        numMatches = 0
+        for index2, val2 in enumerate(thisLevels):
+    #for val in arrayLessonTitles:
+    #    for val2 in thisLevels:
+            #sayin.append(index)
+            #sayin2.append(index2)
+            if (val2.lesson.lessonTitle == val):
+                numMatches+=1
+                mylist[index] = numMatches
+
+
+
+    
+    context = {
+        'lan': lan,
+        'course_lessons': course_lessons,
+        'listLessonTitles': listLessonTitles,
+        'thislevels': thisLevels,
+        'arrayLevels': arrayLevels,
+        'arrayLessonTitles': arrayLessonTitles,
+        #'test': test,
+        #'test2': test2,
+        'numMatches': numMatches,
+        'mylist': mylist,
+
+    }
+    return render(request, 'learning/grammar.html', context)
+
 def ViewLessonView(request, lan, myslug, level):
     #lesson = Lesson.objects.filter(course__title=lan, lessonTitle=myslug)
     #lesson = Lesson.objects.get(course__title=lan, lessonTitle=myslug)
@@ -209,7 +291,7 @@ def ViewLessonView(request, lan, myslug, level):
         #    levelInfo.append(0)
 
     if not userUnlockedLevel:
-        return redirect('course', lan=lan)
+        return redirect('grammar', lan=lan)
 
     numLevels = lesson.numLevels
 
