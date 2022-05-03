@@ -69,7 +69,7 @@ mylistbaby
 <div class="row">    
     <div class="col" style="margin-top: 15px;">
       <div class="row">
-        <div class="col-12 col-md-4 sixth-theme-border" style="width: 100%; border-radius: 25px;">
+        <div class="col-12 col-md-4 fourth-theme-background sixth-theme-border" style="width: 100%; border-radius: 25px;">
             <a class="capitalize-first-letter text-center" href="{% url 'guide' lan %}"><span><h2 class="fifth-theme" style="margin-top: 8px; margin-bottom: 8px;">Grammar Guide</h2></span></a>
             <hr class="third-theme center1">
             <div class="guide-title" style="padding-left: 38px;">
@@ -143,9 +143,9 @@ mylistbaby
                         <a class="third-level third-theme level-button b-1" href="{% url 'lesson' lan lesson.slug 3 %}">3</a>
                     </div>
 
-                    <div class="course-progress-bar-div">
+                    <!--<div class="course-progress-bar-div">
                         <div class="text-center course-progress-bar progress-bar"></div>
-                    </div>
+                    </div>-->
 
                 </div>
 
@@ -343,7 +343,7 @@ for (i = 0; i < numLevels.length; i++){
         second[i].style.filter = "grayscale(100%)";
         third[i].style.display = "none";
         third[i].style.pointerEvents = "none";
-        third[i].style.filter = "grayscale(100%)";
+        third[i].style.filter = "grayscale(100%)";        
     }
     else if (numLevels[i] === 1){
         second[i].style.pointerEvents = "none";

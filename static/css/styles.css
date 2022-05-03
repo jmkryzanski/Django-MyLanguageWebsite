@@ -18,6 +18,9 @@
 
     --primPolandColor: red;
     --secPolandColor: white;
+
+    --cardBorderColor: rgb(150, 150, 150);
+    --darkerBackground: rgb(17, 17, 17);
 }
 
 /* LEARN PAGE */
@@ -27,13 +30,13 @@
     margin: 25px 0;
 }
 .learn-card:hover{
-    background-color: #e0e0e0;
+    background-color: #e0e0e03f;
 }
 .learn-card-nohover{
     width: 20rem;
     border-radius: 25px;
     margin: 15px 0;
-    padding: 5px 0px;
+    padding: 15px 0px;
 }
 .learn-flag{
     margin: 15px;
@@ -144,7 +147,8 @@ footer {
 
 /* THEMES AND DARK MODE */
 body.dark {
-    background-color: #1a1a1a;
+    /*background-color: #1a1a1a;*/
+    background-color: var(--darkerBackground);
 }
 .dark{
     color: aqua;
@@ -216,8 +220,22 @@ body.dark {
 }
 .dark-sixth-theme-border{
     border-radius: 25px;
-    border: 1px solid white;
+    border: 1px solid var(--cardBorderColor);
+    box-shadow: 0.4em 0.4em var(--cardBorderColor);
+    /*border: 1px solid grey;*/
+    /*box-shadow: 0.4em 0.4em gray;*/
 }
+.sixth-theme-border-noshadow{
+    border-radius: 25px;
+    border: 1px solid var(--sixthThemeColor);
+}
+.dark-sixth-theme-border-noshadow{
+    border-radius: 25px;
+    border: 1px solid var(--cardBorderColor);
+    /*border: 1px solid grey;*/
+    /*box-shadow: 0.4em 0.4em gray;*/
+}
+
 /******************************/
 
 /* LESSON ELEMENTS */
@@ -225,6 +243,9 @@ body.dark {
     box-shadow: 0 0.2em rgb(218, 218, 218), 0 0.9em rgba(0, 0, 0, 0);
     border-radius: 25px;
     margin: 15px;
+}
+.dark-lesson-progress-bar-div{
+    box-shadow: 0 0.2em var(--cardBorderColor), 0 0.9em rgba(0, 0, 0, 0);
 }
 .lesson-progress-bar{
     background-color: #f8a300;
@@ -257,6 +278,13 @@ textarea:focus{
  textarea{
     margin-bottom: 20px;
 }
+input:focus{
+    background-color: transparent !important;
+ }
+input:disabled{
+     background-color: transparent !important;
+ }
+
 /******************************/
 
 /* COURSE ELEMENTS */
@@ -311,7 +339,7 @@ textarea:focus{
     text-transform: uppercase;
     text-decoration: none;
     margin: 1rem;
-    padding: 0.5rem;
+    padding: 0.5rem 0.7rem;
     border: 2px solid #f8a300;
     border-radius: 0.5rem;
     position: relative;
@@ -343,7 +371,7 @@ textarea:focus{
     top: 0.4em;
     box-shadow: 0 0.2em #c2bb11, 0 0.5em rgba(0, 0, 0, 0.4);
 }
-.course-progress-bar-div{
+/*.course-progress-bar-div{
     box-shadow: 0 0.2em rgb(218, 218, 218), 0 0.9em rgba(0, 0, 0, 0);
     border-radius: 25px;
     margin: 15px;
@@ -353,7 +381,7 @@ textarea:focus{
     color: white;
     border-radius: 25px;
     height: 12px;
-}
+}*/
 
 /******************************/
 

@@ -3,13 +3,13 @@
 {% load static %}
 
 {% if user %}
-<div class="text-center">
-    <h1 class="secondary-theme title-text">Welcome, {{currentProfile.username}}</h1>
+<div class="text-center sixth-theme-border fourth-theme-background">
+    <h1 class="secondary-theme title-text">Welcome, {{currentProfile.username}}!</h1>
     <h3 class="third-theme">Your languages:<br>
         {% for c in currentProfile.course.all %}
         <div class="col d-flex justify-content-center">
             <a href="{% url 'course' c.title %}">
-            <div class="card text-center learn-card fourth-theme-background">
+            <div class="card text-center learn-card fourth-theme-background" style="padding: 18px;">
                 <img class="img-fluid learn-flag" src="{{ c.image.url }}">
                 <p class="third-theme capitalize-first-letter">{{c.title}}</p>
             </div>

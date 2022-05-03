@@ -8,11 +8,12 @@ class ProfileForm(forms.ModelForm):
         fields = ('username', 'bio',)
         widgets = {
             'username': forms.TextInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control third-theme fourth-theme-background' ,
                 'placeholder': 'Title',
             }),
             'bio': forms.Textarea(attrs={
-                'class': 'form-control',
-                'placeholder': 'Body'
+                'class': 'form-control third-theme fourth-theme-background',
+                'placeholder': 'Body',
+                'rows': 5,
             }),
         }

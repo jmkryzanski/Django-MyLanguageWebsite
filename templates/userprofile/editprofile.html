@@ -1,21 +1,26 @@
 {% extends 'learning/base.html' %}
 
 {% block content %}
-<div class="third-theme">
-Permanent user name: {{user.profile.user}}<br>
-Changeeable user name: {{user.profile.username}}<br>
-Bio: {{user.profile.bio}}<br>
-
-{{user.pk}}
-
-
-<h1 class="secondary-theme">Update profile</h1>
+<div class="sixth-theme-border fourth-theme-background" style="padding: 50px;">
+<h1 class="fifth-theme text-center">Edit Profile</h1>
 
 <div class="form-group">
     <form method="POST">
         {% csrf_token %}
-        {{form.as_p}}
-        <button>Update</button>
+        <label class="fifth-theme">
+            Login name - {{user.profile.user}}
+        </label>
+        <br><br>
+        <div class="form-group">
+            <label class="fifth-theme">Display name </label>
+            {{form.username}}
+        </div>
+        <br>
+        <div class="form-group">
+            <label class="fifth-theme">Bio</label>
+            {{form.bio}}
+        </div>
+        <button class="text-center">Update</button>
     </form>
 </div>
 </div>
