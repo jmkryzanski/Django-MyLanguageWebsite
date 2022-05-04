@@ -8,7 +8,8 @@ urlpatterns = [
     #path('home/', HomeView.as_view(), name="home"),
     path('home/', views.HomeView, name="home"),
     path('about/', views.AboutView, name="about"),
-    path('learn/', LearnView.as_view(), name="learn"),
+    #path('learn/', LearnView.as_view(), name="learn"),
+    path('learn/', views.LearnView, name="learn"),
     path('learn/create/', CreateLessonView.as_view(), name="createlesson"),
     path('learn/<str:lan>/', CourseView, name="course"),
     path('learn/<str:lan>/guide/', ViewGuideView, name="guide"),
@@ -22,6 +23,7 @@ urlpatterns = [
     path('learn/<str:lan>/grammar/<str:myslug>/edit', EditLessonView.as_view(), name="editlesson"),
     path('learn/<str:lan>/grammar/<str:myslug>/delete', DeleteLessonView.as_view(), name="deletelesson"),
     path('addLanToProfile/<str:lan>/', views.addLanToProfile, name="addLanToProfile"),
+    path('updateCurrentCourse/<str:lan>/', views.updateCurrentCourse, name="updateCurrentCourse"),
 
     path('levelCompleted/<str:lan>/<str:myslug>/<int:level>/', views.levelCompleted, name="levelCompleted"),
 

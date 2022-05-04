@@ -61,11 +61,11 @@ mylistbaby
 
 
 
+<button id="ajaxtest2">plzwork</button>
+<a href="{% url 'updateCurrentCourse' lan %}">update currentcourse profile current course</a>
 
 
-
-
-<h1 class="capitalize-first-letter text-center fifth-theme title-text">{{lan}}</h1>
+<h1 class="capitalize-first-letter text-center fifth-theme title-text">{{lan}} Course</h1>
 
 <div class="row">
     <div class="col-12 col-md-4">
@@ -115,6 +115,54 @@ mylistbaby
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+
+    $('#ajaxtest2').click(function() {
+            $.ajax({
+                data: $(this).serialize(),
+                type: $(this).attr('method'),
+                url: "{% url 'updateCurrentCourse' lan %}",
+                success: function (response) {
+                    //alert("worked");
+                },
+                error: function (response) {
+                    //console.log("didnt work")
+                }
+            });
+            return false;
+    });
+
+
+    $('#ajaxtest').click(function () {
+        $.ajax({
+            data: $(this).serialize(),
+            type: $(this).attr('method'),
+            url: "{% url 'addLanToProfile' lan %}",
+            success: function (response) {
+                alert("worked");
+            },
+            error: function (response) {
+                console.log("didnt work")
+            }
+        });
+        return false;
+    });
+        /*$('#ajaxtest2').click(function () {
+            $.ajax({
+                data: $(this).serialize(),
+                type: $(this).attr('method'),
+                url: "{% url 'updateCurrentCourse' lan %}",
+                success: function (response) {
+                    alert("worked");
+                },
+                error: function (response) {
+                    console.log("didnt work")
+                }
+            });
+            return false;
+    });*/
+</script>
 <script>
 
 

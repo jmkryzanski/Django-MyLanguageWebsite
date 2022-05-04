@@ -102,7 +102,7 @@ footer {
 }
 .navbar-img{
     height: 75px;
-    width: 75px;;
+    width: 75px;
 }
 .navbar-container{
     margin-bottom: 0px !important;
@@ -117,7 +117,8 @@ footer {
     color: var(--primThemeColor);
     font-size: 30px;
 }
-.my-nav-item:after {
+
+/*.my-nav-item:after {
     content: '';
     position: absolute;
     width: 100%;
@@ -134,7 +135,7 @@ footer {
     transform-origin: bottom left;
     text-decoration: none;
     color: var(--secThemeColor);
-}
+}*/
 
 .my-nav-item{
     color: var(--primThemeColor);
@@ -234,6 +235,15 @@ body.dark {
     box-shadow: 0.4em 0.4em var(--cardBorderColor);
     /*border: 1px solid grey;*/
     /*box-shadow: 0.4em 0.4em gray;*/
+}
+
+/* used in dropdown menu on navbar, slight variant of sixth theme */
+.sixth-theme-background{
+    background-color: rgb(245, 245, 245);
+}
+.dark-sixth-theme-background{
+    background-color: rgb(59, 59, 59);
+
 }
 .sixth-theme-border-noshadow{
     border-radius: 25px;
@@ -417,7 +427,7 @@ hr.welcome{
     margin-bottom: 25px;
 }
 h1, h2, h3, h4, h5, h6{
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
 }
 h1.title-text{
     margin: 20px 0;

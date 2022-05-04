@@ -1,3 +1,4 @@
+from re import T
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -13,6 +14,8 @@ class Profile(models.Model):
     email = models.EmailField(max_length=100, unique=True)
     slug = AutoSlugField(populate_from='user', default='', unique=True)
     course = models.ManyToManyField(Course, blank=True)
+
+    currentCourse = models.ForeignKey(Course, related_name='currentCourse', on_delete=models.CASCADE, blank=True, null=True)
 
     levels = models.ManyToManyField(Level, blank=True)
 

@@ -8,6 +8,119 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <title>Language learning</title>
+
+    <style>
+.menu {
+  
+  /*--menu-height: 40px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;*/
+}
+.menu ul {
+  list-style: none;
+  margin: 0;
+  border-radius: 25px;
+  z-index: 3;
+}
+.menu ul li, .menu ul li a {
+  opacity: 0.8;
+  /*color: #ffffff;*/
+  cursor: pointer;
+  transition: 200ms;
+  text-decoration: none;
+  white-space: nowrap;
+  font-weight: 700;
+  z-index: 3;
+}
+.menu ul li:hover, .menu ul li a:hover {
+  opacity: 1;
+}
+.menu ul li a, .menu ul li a a {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+.menu ul li {
+
+}
+.menu ul li::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #FFA500;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  visibility: hidden;
+}
+.menu ul .link::before {
+  padding-right: 0;
+  display: none;
+}
+.menu > ul {
+  display: flex;
+  height: var(--menu-height);
+  align-items: center;
+}
+.menu > ul li {
+  position: relative;
+  margin: 0 8px;
+}
+.menu > ul li ul {
+  visibility: hidden;
+  opacity: 0;
+  padding: 0;
+  min-width: 200px;
+  position: absolute;
+  top: calc(var(--menu-height) + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  transition: 200ms;
+  z-index: 3;
+}
+.menu > ul li ul li {
+  margin: 0;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 30px;
+  padding-right: 40px;
+}
+.menu > ul li ul li::before {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid #FFA500;
+  visibility: visible;
+}
+
+.menu > ul li ul li ul {
+  top: -2%;
+  left: 100%;
+  transform: translate(0);
+}
+
+.menu > ul li ul li:hover {
+}
+.menu > ul li:hover > ul {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0ms;
+}
+ul{
+  padding: 0px;
+}
+      </style>
+
   </head>
 <body class="d-flex flex-column min-vh-100">
   <nav class="navbar navbar-light navbar-expand-lg bg-faded justify-content-center seventh-theme-background">
@@ -29,24 +142,70 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav ms-auto w-100 justify-content-end">
-                <li>
-                    <a class="my-nav-item primary-theme" id="navbar-dark-light">
-                      <input hidden type="checkbox" class="checkbox" id="chk" />
-                      <label class="label" for="chk"><img id="dark-light-icon" src="{% static 'img/blue.png' %}"></label>
+
+              {% if user.is_authenticated %}
+              <div class="menu primary-theme">
+                <ul>
+                  <li>
+                    <a href="{% url 'course' currentProfile.currentCourse %}">
+                    <img id="currentflag" class="img-fluid" style="border-radius: 5px; height: auto; width: 64px;" src="{{ currentProfile.currentCourse.image.url }}">
                     </a>
+                    <ul class="sixth-theme-background">
+                      {% for c in currentProfile.course.all %}
+                        {% if not c == currentProfile.currentCourse %}
+                          <li style="padding: 20px 10px; margin: 20px 10px;">
+                            <a href="{% url 'course' c.title %}">
+                            <img class="img-fluid" style="border-radius: 5px; height: auto; width: 64px;" src="{{ c.image.url }}">
+                            <h5 class="capitalize-first-letter primary-theme" style="margin: 0px 0px 0px 5px;">{{c.title}}</h5>
+                            </a>
+                            <ul class="sixth-theme-background">
+                              <li class="link">
+                                <a class="primary-theme" href="">Reference</a>
+                              </li>
+                              <li class="link">
+                                <a class="primary-theme" href="">Grammar</a>
+                              </li>
+                              <li class="link">
+                                <a class="primary-theme" href="">Vocabulary</a>
+                              </li>
+                            </ul>
+                          </li>
+                        {% endif %}
+                      {% endfor %}
+                    </ul>
+                  </li>
+                </ul>
+             </div>
+              {% endif %}
+
+                <li>
+                  <a class="my-nav-item primary-theme" id="navbar-dark-light">
+                    <input hidden type="checkbox" class="checkbox" id="chk" />
+                    <label class="label" for="chk"><img id="dark-light-icon" src="{% static 'img/blue.png' %}"></label>
+                  </a>
                 </li>
                 {% if user.is_authenticated %}
-                <li>
-                  <a class="my-nav-item primary-theme" href="{% url 'profile' request.user.profile.user %}">Profile</a>
-                </li>
-                <li>
-                  <a class="my-nav-item primary-theme" href="{% url 'logout' %}">Logout</a>
-                </li>
-                {% else %}
-                <li>
-                  <a class="my-nav-item primary-theme" href="{% url 'mylogin' %}">Login</a>
-                </li>
-                {% endif %}
+
+                <div class="my-nav-item menu primary-theme" style="margin-left: 0px; padding-left: 0px;">
+                  <ul>
+                    <li>
+                      {{user.username}}
+                      <ul class="sixth-theme-background">
+                        <li class="link">
+                          <a class="my-nav-item primary-theme" href="{% url 'profile' request.user.profile.user %}">Profile</a>
+                        </li>
+                        <li class="link">
+                          <a class="my-nav-item primary-theme" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                        {% else %}
+                        <li class="link">
+                          <a class="my-nav-item primary-theme" href="{% url 'mylogin' %}">Login</a>
+                        </li>
+                        {% endif %}
+                      </ul>
+                    </li>     
+                  </ul>
+               </div>
             </ul>
         </div>
     </div>
@@ -108,6 +267,7 @@
         $('.sixth-theme-border').toggleClass('dark-sixth-theme-border')
         $('.sixth-theme-border-noshadow').toggleClass('dark-sixth-theme-border-noshadow')
         $('.seventh-theme-background').toggleClass('dark-seventh-theme-background')
+        $('.sixth-theme-background').toggleClass('dark-sixth-theme-background')
         $('body').toggleClass('dark')
       }
       else{
@@ -125,6 +285,7 @@
         $('.sixth-theme-border').toggleClass('dark-sixth-theme-border')
         $('.sixth-theme-border-noshadow').toggleClass('dark-sixth-theme-border-noshadow')
         $('.seventh-theme-background').toggleClass('dark-seventh-theme-background')
+        $('.sixth-theme-background').toggleClass('dark-sixth-theme-background')
         $('body').toggleClass('dark')
       }
       localStorage.setItem('darkModeStatus', chk.checked);
@@ -146,11 +307,18 @@
         $('.sixth-theme-border').toggleClass('dark-sixth-theme-border')
         $('.sixth-theme-border-noshadow').toggleClass('dark-sixth-theme-border-noshadow')
         $('.seventh-theme-background').toggleClass('dark-seventh-theme-background')
+        $('.sixth-theme-background').toggleClass('dark-sixth-theme-background')
         $('body').toggleClass('dark')
         document.body.classList.add("dark"); 
         document.getElementById('chk').checked = true;
       }
     });
- </script>        
+ </script>
+ <script>
+   var currentFlag = document.getElementById('currentflag');
+  //currentFlag.
+   //src="{{ currentProfile.currentCourse.image.url }}"
+   
+ </script>    
 </body>
 </html>
