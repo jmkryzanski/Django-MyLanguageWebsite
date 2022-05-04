@@ -1,3 +1,4 @@
+from ast import Delete
 from pipes import Template
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import context
@@ -69,6 +70,8 @@ def CourseView(request, lan):
         currentProfile = Profile.objects.get(user=request.user)
         currentProfile.currentCourse = mycurrentCourse
         currentProfile.save()
+        #
+
         context = {
             'lan': lan,
             'currentProfile': currentProfile,
@@ -107,6 +110,11 @@ class EditLessonView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         return self.request.user.is_superuser
 
+    def get_context_data(self,*args, **kwargs):
+        context = super(EditLessonView, self).get_context_data(*args,**kwargs)
+        context['currentProfile'] = Profile.objects.get(user=self.request.user)
+        return context
+
 class DeleteLessonView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Lesson
     template_name = 'learning/deletelesson.html'
@@ -117,8 +125,19 @@ class DeleteLessonView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         return self.request.user.is_superuser
 
+    def get_context_data(self,*args, **kwargs):
+        context = super(DeleteLessonView, self).get_context_data(*args,**kwargs)
+        context['currentProfile'] = Profile.objects.get(user=self.request.user)
+        return context
+
 def ViewGrammarView(request, lan):
     if request.user.is_authenticated:
+        currentProfile = Profile.objects.get(user=request.user)
+        mycurrentCourse = Course.objects.get(title=lan)
+        currentProfile = Profile.objects.get(user=request.user)
+        currentProfile.currentCourse = mycurrentCourse
+        currentProfile.save()
+
         Lesson.objects.all()
         course_lessons = Lesson.objects.filter(course__title=lan).order_by('orderingID')
 
@@ -161,6 +180,7 @@ def ViewGrammarView(request, lan):
             'numMatches': numMatches,
             'mylist': mylist,
             'isAuthenticated': isAuthenticated,
+            'currentProfile': currentProfile,
 
         }
         return render(request, 'learning/grammar.html', context)
@@ -259,6 +279,11 @@ class EditGuideView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         return self.request.user.is_superuser
 
+    def get_context_data(self,*args, **kwargs):
+        context = super(EditGuideView, self).get_context_data(*args,**kwargs)
+        context['currentProfile'] = Profile.objects.get(user=self.request.user)
+        return context
+
 class DeleteGuideView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Guide
     template_name = 'learning/deleteguide.html'
@@ -269,7 +294,18 @@ class DeleteGuideView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         return self.request.user.is_superuser
 
+    def get_context_data(self,*args, **kwargs):
+        context = super(DeleteGuideView, self).get_context_data(*args,**kwargs)
+        context['currentProfile'] = Profile.objects.get(user=self.request.user)
+        return context
+
 def ViewGuideView(request, lan):
+    if request.user.is_authenticated:
+        currentProfile = Profile.objects.get(user=request.user)
+        mycurrentCourse = Course.objects.get(title=lan)
+        currentProfile = Profile.objects.get(user=request.user)
+        currentProfile.currentCourse = mycurrentCourse
+        currentProfile.save()
     course_lessons = Lesson.objects.filter(course__title=lan)
 
     course_guides = Guide.objects.all().filter(course__title=lan).order_by('orderingID')
@@ -281,6 +317,7 @@ def ViewGuideView(request, lan):
     thisAdjectiveGuides = course_guides.filter(category="adjectives")
     thisAdverbGuides = course_guides.filter(category="adverbs")
     thisOtherGuides = course_guides.filter(category="other")
+    currentProfile = Profile.objects.get(user=request.user)
     context = {
         'lan': lan,
         'course_lessons': course_lessons,
@@ -290,15 +327,63 @@ def ViewGuideView(request, lan):
         'thisAdjectiveGuides': thisAdjectiveGuides,
         'thisAdverbGuides': thisAdverbGuides,
         'thisOtherGuides': thisOtherGuides,
+        'currentProfile': currentProfile,
     }
+    
 
     return render(request, 'learning/guide.html', context)
 
+def IndividualGuideView(request, lan, myslug):
+    currentProfile = Profile.objects.get(user=request.user)
+    guide = Guide.objects.get(slug=myslug)
+
+
+    #
+    Lesson.objects.all()
+    course_guides = Guide.objects.all().filter(course__title=lan).order_by('orderingID')
+    thisCaseGuides = course_guides.filter(category="cases")
+    thisPronounGuides = course_guides.filter(category="pronouns")
+    #thisPronounGuides.all().order_by('orderingID')
+    thisVerbGuides = course_guides.filter(category="verbs")
+    thisAdjectiveGuides = course_guides.filter(category="adjectives")
+    thisAdverbGuides = course_guides.filter(category="adverbs")
+    thisOtherGuides = course_guides.filter(category="other")
+    guide = Guide.objects.all().get(course__title=lan, slug=myslug)
+    context = {
+        'thisCaseGuides': thisCaseGuides,
+        #'course_guides': course_guides,
+        'thisPronounGuides': thisPronounGuides,
+        'thisVerbGuides': thisVerbGuides,
+        'thisAdjectiveGuides': thisAdjectiveGuides,
+        'thisAdverbGuides': thisAdverbGuides,
+        'thisOtherGuides': thisOtherGuides,
+        'lan': lan,
+        'myslug': myslug,
+        'guide': guide,
+        'currentProfile': currentProfile,
+
+    }
+    #
+    '''context = {
+        'currentProfile': currentProfile,
+        'lan': lan,
+        'myslug': myslug,
+        'guide': guide,
+    }'''
+    return render(request, 'learning/individualguide.html', context)
+    
+
+'''
 class IndividualGuideView(DetailView):
     model = Guide
     template_name = 'learning/individualguide.html'
     slug_url_kwarg = 'myslug'
     slug_field = 'slug'
+    def get_context_data(self,*args, **kwargs):
+        context = super(IndividualGuideView, self).get_context_data(*args,**kwargs)
+        context['currentProfile'] = Profile.objects.get(user=self.request.user)
+        return context
+'''
 
 def AboutView(request):
     return render(request, 'learning/about.html')
@@ -320,6 +405,28 @@ def updateCurrentCourse(request, lan):
         context = {
             'lan': lan,
             #'mycourses': mycourses,
+            'currentProfile': currentProfile,
+        }
+        #return render(request, 'learning/home.html', context)
+        return HomeView(request)
+    else:
+        return redirect('home')
+
+def removeCourse(request, lan):    
+    if is_ajax(request):
+        currentCourse = Course.objects.get(title=lan)
+        mycourses = currentCourse.profile_set.all()
+        currentProfile = Profile.objects.get(user=request.user)
+
+        courseToAdd = currentCourse
+        currentProfile.course.remove(courseToAdd)
+
+        currentProfile.currentCourse = None
+        currentProfile.save()
+
+        context = {
+            'lan': lan,
+            'mycourses': mycourses,
             'currentProfile': currentProfile,
         }
         #return render(request, 'learning/home.html', context)

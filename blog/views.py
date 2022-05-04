@@ -3,6 +3,7 @@ from django.urls.base import reverse, reverse_lazy
 from .forms import PostForm, EditPostForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from userprofile.models import Profile
 
 from blog.models import Post
 
@@ -10,6 +11,10 @@ class ViewPostView(ListView):
     model = Post
     template_name = 'blog/post.html'
     ordering = ['-id']
+    def get_context_data(self,*args, **kwargs):
+        context = super(ViewPostView, self).get_context_data(*args,**kwargs)
+        context['currentProfile'] = Profile.objects.get(user=self.request.user)
+        return context
     #ordering = ['post_date']
 
 class IndividualPostView(DetailView):
@@ -18,6 +23,11 @@ class IndividualPostView(DetailView):
     slug_url_kwarg = 'myslug'
     slug_field = 'slug'
 
+    def get_context_data(self,*args, **kwargs):
+        context = super(IndividualPostView, self).get_context_data(*args,**kwargs)
+        context['currentProfile'] = Profile.objects.get(user=self.request.user)
+        return context
+
 class CreatePostView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Post
     form_class = PostForm
@@ -25,6 +35,11 @@ class CreatePostView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     def test_func(self):
         return self.request.user.is_superuser
+
+    def get_context_data(self,*args, **kwargs):
+        context = super(CreatePostView, self).get_context_data(*args,**kwargs)
+        context['currentProfile'] = Profile.objects.get(user=self.request.user)
+        return context
 
 class EditPostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
@@ -36,6 +51,11 @@ class EditPostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         return self.request.user.is_superuser
 
+    def get_context_data(self,*args, **kwargs):
+        context = super(EditPostView, self).get_context_data(*args,**kwargs)
+        context['currentProfile'] = Profile.objects.get(user=self.request.user)
+        return context
+
 class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     template_name = 'blog/deletepost.html'
@@ -45,5 +65,10 @@ class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         return self.request.user.is_superuser
+
+    def get_context_data(self,*args, **kwargs):
+        context = super(DeletePostView, self).get_context_data(*args,**kwargs)
+        context['currentProfile'] = Profile.objects.get(user=self.request.user)
+        return context
     #def test_func(self):
     #    return self.request.user.username.endswith('ski')

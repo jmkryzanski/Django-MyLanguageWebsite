@@ -14,7 +14,8 @@ urlpatterns = [
     path('learn/<str:lan>/', CourseView, name="course"),
     path('learn/<str:lan>/guide/', ViewGuideView, name="guide"),
     path('learn/<str:lan>/guide/create/', CreateGuideView.as_view(), name="createguide"),
-    path('learn/<str:lan>/guide/<str:myslug>/', IndividualGuideView.as_view(), name="individualguide"),
+    #path('learn/<str:lan>/guide/<str:myslug>/', IndividualGuideView.as_view(), name="individualguide"),
+    path('learn/<str:lan>/guide/<str:myslug>/', views.IndividualGuideView, name="individualguide"),
     path('learn/<str:lan>/guide/<str:myslug>/edit', EditGuideView.as_view(), name="editguide"),
     path('learn/<str:lan>/guide/<str:myslug>/delete', DeleteGuideView.as_view(), name="deleteguide"),
     #path('learn/<str:lan>/<str:myslug>/', views.ViewLessonView, name="lesson"),
@@ -24,6 +25,7 @@ urlpatterns = [
     path('learn/<str:lan>/grammar/<str:myslug>/delete', DeleteLessonView.as_view(), name="deletelesson"),
     path('addLanToProfile/<str:lan>/', views.addLanToProfile, name="addLanToProfile"),
     path('updateCurrentCourse/<str:lan>/', views.updateCurrentCourse, name="updateCurrentCourse"),
+    path('removeCourse/<str:lan>/', views.removeCourse, name="removeCourse"),
 
     path('levelCompleted/<str:lan>/<str:myslug>/<int:level>/', views.levelCompleted, name="levelCompleted"),
 

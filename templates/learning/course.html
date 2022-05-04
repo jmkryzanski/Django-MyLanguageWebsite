@@ -58,9 +58,6 @@ mylistbaby
 {{mylist}}
 <br><br>
 -->
-
-
-
 <button id="ajaxtest2">plzwork</button>
 <a href="{% url 'updateCurrentCourse' lan %}">update currentcourse profile current course</a>
 
@@ -109,10 +106,14 @@ mylistbaby
 {% if user.is_superuser %}
     <a href="{% url 'createlesson' %}"><span><button class="btn btn-primary">Create Lesson</button></span></a>
 {% endif %}
-<button id="ajaxtest">plzwork</button>
-<a href="{% url 'addLanToProfile' lan %}">Add course to home page</a>
 
 
+
+
+<btn id="ajaxtest3" class="btn fifth-theme-background">Remove Course</btn>
+
+
+<button id="ajaxtest" class="btn fifth-theme-background">Add Course</button>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -128,6 +129,21 @@ mylistbaby
                 },
                 error: function (response) {
                     //console.log("didnt work")
+                }
+            });
+            return false;
+    });
+
+    $('#ajaxtest3').click(function() {
+            $.ajax({
+                data: $(this).serialize(),
+                type: $(this).attr('method'),
+                url: "{% url 'removeCourse' lan %}",
+                success: function (response) {
+                    alert("worked");
+                },
+                error: function (response) {
+                    console.log("didnt work")
                 }
             });
             return false;

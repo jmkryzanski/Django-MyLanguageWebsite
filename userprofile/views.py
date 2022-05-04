@@ -20,7 +20,12 @@ from django.contrib.auth.decorators import login_required
 '''
 def ViewProfileView(request, username):
     user = User.objects.get(username=username)
-    return render(request, 'userprofile/profile.html', {"user":user})
+    currentProfile = Profile.objects.get(user=request.user)
+    context = {
+        'user': user,
+        'currentProfile': currentProfile,
+    }
+    return render(request, 'userprofile/profile.html', context)
 
 
 @login_required
@@ -29,6 +34,7 @@ def EditProfileView(request, username):
     username=username
     form = ProfileForm(request.POST, instance=request.user.profile)
     form.actual_user = request.user
+    currentProfile = Profile.objects.get(user=request.user)
     if request.method == 'POST':
         if form.is_valid():
             form.save()
@@ -40,6 +46,7 @@ def EditProfileView(request, username):
     context = {
         'form': form,
         'username': username,
+        'currentProfile': currentProfile,
     }
     return render(request, 'userprofile/editprofile.html', context)
 
