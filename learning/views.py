@@ -77,6 +77,8 @@ def CourseView(request, lan):
         #currentProfile.currentCourse = mycurrentCourse
         #currentProfile.save()
         #
+        lan=lan
+        
 
         context = {
             'lan': lan,
