@@ -26,7 +26,6 @@
   z-index: 3;
 }
 .menu ul li, .menu ul li a {
-  opacity: 0.8;
   /*color: #ffffff;*/
   cursor: pointer;
   transition: 200ms;
@@ -147,16 +146,33 @@ ul{
               <div class="menu primary-theme">
                 <ul>
                   <li>
-                    {% if currentProfile.currentCourse %}
+                    {% if currentProfile.course.all %}
                     <a href="{% url 'course' currentProfile.currentCourse %}">
-                    <img id="currentflag" class="img-fluid" style="border-radius: 5px; height: auto; width: 64px;" src="{{ currentProfile.currentCourse.image.url }}">
+                      <img id="currentflag" class="img-fluid" style="border-radius: 5px; height: auto; width: 64px;" src="{{ currentProfile.currentCourse.image.url }}">
                     </a>
                     {% else %}
-                    <a href="{% url 'course' currentProfile.currentCourse %}">
-                      <img id="currentflag" class="img-fluid" style="border-radius: 5px; height: auto; width: 64px;" src="{% static 'img/blue.png' %}"">
-                      </a>
+                      <a class="my-nav-item primary-theme" href="{% url 'learn' %}">Language</a>
                     {% endif %}
                     <ul class="sixth-theme-background">
+                      {% if currentProfile.currentCourse %}
+                          <li style="padding: 20px 10px; margin: 20px 10px;">
+                            <a href="{% url 'course' currentProfile.currentCourse.title %}">
+                            <img class="img-fluid" style="border-radius: 5px; height: auto; width: 64px;" src="{{ currentProfile.currentCourse.image.url }}">
+                            <h5 class="capitalize-first-letter primary-theme" style="margin: 0px 0px 0px 5px;">{{currentProfile.currentCourse.title}}</h5>
+                            </a>
+                            <ul class="sixth-theme-background">
+                              <li class="link">
+                                <a class="primary-theme" href="{% url 'guide' currentProfile.currentCourse.title %}">Reference</a>
+                              </li>
+                              <li class="link">
+                                <a class="primary-theme" href="{% url 'grammar' currentProfile.currentCourse.title %}">Grammar</a>
+                              </li>
+                              <li class="link">
+                                <a class="primary-theme" href="{% url 'grammar' currentProfile.currentCourse.title %}">Vocabulary</a>
+                              </li>
+                            </ul>
+                          </li>
+                          {% endif %}
                       {% for c in currentProfile.course.all %}
                         {% if not c == currentProfile.currentCourse %}
                           <li style="padding: 20px 10px; margin: 20px 10px;">
@@ -178,8 +194,12 @@ ul{
                           </li>
                         {% endif %}
                       {% endfor %}
+                      <li>
+                        <a class="my-nav-item primary-theme" href="{% url 'learn' %}">Add a new course</a>
+                      </li>
                     </ul>
                   </li>
+                  
                 </ul>
              </div>
               {% endif %}

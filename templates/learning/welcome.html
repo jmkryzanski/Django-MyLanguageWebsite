@@ -228,6 +228,7 @@
       {% if user.is_authenticated %}
       {% else %}
       <a href={% url 'register' %}><button class="btn btn-lg btn-primary">Get started for free!</button></a>
+      <a href={% url 'login' %}><button class="btn btn-lg btn-primary">I already have an account</button></a>
       {% endif %}
   </div>
   </div>
