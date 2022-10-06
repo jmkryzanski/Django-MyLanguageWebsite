@@ -402,7 +402,7 @@ function correctAnswer(){
 
 function wrongAnswerFirst() {
     idle = true;
-    resultLabel.innerHTML = "Incorrect, the correct translation is" + currentAnswer;
+    resultLabel.innerHTML = "Incorrect, the correct translation is '" + currentAnswer.split("//")[0] + "'";
     $(resultLabel).css('color', 'red');
     btnSubmit.innerHTML = "Continue";
     answerTextarea.disabled = true;
