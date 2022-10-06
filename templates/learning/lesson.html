@@ -97,9 +97,10 @@ border: 1px solid grey; margin-bottom: 30px; padding: 10px;">-->
 {% if user.is_superuser %}
     <a href="{% url 'editlesson' lesson.course lesson.slug %}"><span><button class="btn btn-primary">Edit Lesson</button></span></a>
     <a href="{% url 'deletelesson' lesson.course lesson.slug %}"><span><button class="btn btn-primary">Delete Lesson</button></span></a>
+    <button id="ajaxtest2">plzwork</button>
+    <a href="{% url 'levelCompleted' lan myslug level %}">Add course to home page</a>
 {% endif %}
-<button id="ajaxtest2">plzwork</button>
-<a href="{% url 'levelCompleted' lan myslug level %}">Add course to home page</a>
+
 </div>
 
 
@@ -384,6 +385,7 @@ function newRandomQA(){
 }
 
 function playAudio(){
+    var availableGames = ["translation", "dragdrop", "keyword", "reverse"];
     audioMessage.text = currentQuestion.split("//")[0];
     speechSynthesis.speak(audioMessage);
 }

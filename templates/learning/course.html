@@ -1,8 +1,6 @@
 {% extends 'learning/base.html' %}
 {% block content %}
 
-
-
 <style>
     .navigation-container {
   width: 60%;
@@ -58,37 +56,34 @@ mylistbaby
 {{mylist}}
 <br><br>
 -->
+{% if user.is_superuser %}
 <button id="ajaxtest2">plzwork</button>
 <a href="{% url 'updateCurrentCourse' lan %}">update currentcourse profile current course</a>
+{% endif %}
 
 
 <h1 class="capitalize-first-letter text-center fifth-theme title-text">{{lan}} Course</h1>
 
 <div class="row">
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-6">
         <div class="seventh-theme-background sixth-theme-border">
             <a class="fifth-theme" href="guide">
             <h1 class="text-center fifth-theme capitalize-first-letter">Reference</h1></a>
-            <p class="third-theme text-center">In-depth grammar guide</p>
-            <p class="third-theme text-center">In-depth grammar guide</p>
-            <p class="third-theme text-center">In-depth grammar guide</p>
-            <p class="third-theme text-center">In-depth grammar guide</p>
-            <p class="third-theme text-center">In-depth grammar guide</p>
+            <h5 class="third-theme text-center mb-4">Free Grammar Guide</h5>
+            <h5 class="third-theme text-center mb-4">Broken down by category</h5>
+            <h5 class="third-theme text-center mb-4">Learn the most important grammar points</h5>
         </div>
-        
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-6">
         <div class="seventh-theme-background sixth-theme-border">
             <a class="fifth-theme" href="grammar">
             <h1 class="text-center fifth-theme capitalize-first-letter">Grammar</h1></a>
-            <p class="third-theme text-center">Learn grammar in context with interactive exercise</p>
-            <p class="third-theme text-center">Learn grammar in context with interactive exercise</p>
-            <p class="third-theme text-center">Learn grammar in context with interactive exercise</p>
-            <p class="third-theme text-center">Learn grammar in context with interactive exercise</p>
-            <p class="third-theme text-center">Learn grammar in context with interactive exercise</p>
+            <h5 class="third-theme text-center mb-4">Learn grammar and vocabulary in context</h5>
+            <h5 class="third-theme text-center mb-4">Start from the most commonly spoken words</h5>
+            <h5 class="third-theme text-center mb-4">Interactive exercises</h5>
         </div>
     </div>
-    <div class="col-12 col-md-4">
+    <!--<div class="col-12 col-md-4">
         <div class="seventh-theme-background sixth-theme-border">
             <a href="grammar">
             <h1 class="text-center fifth-theme capitalize-first-letter">Vocabulary</h1></a>
@@ -98,7 +93,7 @@ mylistbaby
             <p class="third-theme text-center">Learn vocabulary in context with interactive exercise</p>
             <p class="third-theme text-center">Learn vocabulary in context with interactive exercise</p>
         </div>
-    </div>
+    </div>-->
 </div>
 
 {% if user.is_superuser %}
@@ -107,7 +102,24 @@ mylistbaby
 
 <!--<btn id="ajaxtest3" class="btn fifth-theme-background">Remove Course</btn>-->
 
-<button id="ajaxtest" class="btn fifth-theme-background">Add Course</button>
+
+<!--<button id="ajaxtest" class="btn fifth-theme-background">Add Course</button>-->
+<!--<div class="col d-flex justify-content-center">
+    <a class="sticky" id="ajaxtest" href="">
+    <div class="card text-center learn-card fourth-theme-background">
+        <p class="third-theme" style="font-size: 30px;">Click here to learning {{lan}}!</p>
+    </div>
+    </a>
+</div>-->
+{% if not boolDoesHaveLang %}
+<div class="col d-flex justify-content-center">
+    <a id="ajaxtest" href="">
+    <div class="text-center learn-card fourth-theme-background">
+        <p class="third-theme" style="font-size: 30px;">Click here to start learning {{lan}}!</p>
+    </div>
+    </a>
+</div>
+{% endif %}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -150,7 +162,8 @@ mylistbaby
             type: $(this).attr('method'),
             url: "{% url 'addLanToProfile' lan %}",
             success: function (response) {
-                alert("worked");
+                //alert("worked");
+                location.reload();
             },
             error: function (response) {
                 console.log("didnt work")

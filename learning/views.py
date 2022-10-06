@@ -1,4 +1,4 @@
-from ast import Delete
+from ast import Delete, For
 from pipes import Template
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import context
@@ -23,15 +23,9 @@ isSignedInSignedUpCourse = False
 
 def WelcomeView(request):
     if request.user.is_authenticated:
-        #return render(request, 'learning/home.html')
         return HomeView(request)
     else:
         return render(request, 'learning/welcome.html')
-
-'''class HomeView(ListView):
-    model = Course
-    template_name = 'learning/home.html'
-'''
 
 def HomeView(request):
     if request.user.is_authenticated:
@@ -70,19 +64,23 @@ def LearnView(request):
 def CourseView(request, lan):
     if request.user.is_authenticated:
         currentProfile = Profile.objects.get(user=request.user)
-
-        # update current course
-        #mycurrentCourse = Course.objects.get(title=lan)
-        #currentProfile = Profile.objects.get(user=request.user)
-        #currentProfile.currentCourse = mycurrentCourse
-        #currentProfile.save()
-        #
         lan=lan
-        
+        doesHaveLang = currentProfile.course.all
+        boolDoesHaveLang = False
+
+        if currentProfile.course.filter(title=lan).exists():
+            boolDoesHaveLang = True
+
+        #boolHas = False
+        #for d in doesHave:
+        #    if d.title == lan:
+        #        boolHas = True
 
         context = {
             'lan': lan,
             'currentProfile': currentProfile,
+            'boolDoesHaveLang': boolDoesHaveLang,
+            #'boolHas': boolHas,
         }
         return render(request, 'learning/course.html', context)
 
@@ -149,6 +147,15 @@ def ViewGrammarView(request, lan):
         #
         currentProfile = Profile.objects.get(user=request.user)
         mycurrentCourse = Course.objects.get(title=lan)
+
+        #
+        doesHaveLang = currentProfile.course.all
+        boolDoesHaveLang = False
+
+        if currentProfile.course.filter(title=lan).exists():
+            boolDoesHaveLang = True
+        #
+
         if currentProfile.course.filter(profile__course=mycurrentCourse).exists():
             #
             #mycurrentCourse = Course.objects.get(title=lan)
@@ -204,6 +211,7 @@ def ViewGrammarView(request, lan):
                 'isAuthenticated': isAuthenticated,
                 'currentProfile': currentProfile,
                 #'plzwork': plzwork,
+                'boolDoesHaveLang': boolDoesHaveLang,
 
             }
             return render(request, 'learning/grammar.html', context)
@@ -257,6 +265,7 @@ def ViewGrammarView(request, lan):
                 'isAuthenticated': isAuthenticated,
                 'currentProfile': currentProfile,
                 #'plzwork': plzwork,
+                'boolDoesHaveLang': boolDoesHaveLang,
 
             }
             return render(request, 'learning/grammar.html', context)
