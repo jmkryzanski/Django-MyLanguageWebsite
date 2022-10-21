@@ -215,7 +215,7 @@ ul{
                 <div class="my-nav-item menu primary-theme" style="margin-left: 0px; padding-left: 0px;">
                   <ul>
                     <li>
-                      {{user.username}}
+                      <!--{{user.username}}-->{{currentProfile}}
                       <ul class="sixth-theme-background">
                         <li class="link">
                           <a class="my-nav-item primary-theme" href="{% url 'profile' request.user.profile.user %}">Profile</a>
@@ -244,7 +244,7 @@ ul{
 
 <footer class="text-center mt-auto third-theme seventh-theme-background">
   <div class="container">
-      <h1 class="secondary-theme m-4">website name</h1>
+      <h1 class="fifth-theme m-4">Website</h1>
     <section class="mb-4">
       <p class="normal-text">
         Learn languages the fun way

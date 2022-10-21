@@ -133,10 +133,6 @@ const questionsarray = {{ questions|safe }};
 const answersarray = {{ answers|safe }};
 const questionkeywordsarray = {{questionKeywords|safe}};
 const gameCard = document.getElementById("game-card");
-//var availableGames = ["translation", "dragdrop", "keyword"];
-//var availableGames = ["translation", "translation", "keyword", "reverse"];
-
-//var availableGames = ["reverse", "reverse", "reverse", "reverse"];
 var availableGames = ["translation", "dragdrop", "keyword", "reverse"];
 
 var arrayRandomGames = [];
@@ -289,18 +285,8 @@ function checkIfQAMatch(q, a){
     testa = testa.replace(/(?!\w|\s)./g, '');
 
     // if the game is translation, allow multiple correct answers
-    if (arrayRandomGames[currentIndex] === "translation"){ //|| arrayRandomGames[currentIndex] === "keyword"){
+    if (arrayRandomGames[currentIndex] === "translation"){
         var testarray = currentAnswer.split("//");
-        //console.log(testarray);
-        //console.log(testarray[0]);
-        //console.log(testarray[1]);
-        //console.log(testarray[2]);
-        //console.log(currentAnswer.split("//").length);
-        //console.log("testarray " + testarray);
-        //console.log("testarray0 " + testarray[0]);
-        //console.log("testarra1 " + testarray[1]);
-        //console.log("testq " + testq);
-        //console.log("testa " + testa);
         for (i = 0; i < testarray.length; i++){
             let tempv = testarray[i].replace(/\s+/g, '');
             tempv = tempv.toLowerCase();
@@ -326,16 +312,6 @@ function checkIfQAMatch(q, a){
 
     else if (arrayRandomGames[currentIndex] === "reverse"){
         var testarray2 = currentQuestion.split("//");
-        //console.log(testarray);
-        //console.log(testarray[0]);
-        //console.log(testarray[1]);
-        //console.log(testarray[2]);
-        //console.log(currentAnswer.split("//").length);
-        //console.log("testarray " + testarray);
-        //console.log("testarray0 " + testarray[0]);
-        //console.log("testarra1 " + testarray[1]);
-        //console.log("testq " + testq);
-        //console.log("testa " + testa);
         for (i = 0; i < testarray2.length; i++){
             let tempv = testarray2[i].replace(/\s+/g, '');
             tempv = tempv.toLowerCase();

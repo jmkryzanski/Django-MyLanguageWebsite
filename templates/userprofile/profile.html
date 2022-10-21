@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="third-theme">
-Username (not modifiable) {{user.profile.user}}<br>
+<!--Username (not modifiable) {{user.profile.user}}<br>
 Userbane (modifiable) {{user.profile.username}}<br>
 Bio {{user.profile.bio}}<br>
 
@@ -16,9 +16,27 @@ Current languages for this profile:
 
 {{p}}, 
 
-{% endfor %}
-
+{% endfor %}-->
+<h3><span class="fifth-theme">Login name - </span>{{user.profile.user}}</h3>
+<h3><span class="fifth-theme">Display name - </span>{{user.profile.username}}</h3>
+<h3><span class="fifth-theme">Bio - </span>{{user.profile.bio}}</h3>
+<h3><span class="fifth-theme">Languages - </span>
+    {% for p in request.user.profile.course.all %}
+        {% if forloop.last %}
+        <span class="capitalize-first-letter">{{p}}</span>
+        {% else %}
+        <span class="capitalize-first-letter">{{p}}, </span>
+        {% endif %}
+        {% empty %}
+            no languages being learned...yet
+    {% endfor %}
+</h3>
+<h3><span class="fifth-theme">Date joined - </span>{{user.date_joined}}</h3>
 </div>
-<a href="{% url 'editprofile' user.profile.user %}">edit</a>
+<br>
+{% if currentProfile == user.profile %}
+<a class="fifth-theme" href="{% url 'editprofile' user.profile.user %}">Edit</a>
+<!--<button id="btn-submit" class="btn text-center fifth-theme-background" onclick="location.href='{% url 'editprofile' user.profile.user %}'">Update</button>-->
+{% endif %}
 
 {% endblock %}

@@ -30,32 +30,6 @@
 
 </style>
 
-<!--{{thislevels}}kkk
-<br><br>
-<br><br>
-{{test2}}
-<br><br>
-<br><br>
-{{arrayLevels}}
-<br><br>
-{{arrayLessonTitles}}
-<br><br>
-{{test}}
-
-sssss
-{{numMatches}}
-<br>mysayin
-{{sayin}}
-<br>
-<br>ddd<br>
-{{sayin2}}
-ssssss
-
-<br><br>
-mylistbaby
-{{mylist}}
-<br><br>
--->
 {% if user.is_superuser %}
 <button id="ajaxtest2">plzwork</button>
 <a href="{% url 'updateCurrentCourse' lan %}">update currentcourse profile current course</a>
@@ -112,13 +86,22 @@ mylistbaby
     </a>
 </div>-->
 {% if not boolDoesHaveLang %}
-<div class="col d-flex justify-content-center">
+<div class="d-flex justify-content-center m-5">
+    <div class="seventh-theme-background sixth-theme-border" style="padding: 12px;">
+        <a id="ajaxtest" href="">
+            <p class="fifth-theme" style="font-size: 30px; margin: 0px;">Click here to start learning <span class="capitalize-first-letter">{{lan}}</span>!</p>
+        </a>
+    </div>
+</div>
+<!--OTHER BUTTON VERSION
+    <div class="col d-flex justify-content-center">
     <a id="ajaxtest" href="">
     <div class="text-center learn-card fourth-theme-background">
         <p class="third-theme" style="font-size: 30px;">Click here to start learning {{lan}}!</p>
     </div>
     </a>
 </div>
+-->
 {% endif %}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

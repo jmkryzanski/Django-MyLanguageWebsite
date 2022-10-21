@@ -177,7 +177,7 @@
             <div class="card border-0">
               <div class="card-body">
                   <h2 class="card-title">Most Common Words</h2>
-                  <h5 class="card-text">Start learning the most commonly spoken words instead of words you may never even use</h5>
+                  <h5 class="card-text">Learn commonly spoken words instead of words you may never use</h5>
                   <img class="img-fluid" src="{% static 'img/pic1.jpg' %}">
               </div>
             </div>
@@ -227,8 +227,8 @@
       </nav>-->
       {% if user.is_authenticated %}
       {% else %}
-      <a href={% url 'register' %}><button class="btn btn-lg btn-primary">Get started for free!</button></a>
-      <a href={% url 'login' %}><button class="btn btn-lg btn-primary">I already have an account</button></a>
+      <a href={% url 'register' %}><button class="btn btn-lg btn-warning">Get started for free!</button></a>
+      <a href={% url 'login' %}><button class="btn btn-lg btn-warning">I already have an account</button></a>
       {% endif %}
   </div>
   </div>
@@ -242,7 +242,7 @@
               Learn languages the fun way
             </p>
         </section>
-        <section class="">
+        <section>
             <div class="row">
               <div class="col-12">
                   <h5 class="text-uppercase">Links</h5>
@@ -260,7 +260,7 @@
       </div>
       <div id="fotter-copyright" class="text-center">
         © 2022 Copyright:
-        <a class="text-white" href="https://website.com/">website.com</a>
+        <a href="https://website.com/">website.com</a>
       </div>
   </footer>
   <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
