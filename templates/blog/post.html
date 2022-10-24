@@ -16,12 +16,63 @@
             <hr class="third-theme center1">
         {% endfor %}
     </div>
-    <div class="col-12 col-md-4 border border-white">
-        <h1 class="secondary-theme">Blog Archive</h1>
+    <!--<div class="col-12 col-md-4 border border-white">
+        <h1 class="fifth-theme">Blog Archive</h1>
         {% for post in object_list %}
         <a class="third-theme course-title" href="{% url 'individualpost' post.slug %}">{{post.title}} | {{post.post_date}}</a><br>
         {% endfor %}
+    </div>-->
+    <div class="col-12 col-md-4 sixth-theme-border">
+        <div class="guide-title">
+            <h1 class="fifth-theme">Blog Archive</h1>
+            {% for post in object_list %}
+                <a class="third-theme course-title" href="{% url 'individualpost' post.slug %}">{{post.title}} | {{post.post_date}}</a><br>
+            {% endfor %}
+        </div>
     </div>
 </div>
 
 {% endblock %}
+
+
+<!--<div class="col-12 col-md-6 sixth-theme-border">
+    <div class="guide-title">
+        {% for p in thisCaseGuides %}
+            {% if p.orderingID == 1 %}
+                <h3 class="secondary-theme card-title">Cases</h3>
+            {% endif %}
+            <a class="third-theme guide-item" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+        {% endfor %}
+        {% for p in thisPronounGuides %}
+            {% if p.orderingID == 1 %}
+                <h3 class="secondary-theme card-title">Pronouns</h3>
+            {% endif %}
+            <a class="third-theme guide-item" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+        {% endfor %}
+        {% for p in thisVerbGuides %}
+            {% if p.orderingID == 1 %}
+                <h3 class="secondary-theme card-title">Verbs</h3>
+            {% endif %}
+            <a class="third-theme guide-item" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+        {% endfor %}
+        {% for p in thisAdjectiveGuides %}
+            {% if p.orderingID == 1 %}
+                <h3 class="secondary-theme card-title">Adjectives</h3>
+            {% endif %}
+            <a class="third-theme guide-item" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+        {% endfor %}
+        {% for p in thisAdverbGuides %}
+            {% if p.orderingID == 1 %}
+                <h3 class="secondary-theme card-title">Adverbs</h3>
+            {% endif %}
+            <a class="third-theme guide-item" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+        {% endfor %}
+        {% for p in thisOtherGuides %}
+            {% if p.orderingID == 1 %}
+                <h3 class="secondary-theme card-title">Other</h3>
+            {% endif %}
+                <a class="third-theme guide-item" href="{% url 'individualguide' p.course p.slug  %}">{{p.guideTitle}}</a><br>
+        {% endfor %}
+        <br>
+    </div>
+</div>-->

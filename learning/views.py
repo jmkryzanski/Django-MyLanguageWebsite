@@ -630,7 +630,14 @@ class IndividualGuideView(DetailView):
 '''
 
 def AboutView(request):
-    return render(request, 'learning/about.html')
+    if request.user.is_authenticated:
+        currentProfile = Profile.objects.get(user=request.user)
+        context = {
+            'currentProfile': currentProfile,
+        }
+        return render(request, 'learning/about.html', context)
+    else:
+        return render(request, 'learning/about.html')
 
 def ContactView(request):
     return render(request, 'learning/test.html')

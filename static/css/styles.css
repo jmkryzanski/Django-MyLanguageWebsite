@@ -16,8 +16,14 @@
     /* almost greyed white to light black, for card borders in course and lesson */
     --sixthThemeColor: rgba(223, 223, 223, 1);
 
-    /* white to slightly lighter black, used for navbar, footer, and content inside 3d cards */
+    /* white to slightly lighter black, used for navbar, and content inside 3d cards */
     --seventhThemeColor: white;
+
+    /* blue to sligthly lighter black, used for footer */
+    --eigthThemeColor: #3778c2;
+
+    /* white to orange */
+    --ninthThemeColor: white;
 
     --primPolandColor: red;
     --secPolandColor: white;
@@ -75,7 +81,8 @@ body{
     font-family: sans-serif;
 }
 footer {
-    background-color: var(--primThemeColor);
+    /*background-color: var(--primThemeColor);*/
+    background-color: var(--eigthThemeColor);
     /*border-top:1px solid var(--primThemeColor);*/
     border-top:1px solid var(--sixthThemeColor);
 }
@@ -260,6 +267,18 @@ body.dark {
 }
 .dark-seventh-theme-background{
     background-color: #1a1a1a;
+}
+.eigth-theme-background{
+    background-color: var(--eigthThemeColor);
+}
+.dark-eigth-theme-background{
+    background-color: #1a1a1a;
+}
+.ninth-theme{
+    color: var(--ninthThemeColor);
+}
+.dark-ninth-theme{
+    color: #f8a300;
 }
 
 /******************************/

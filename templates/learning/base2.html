@@ -32,42 +32,30 @@
     const chk = document.getElementById('chk');
     const darkLightIcon = document.getElementById('dark-light-icon');
     chk.addEventListener('click', () => {
-      if (chk.checked == true){
+      if (chk.checked){
         darkLightIcon.src = "{% static 'img/lightmode1.png' %}";
-        $('.primary-theme').toggleClass('dark-primary-theme')
-        $('.primary-theme-background').toggleClass('dark-primary-theme-background')
-        $('.secondary-theme').toggleClass('dark-secondary-theme')
-        $('.secondary-theme-background').toggleClass('dark-secondary-theme-background')
-        $('.third-theme').toggleClass('dark-third-theme')
-        $('.third-theme-background').toggleClass('dark-third-theme-background')
-        $('.third-theme-border').toggleClass('dark-third-theme-border')
-        $('.fourth-theme').toggleClass('dark-fourth-theme')
-        $('.fourth-theme-background').toggleClass('dark-fourth-theme-background')
-        $('.fifth-theme').toggleClass('dark-fifth-theme')
-        $('.fifth-theme-background').toggleClass('dark-fifth-theme-background')
-        $('.sixth-theme-border').toggleClass('dark-sixth-theme-border')
-        $('.lesson-progress-bar-div').toggleClass('dark-lesson-progress-bar-div')
-        $('.seventh-theme-background').toggleClass('dark-seventh-theme-background')
-        $('body').toggleClass('dark')
       }
       else{
         darkLightIcon.src = "{% static 'img/darkmode1.png' %}";
-        $('.primary-theme').toggleClass('dark-primary-theme')
-        $('.primary-theme-background').toggleClass('dark-primary-theme-background')
-        $('.secondary-theme').toggleClass('dark-secondary-theme')
-        $('.secondary-theme-background').toggleClass('dark-secondary-theme-background')
-        $('.third-theme').toggleClass('dark-third-theme')
-        $('.third-theme-background').toggleClass('dark-third-theme-background')
-        $('.third-theme-border').toggleClass('dark-third-theme-border')
-        $('.fourth-theme').toggleClass('dark-fourth-theme')
-        $('.fourth-theme-background').toggleClass('dark-fourth-theme-background')
-        $('.fifth-theme').toggleClass('dark-fifth-theme')
-        $('.fifth-theme-background').toggleClass('dark-fifth-theme-background')
-        $('.sixth-theme-border').toggleClass('dark-sixth-theme-border')
-        $('.lesson-progress-bar-div').toggleClass('dark-lesson-progress-bar-div')
-        $('.seventh-theme-background').toggleClass('dark-seventh-theme-background')
-        $('body').toggleClass('dark')
       }
+      $('.primary-theme').toggleClass('dark-primary-theme')
+      $('.primary-theme-background').toggleClass('dark-primary-theme-background')
+      $('.secondary-theme').toggleClass('dark-secondary-theme')
+      $('.secondary-theme-background').toggleClass('dark-secondary-theme-background')
+      $('.third-theme').toggleClass('dark-third-theme')
+      $('.third-theme-background').toggleClass('dark-third-theme-background')
+      $('.third-theme-border').toggleClass('dark-third-theme-border')
+      $('.fourth-theme').toggleClass('dark-fourth-theme')
+      $('.fourth-theme-background').toggleClass('dark-fourth-theme-background')
+      $('.fifth-theme').toggleClass('dark-fifth-theme')
+      $('.fifth-theme-background').toggleClass('dark-fifth-theme-background')
+      $('.sixth-theme-border').toggleClass('dark-sixth-theme-border')
+      $('.sixth-theme-border-noshadow').toggleClass('dark-sixth-theme-border-noshadow')
+      $('.seventh-theme-background').toggleClass('dark-seventh-theme-background')
+      $('.eigth-theme-background').toggleClass('dark-eigth-theme-background')
+      $('.sixth-theme-background').toggleClass('dark-sixth-theme-background')
+      $('.ninth-theme').toggleClass('dark-ninth-theme')
+      $('body').toggleClass('dark')
       localStorage.setItem('darkModeStatus', chk.checked);
     });
     
@@ -86,8 +74,11 @@
         $('.fifth-theme').toggleClass('dark-fifth-theme')
         $('.fifth-theme-background').toggleClass('dark-fifth-theme-background')
         $('.sixth-theme-border').toggleClass('dark-sixth-theme-border')
-        $('.lesson-progress-bar-div').toggleClass('dark-lesson-progress-bar-div')
+        $('.sixth-theme-border-noshadow').toggleClass('dark-sixth-theme-border-noshadow')
         $('.seventh-theme-background').toggleClass('dark-seventh-theme-background')
+        $('.eigth-theme-background').toggleClass('dark-eigth-theme-background')
+        $('.sixth-theme-background').toggleClass('dark-sixth-theme-background')
+        $('.ninth-theme').toggleClass('dark-ninth-theme')
         $('body').toggleClass('dark')
         document.body.classList.add("dark"); 
         document.getElementById('chk').checked = true;
